@@ -10,6 +10,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@designsystem-se/af": "^32.4.0",
+    "@designsystem-se/af-react": "^32.4.0",
+    "@taxonomy/yrkesvaljaren": "^9.1.2",
     "react": "^19.2.4",
     "react-dom": "^19.2.4"
   },
