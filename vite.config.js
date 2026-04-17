@@ -4,6 +4,12 @@ import react from '@vitejs/plugin-react'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
+  test: {
+    environment: 'jsdom',
+    globals: true,
+    setupFiles: './tests/setup.js',
+    passWithNoTests: true,
+  },
   // Stencil lazy-loadar *.entry.js med relativa dynamiska imports. Om Vite
   // pre-bundlar dessa paket hamnar importen under .vite/deps/ och chunken
   // laddas med fel MIME / trasig sökväg.

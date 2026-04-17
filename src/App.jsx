@@ -7,11 +7,10 @@ function App() {
     <>
       <section id="center">
         <div className="hero">
-        <DigiLogo
-        afOnlySymbol={false}
-        afColor={LogoColor.SECONDARY}
-        >
-        </DigiLogo>
+          <DigiLogo
+            afOnlySymbol={false}
+            afColor={LogoColor.SECONDARY}
+          ></DigiLogo>
         </div>
       </section>
 
@@ -25,8 +24,11 @@ function App() {
           <h2>Dokumentation</h2>
           <ul>
             <li>
-              <a href="https://github.com/Letssdothiss/historical-ads-frontend-rework-FRONTEND" target="_blank">
-              <svg
+              <a
+                href="https://github.com/Letssdothiss/historical-ads-frontend-rework-FRONTEND"
+                target="_blank"
+              >
+                <svg
                   className="button-icon"
                   role="presentation"
                   aria-hidden="true"
@@ -37,8 +39,11 @@ function App() {
               </a>
             </li>
             <li>
-              <a href="https://github.com/Letssdothiss/historical-ads-frontend-rework-BACKEND" target="_blank">
-              <svg
+              <a
+                href="https://github.com/Letssdothiss/historical-ads-frontend-rework-BACKEND"
+                target="_blank"
+              >
+                <svg
                   className="button-icon"
                   role="presentation"
                   aria-hidden="true"
@@ -55,11 +60,18 @@ function App() {
             <use href="/icons.svg#social-icon"></use>
           </svg>
           <h2>Historical Ads</h2>
-          <p>Här pågår ett studentprojekt där vi jobbar med att skapa en omarbetat version av den sida som finns för historiska platsannonser.</p>
+          <p>
+            Här pågår ett studentprojekt där vi jobbar med att skapa en
+            omarbetat version av den sida som finns för historiska
+            platsannonser.
+          </p>
 
           <ul>
             <li>
-              <a href="https://historical-ads-frontend.jobtechdev.se/annonser" target="_blank">
+              <a
+                href="https://historical-ads-frontend.jobtechdev.se/annonser"
+                target="_blank"
+              >
                 <svg
                   className="button-icon"
                   role="presentation"
