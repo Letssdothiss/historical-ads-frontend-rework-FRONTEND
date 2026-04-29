@@ -1,6 +1,7 @@
 import React from 'react';
 import { DigiLogo } from '@designsystem-se/af-react'
 import { LogoColor } from '@designsystem-se/af'
+import Footer from './Footer';
 
 const HeroSection = () => {
   return (
@@ -15,10 +16,8 @@ const HeroSection = () => {
 
       <div className="content-container"></div>
 
-      <div className="footer-container"
-      style={{
-        backgroundColor: 'blue',
-      }}>
+      <div className="footer-container">
+        <Footer />
       </div>
     </section>
   );

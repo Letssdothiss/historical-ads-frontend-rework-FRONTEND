@@ -38,6 +38,41 @@ body {
   background-color: var(--digi--color--background--primary);
 }
 
+.logo-container {
+  padding-left: 10%;
+}
+
+/* In flow with the page; short pages still pin footer to viewport bottom via flex chain below */
+.footer-container {
+  flex-shrink: 0;
+}
+
+/* Sticky footer: grow middle, footer follows document (scrolls away on long pages) */
+.home-page {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.home-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+#layout-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.content-container {
+  flex: 1 1 auto;
+}
+
 .logo-divider {
   border-bottom: 2px solid var(--border);
   width: 100vw;
@@ -45,7 +80,7 @@ body {
 }
 
 #root {
-  width: 1126px;
+  width: 100vw;
   max-width: 100%;
   margin: 0 auto;
   text-align: center;
@@ -53,6 +88,13 @@ body {
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
+}
+
+.app-root {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
 }
 
 h1,
