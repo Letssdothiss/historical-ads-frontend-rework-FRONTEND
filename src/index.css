@@ -42,6 +42,23 @@ body {
   padding-left: 10%;
 }
 
+.context-content-container {
+  box-sizing: border-box;
+  padding-block: var(--digi--global--spacing--largest-4);
+  padding-inline: var(--digi--global--spacing--base);
+}
+
+.context-content-container h2 {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.context-content-container p {
+  font-size: 1.1rem;
+  text-align: left;
+  margin-left: 36%;
+}
+
 /* In flow with the page; short pages still pin footer to viewport bottom via flex chain below */
 .footer-container {
   flex-shrink: 0;

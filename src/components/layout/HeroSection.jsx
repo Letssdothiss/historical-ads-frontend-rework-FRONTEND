@@ -1,7 +1,7 @@
 import React from 'react';
-import { DigiLogo } from '@designsystem-se/af-react'
-import { LogoColor } from '@designsystem-se/af'
-import Footer from './Footer';
+import { DigiLayoutBlock, DigiLogo } from '@designsystem-se/af-react'
+import { LayoutBlockVariation, LogoColor } from '@designsystem-se/af'
+import DigiFooter from './DigiFooter';
 
 const HeroSection = () => {
   return (
@@ -14,10 +14,20 @@ const HeroSection = () => {
       </div>
       <div className="logo-divider" aria-hidden="true"></div>
 
+      <div className="context-container">
+        <DigiLayoutBlock afVariation={LayoutBlockVariation.SECONDARY}>
+          <div className="context-content-container">
+            <h2>Historiska platsannonser</h2>
+            <p>Sök data från platsannonser tidigare</p>
+            <p>publicerade på Platsbanken</p>
+          </div>
+        </DigiLayoutBlock>
+      </div>
+
       <div className="content-container"></div>
 
       <div className="footer-container">
-        <Footer />
+        <DigiFooter />
       </div>
     </section>
   );
