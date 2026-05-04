@@ -14,7 +14,8 @@ const HeroSection = () => {
       </div>
       <div className="logo-divider" aria-hidden="true"></div>
 
-    {/*}
+    {/*} Removed content for now, dont know if it will be needed.
+
       <div className="context-container">
         <DigiLayoutBlock afVariation={LayoutBlockVariation.SECONDARY}>
           <div className="context-content-container">
@@ -24,6 +25,7 @@ const HeroSection = () => {
           </div>
         </DigiLayoutBlock>
       </div>
+      
     */}
 
       <div className="content-container"></div>
