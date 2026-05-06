@@ -2,7 +2,7 @@ import React from 'react';
 import { DigiLayoutBlock } from '@designsystem-se/af-react';
 import { LayoutBlockVariation } from '@designsystem-se/af';
 
-const ContentWrapper = () => {
+function ContentWrapper() {
   return (
     <div>
       <h1>Content Wrapper</h1>

@@ -2,7 +2,7 @@ import TopTitleSection from '../../components/layout/TopTitleSection';
 import ContentWrapper from '../../components/layout/ContentWrapper';
 import DigiFooter from '../../components/layout/DigiFooter';
 
-const Home = () => {
+function Home() {
   return (
     <div className="home-page">
       <main className="home-main">
