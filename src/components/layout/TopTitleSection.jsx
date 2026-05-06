@@ -1,7 +1,7 @@
 import React from 'react';
-import { DigiLayoutBlock, DigiLogo } from '@designsystem-se/af-react'
-import { LayoutBlockVariation, LogoColor } from '@designsystem-se/af'
-import DigiFooter from './DigiFooter';
+import { DigiLogo } from '@designsystem-se/af-react'
+import { LogoColor } from '@designsystem-se/af'
+
 
 const HeroSection = () => {
   return (
@@ -13,12 +13,6 @@ const HeroSection = () => {
         ></DigiLogo>
       </div>
       <div className="logo-divider" aria-hidden="true"></div>
-
-      <div className="content-container"></div>
-
-      <div className="footer-container">
-        <DigiFooter />
-      </div>
     </section>
   );
 };
