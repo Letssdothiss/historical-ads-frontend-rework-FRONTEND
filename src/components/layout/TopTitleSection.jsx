@@ -1,6 +1,6 @@
 import React from 'react';
-import { DigiLogo } from '@designsystem-se/af-react'
-import { LogoColor } from '@designsystem-se/af'
+import { DigiLayoutBlock, DigiLogo } from '@designsystem-se/af-react'
+import { LayoutBlockVariation, LogoColor } from '@designsystem-se/af'
 
 
 const HeroSection = () => {
@@ -13,6 +13,16 @@ const HeroSection = () => {
         ></DigiLogo>
       </div>
       <div className="logo-divider" aria-hidden="true"></div>
+
+      <div className="context-container">
+        <DigiLayoutBlock afVariation={LayoutBlockVariation.SECONDARY}>
+          <div className="context-content-container">
+            <h2>Historiska platsannonser</h2>
+            <p>Sök data från platsannonser tidigare</p>
+            <p>publicerade på Platsbanken</p>
+          </div>
+        </DigiLayoutBlock>
+      </div>
     </section>
   );
 };
