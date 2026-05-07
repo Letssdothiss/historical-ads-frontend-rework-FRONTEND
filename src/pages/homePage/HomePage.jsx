@@ -1,6 +1,6 @@
-import MainHeader from '../../components/layout/MainHeader';
+import MainHeader from '../../shared/components/mainHeader/MainHeader';
 import ContentWrapper from '../../components/layout/ContentWrapper';
-import DigiFooter from '../../components/layout/DigiFooter';
+import DigiFooter from '../../shared/components/digiFooter/DigiFooter';
 
 function Home() {
   return (
