@@ -1,21 +1,16 @@
-import MainHeader from '../../shared/components/mainHeader/MainHeader';
-import ContentWrapper from '../../components/layout/ContentWrapper';
-import DigiFooter from '../../shared/components/digiFooter/DigiFooter';
+import './HomePage.css';
+import MainLayout from '../../app/layout/MainLayout';
+import ContentWrapper from '../../shared/components/contentWrapper/ContentWrapper';
 
-function Home() {
+function HomePage() {
   return (
     <div className="home-page">
-      <main className="home-main">
-        <MainHeader />
-
+      <MainLayout>
         <ContentWrapper />
-
-        <div className="footer-container">
-          <DigiFooter />
-      </div>
-      </main>
+      </MainLayout>
     </div>
-  );
-};
 
-export default Home;
+  );
+}
+
+export default HomePage;

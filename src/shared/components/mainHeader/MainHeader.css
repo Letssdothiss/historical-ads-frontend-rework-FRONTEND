@@ -1,0 +1,33 @@
+.logo-container {
+  padding-left: 10%;
+}
+
+.context-content-container {
+  box-sizing: border-box;
+  padding-block: var(--digi--global--spacing--largest-4);
+  padding-inline: var(--digi--global--spacing--base);
+}
+
+.context-content-container h2 {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.context-content-container p {
+  font-size: 1.1rem;
+  text-align: left;
+  margin-left: 36%;
+}
+
+#layout-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.logo-divider {
+  border-bottom: 2px solid var(--border);
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+}

@@ -1,9 +1,10 @@
+import './MainHeader.css';
 import React from 'react';
 import { DigiLayoutBlock, DigiLogo } from '@designsystem-se/af-react'
 import { LayoutBlockVariation, LogoColor } from '@designsystem-se/af'
 
 
-const HeroSection = () => {
+const MainHeader = () => {
   return (
     <section id="layout-section">
       <div className="logo-container">
@@ -27,4 +28,4 @@ const HeroSection = () => {
   );
 };
 
-export default HeroSection;
+export default MainHeader;

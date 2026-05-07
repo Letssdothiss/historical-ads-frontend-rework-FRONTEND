@@ -1,3 +1,4 @@
+import './SiteFooter.css';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import {
@@ -17,7 +18,7 @@ import {
   LogoVariation,
 } from '@designsystem-se/af';
 
-const Footer = () => {
+const SiteFooter = () => {
   return (
     <DigiFooter afVariation={FooterVariation.LARGE}>
       <div slot="content-top">
@@ -118,4 +119,4 @@ const Footer = () => {
   );
 };
 
-export default Footer;
+export default SiteFooter;
