@@ -1,0 +1,24 @@
+/* In flow with the page; short pages still pin footer to viewport bottom via flex chain below */
+.footer-container {
+  flex-shrink: 0;
+}
+
+/* Sticky footer: grow middle, footer follows document (scrolls away on long pages) */
+.main-layout {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.main-layout-main-tag {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.main-layout-content {
+  flex: 1 1 auto;
+  min-height: 0;
+}
