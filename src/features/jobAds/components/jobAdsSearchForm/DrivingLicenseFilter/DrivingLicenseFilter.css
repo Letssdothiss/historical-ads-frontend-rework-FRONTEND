@@ -1,0 +1,12 @@
+.driving-license-filter {
+  margin: 1rem 0;
+}
+
+.chevron-wrapper {
+  display: inline-flex;
+  transition: transform 0.2s ease;
+}
+
+.chevron-wrapper.open {
+  transform: rotate(-180deg);
+}
