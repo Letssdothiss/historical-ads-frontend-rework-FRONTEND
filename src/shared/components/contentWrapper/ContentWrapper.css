@@ -4,23 +4,29 @@
   align-items: center;
   margin: 0 auto;
   width: 70vw;
-  background-color: rgb(9, 29, 84, 1);
-};
+  background-color: rgb(9, 29, 84);
+}
 
-.shell-header-container {
+.shell-top-row {
+  display:flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
-};
+.shell-header-container {}
 
 .shell-header-content-container {
-  padding-block: var(--digi--global--spacing--largest-4);
+  padding-block: var(--digi--global--spacing--largest-6);
   padding-inline: var(--digi--global--spacing--base);
-};
+}
 
 .shell-header-content-container h2 {
+  color: white;
   font-size: 2rem;
-};
+}
 
 .shell-header-content-container p {
+  color: white;
   text-align: left;
   font-size: 0.9rem;
-};
+}
