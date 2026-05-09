@@ -19,8 +19,8 @@ const MainHeader = () => {
         <DigiLayoutBlock afVariation={LayoutBlockVariation.SECONDARY}>
           <div className="context-content-container">
             <h2>Historiska platsannonser</h2>
-            <p>Sök data från platsannonser tidigare</p>
-            <p>publicerade på Platsbanken</p>
+            <p className="context-content-container-p">Sök data från platsannonser tidigare</p>
+            <p className="context-content-container-p">publicerade på Platsbanken</p>
           </div>
         </DigiLayoutBlock>
       </div>
