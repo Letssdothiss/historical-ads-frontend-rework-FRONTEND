@@ -1,12 +1,193 @@
+/* FILTER WRAPPER */
 .driving-license-filter {
-  margin: 1rem 0;
+  position: relative;
+
+  width: 100%;
+  max-width: 374px;
 }
 
+/* TRIGGER */
+.driving-license-trigger {
+  width: 100%;
+}
+
+/* BUTTON */
+.driving-license-trigger digi-button::part(button) {
+  height: 56px;
+
+  border-radius: 6px;
+}
+
+/* TRIGGER CONTENT */
+.trigger-content {
+  display: flex;
+  align-items: center;
+
+  color: #1616B2;
+}
+
+/* CAR ICON */
+.trigger-content digi-icon-licence-car {
+  --digi--icon--width: 24px;
+  --digi--icon--height: 24px;
+  --digi--icon--color: #1616B2;
+
+  margin-right: 40px;
+  margin-left: 20px;
+
+  flex-shrink: 0;
+}
+
+/* LABEL */
+.trigger-label {
+  color: #1616B2;
+
+  font-size: 18px;
+
+  font-weight: 700;
+
+  line-height: 1;
+}
+
+/* CHEVRON WRAPPER */
 .chevron-wrapper {
   display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  margin-left: 18px;
+
+  color: #1616B2;
+
   transition: transform 0.2s ease;
 }
 
 .chevron-wrapper.open {
   transform: rotate(-180deg);
+}
+
+/* CHEVRON ICON */
+.chevron-wrapper digi-icon-chevron-down {
+  --digi--icon--width: 16px;
+  --digi--icon--height: 16px;
+  --digi--icon--color: #1616B2;
+}
+
+/* OVERLAY */
+.driving-license-dropdown {
+  width: 100%;
+
+  margin-top: 8px;
+
+  padding: 24px 32px 32px 32px;
+
+  box-sizing: border-box;
+
+  background: #ffffff;
+
+  border: 1px solid #1616B2;
+
+  border-radius: 6px;
+}
+
+/* HEADER */
+.dropdown-header {
+  display: flex;
+
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 52px;
+}
+
+/* ACTION BUTTONS */
+.dropdown-text-button,
+.dropdown-close-button {
+  display: flex;
+  align-items: center;
+
+  background: none;
+  border: none;
+
+  padding: 0;
+
+  cursor: pointer;
+
+  color: #1616B2;
+
+  font-size: 18px;
+
+  font-weight: 700;
+
+  line-height: 1;
+}
+
+/* EXTRA SPACE BETWEEN STÄNG + X */
+.dropdown-close-button {
+  gap: 28px;
+}
+
+/* CLOSE ICON */
+.dropdown-close-button digi-icon-x {
+  --digi--icon--width: 24px;
+  --digi--icon--height: 24px;
+  --digi--icon--color: #1616B2;
+
+  flex-shrink: 0;
+}
+
+/* CONTENT */
+.dropdown-content {
+  display: flex;
+  flex-direction: column;
+}
+
+/* TITLE */
+.dropdown-title {
+  margin: 0 0 8px 0;
+
+  color: #333333;
+
+  font-size: 28px;
+
+  font-weight: 600;
+
+  line-height: 1.2;
+
+  text-align: left;
+}
+
+/* DIVIDER */
+.dropdown-divider {
+  width: 100%;
+
+  margin-bottom: 28px;
+
+  border-bottom: 1px solid #d9d9d9;
+}
+
+/* RADIO GROUP */
+.driving-license-dropdown digi-form-radiogroup {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 18px;
+
+  width: 100%;
+}
+
+/* RADIO BUTTONS */
+.driving-license-dropdown digi-form-radiobutton {
+  width: 100%;
+
+  display: flex;
+
+  align-items: flex-start;
+}
+
+/* FORCE LEFT ALIGN INSIDE DIGI */
+.driving-license-dropdown digi-form-radiobutton::part(label) {
+  text-align: left;
 }
