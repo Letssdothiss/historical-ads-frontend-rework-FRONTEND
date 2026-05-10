@@ -19,9 +19,28 @@
 }
 
 .tabs-switch-container {
- overflow: hidden;
- border-radius: 5px;
- margin-bottom: -2rem;
+  display: inline-flex;
+  flex-wrap: wrap;
+  border-radius: 5px;
+  margin-bottom: 30px;
 }
 
+#button-platsannonser {
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+  margin: 0;
+  border: none;
+}
 
+#button-statistik {
+  border-radius: 0px;
+  margin: 0;
+  border: none;
+}
+
+#button-om-datan {
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+  margin: 0;
+  border: none;
+}

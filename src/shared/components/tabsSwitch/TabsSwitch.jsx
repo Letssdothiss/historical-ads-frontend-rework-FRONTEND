@@ -18,20 +18,29 @@ function TabsSwitch() {
         </DigiButton>
       </div>
       <div className="tabs-switch-container">
-        <DigiTablist
-          afId="tab-switch-button"
-          afTabs={[
-            {"id":"platsannonser",
-              "title":"Platsannonser"
-            },
-            {"id":"statistik",
-              "title":"Statistik"
-            },
-            {"id":"om-datan",
-              "title":"Om datan"
-            }
-          ]}>
-        </DigiTablist>
+        <DigiButton
+          afId="button-platsannonser"
+	        afSize={ButtonSize.MEDIUM}
+	        afVariation={ButtonVariation.SECONDARY}
+	        afFullWidth={false}>
+	        Platsannonser
+        </DigiButton>
+
+        <DigiButton
+          afId="button-statistik"
+	        afSize={ButtonSize.MEDIUM}
+	        afVariation={ButtonVariation.SECONDARY}
+	        afFullWidth={false}>
+	        Statistik
+        </DigiButton>
+
+        <DigiButton
+          afId="button-om-datan"
+	        afSize={ButtonSize.MEDIUM}
+	        afVariation={ButtonVariation.SECONDARY}
+	        afFullWidth={false}>
+	        Om datan
+        </DigiButton>
       </div>
     </div>
   );
