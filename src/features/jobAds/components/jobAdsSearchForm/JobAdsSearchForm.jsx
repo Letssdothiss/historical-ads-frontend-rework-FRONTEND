@@ -1,7 +1,8 @@
 import './JobAdsSearchForm.css';
 import React from 'react';
-import { DigiFormInput } from '@designsystem-se/af-react';
+import { DigiFormInput, DigiButton } from '@designsystem-se/af-react';
 import { FormInputVariation, FormInputType, FormInputValidation } from '@designsystem-se/af';
+import { ButtonSize, ButtonVariation } from '@designsystem-se/af';
 
 function JobAdsSearchForm() {
   return (
@@ -41,6 +42,7 @@ function JobAdsSearchForm() {
             >
             </DigiFormInput>
           </div>
+          <div className="employer-radio-buttons-container"></div>
         </div>
         <div className="trade-input-and-text-and-info-container">
           <div className="text-above-trade-input-field">
@@ -58,7 +60,16 @@ function JobAdsSearchForm() {
           </div>
         </div>
       </div>
-      <div className="search-button-container"></div>
+      <div className="search-button-container">
+        <DigiButton
+          afId="job-ads-search-button"
+	        afSize={ButtonSize.MEDIUM}
+	        afVariation={ButtonVariation.SECONDARY}
+        	afFullWidth={true}
+        >
+	        Sök
+        </DigiButton>
+      </div>
     </section>
   );
 };

@@ -40,6 +40,8 @@
   width: 22vw;
 }
 
+.employer-radio-buttons-container {}
+
 .trade-input-and-text-and-info-container {}
 
 .text-above-trade-input-field {
@@ -52,7 +54,14 @@
   width: 22vw;
 }
 
-.search-button-container {}
+.search-button-container {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+#job-ads-search-button {
+  background-color: rgb(2, 167, 4);
+}
 
 p {
   color: white;
