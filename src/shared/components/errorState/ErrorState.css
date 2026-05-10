@@ -1,0 +1,50 @@
+/* ERROR STATE WRAPPER */
+.error-state {
+  display: flex;
+
+  flex-direction: column;
+  align-items: center;
+
+  gap: var(--digi--gutter--medium);
+
+  padding: var(--digi--padding--largest);
+
+  text-align: center;
+}
+
+/* WARNING ICON */
+.error-icon {
+  --digi--icon--width: 48px;
+  --digi--icon--height: 48px;
+
+  --digi--icon--color:
+    var(--digi--color--icon--warning);
+}
+
+/* ERROR TITLE */
+.error-title {
+  margin: 0;
+
+  color: var(--digi--color--text--primary);
+
+  font-size:
+    var(--digi--typography--heading-2--font-size--desktop);
+
+  font-weight:
+    var(--digi--typography--heading-2--font-weight--desktop);
+}
+
+/* ERROR MESSAGE */
+.error-message {
+  margin: 0;
+
+  max-width: 500px;
+
+  color: var(--digi--color--text--secondary);
+
+  font-size:
+    var(--digi--typography--body--font-size--desktop);
+
+  line-height:
+    var(--digi--typography--body--line-height--desktop);
+}
