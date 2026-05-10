@@ -1,0 +1,22 @@
+.loading-state {
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: var(--digi--gutter--medium);
+
+  width: 100%;
+
+  padding: 48px 24px;
+}
+
+.loading-state-text {
+  margin: 0;
+
+  color: var(--digi--color--text--secondary);
+
+  font-size:
+    var(--digi--typography--body--font-size--desktop);
+}
