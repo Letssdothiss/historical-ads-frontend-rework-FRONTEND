@@ -1,5 +1,6 @@
 import './ContentWrapper.css';
 import TabsSwitch from '../tabsSwitch/TabsSwitch';
+import JobAdsSearchForm from '../../../features/jobAds/components/jobAdsSearchForm/JobAdsSearchForm';
 import React from 'react';
 
 function ContentWrapper({ children }) {
