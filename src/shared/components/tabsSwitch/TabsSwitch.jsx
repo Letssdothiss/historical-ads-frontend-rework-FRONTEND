@@ -13,7 +13,7 @@ function TabsSwitch() {
 	        afFullWidth={false}
           afId="form-reset-button"
           >
-          <DigiIconCopy></DigiIconCopy>
+          <DigiIconCopy />
 	        Reset
         </DigiButton>
       </div>
