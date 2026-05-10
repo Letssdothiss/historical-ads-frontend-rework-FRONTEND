@@ -171,6 +171,10 @@ button.dropdown-close-button {
 .dropdown-title {
   margin: 0 0 8px;
 
+  width: 100%;
+
+  text-align: left;
+
   color: #333333;
 
   font-family: "Open Sans", sans-serif;
