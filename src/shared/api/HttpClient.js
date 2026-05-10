@@ -2,6 +2,7 @@ import axios from 'axios'
 
 const BASE_URL = import.meta.env.VITE_BASE_URL ?? 'http://localhost:5000'
 
+// Create an instance of axios with default configuration
 const httpClient = axios.create({
   baseURL: BASE_URL,
   headers: {
@@ -9,6 +10,7 @@ const httpClient = axios.create({
   },
 })
 
+// Add a response interceptor to handle responses and errors.
 httpClient.interceptors.response.use(
   (response) => response.data,
   (error) => {
