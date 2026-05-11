@@ -6,7 +6,7 @@ import {
   DigiButton,
   DigiIconChevronRight
 } from '@designsystem-se/af-react'
-import { useGeographyData } from '../../../hooks/useGeographyData'
+import { useGeographyData } from '../../hooks/useGeographyData'
 import './GeographyFilter.css'
 
 export default function GeoFilter({ onClose, onApply }) {
