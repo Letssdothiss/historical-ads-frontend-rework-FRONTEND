@@ -21,12 +21,12 @@ function TrendsFilter() {
           afFullWidth={true}
           onAfOnClick={() => setIsOpen(!isOpen)}
         >
-          <div className="trigger-content">
+          <div className="trends-trigger-content">
             {/* Trend icon */}
             <DigiIconChart />
 
             {/* Button label */}
-            <span className="trigger-label">
+            <span className="trends-trigger-label">
               Trender
             </span>
 
@@ -34,8 +34,8 @@ function TrendsFilter() {
             <span
               className={
                 isOpen
-                  ? 'chevron-wrapper open'
-                  : 'chevron-wrapper'
+                  ? 'trends-chevron-wrapper open'
+                  : 'trends-chevron-wrapper'
               }
             >
               <DigiIconChevronDown />
