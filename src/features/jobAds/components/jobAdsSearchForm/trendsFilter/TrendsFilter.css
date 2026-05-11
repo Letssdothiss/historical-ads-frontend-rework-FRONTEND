@@ -9,12 +9,14 @@
 
   gap: 2px;
 
-  width: 374.5px;
+  width: 375px;
 }
 
 /* TRIGGER */
 .trends-trigger {
-  width: 100%;
+  width: 250px;
+
+  align-self: flex-end;
 }
 
 /* BUTTON */
@@ -25,65 +27,68 @@
 .trends-trigger digi-button::part(button) {
   width: 100%;
 
-  height: 56px;
+  height: 45px;
 
-  border-radius: 6px;
+  border-radius: 5px;
 }
 
 /* TRIGGER CONTENT */
-.trigger-content {
+.trends-trigger-content {
+  position: relative;
+
   display: flex;
 
   align-items: center;
+  justify-content: center;
+
+  gap: 10px;
 
   width: 100%;
 }
 
 /* CHART ICON */
-.trigger-content digi-icon-chart {
+.trends-trigger-content digi-icon-chart {
   --digi--icon--width: 24px;
   --digi--icon--height: 24px;
   --digi--icon--color: #1616B2;
 
-  margin-left: 20px;
-  margin-right: 16px;
+  position: absolute;
+
+  left: 28px;
 
   flex-shrink: 0;
 }
 
 /* LABEL */
-.trigger-label {
+.trends-trigger-label {
   color: #1616B2;
 
   font-family: "Open Sans", sans-serif;
 
-  font-size: 18px;
+  font-size: 16px;
 
   font-style: normal;
-  font-weight: 700;
+  font-weight: 600;
 
   line-height: 24px;
 }
 
 /* CHEVRON */
-.chevron-wrapper {
+.trends-chevron-wrapper {
   display: inline-flex;
 
   align-items: center;
   justify-content: center;
 
-  margin-left: auto;
-  margin-right: 20px;
-
   transition: transform 0.2s ease;
 }
 
-.chevron-wrapper.open {
+.trends-chevron-wrapper.open {
   transform: rotate(-180deg);
 }
 
 /* CHEVRON ICON */
-.chevron-wrapper digi-icon-chevron-down {
+.trends-chevron-wrapper digi-icon-chevron-down {
   --digi--icon--width: 16px;
   --digi--icon--height: 16px;
   --digi--icon--color: #1616B2;
@@ -91,7 +96,7 @@
 
 /* DROPDOWN */
 .trends-dropdown {
-  width: 100%;
+  width: 375px;
 
   margin-top: 2px;
 
@@ -103,7 +108,7 @@
 
   border: 1px solid #1616B2;
 
-  border-radius: 6px;
+  border-radius: 5px;
 }
 
 /* TREND OPTIONS */

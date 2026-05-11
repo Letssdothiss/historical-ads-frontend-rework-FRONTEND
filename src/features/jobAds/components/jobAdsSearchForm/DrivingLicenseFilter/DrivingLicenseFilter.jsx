@@ -23,18 +23,18 @@ function DrivingLicenseFilter() {
           afFullWidth={true}
           onAfOnClick={() => setIsOpen(!isOpen)}
         >
-          <div className="trigger-content">
+          <div className="driving-license-trigger-content">
             <DigiIconLicenceCar />
 
-            <span className="trigger-label">
+            <span className="driving-license-trigger-label">
               Körkort
             </span>
 
             <span
               className={
                 isOpen
-                  ? 'chevron-wrapper open'
-                  : 'chevron-wrapper'
+                  ? 'driving-license-chevron-wrapper open'
+                  : 'driving-license-chevron-wrapper'
               }
             >
               <DigiIconChevronDown />
