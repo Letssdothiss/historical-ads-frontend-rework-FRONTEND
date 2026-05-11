@@ -1,0 +1,194 @@
+.job-filter-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+/* Overlay yrkesväljare */
+.job-filter-panel {
+  display: flex;
+  width: 750px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  background: #fff;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
+}
+
+.job-filter-panel--centered {
+  align-items: center;
+  justify-content: center;
+}
+
+/* Overlay dubbel listväljare */
+.job-filter-body {
+  display: flex;
+  height: 619px;
+  justify-content: center;
+  align-items: flex-start;
+  align-self: stretch;
+}
+
+/* Vänster kolumn */
+.job-filter-area-col {
+  flex: 1;
+  height: 619px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  border-right: 1px solid #DDD;
+  background: #fff;
+}
+
+.job-filter-group-col {
+  flex: 1;
+  height: 619px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  border-radius: 0 6px 6px 0;
+  border-left: 1px solid #DDD;
+  background: #fff;
+  overflow: hidden;
+}
+
+/* Frame — Rensa yrkesgrupper */
+.job-filter-rensa-groups-row {
+  display: flex;
+  align-self: stretch;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: 0px;
+}
+
+/* Välj alla */
+.job-filter-check-row {
+  display: flex;
+  padding: 0 10px;
+  align-items: center;
+  gap: 10px;
+  align-self: stretch;
+}
+
+.job-filter-check-row-inner {
+  display: flex;
+  align-items: flex-start;
+}
+
+.job-filter-check-group-row-inner {
+  display: flex;
+  align-items: flex-start;
+  margin-top: 79px;
+}
+
+/* Listor */
+ul.job-filter-list {
+  padding: 0;
+  margin: 0;
+}
+
+.job-filter-list {
+  align-self: stretch;
+  box-sizing: border-box;
+  height: 440px;
+  border-top: 1px solid #DDD;
+  background: #FFF;
+  overflow-y: scroll;
+  scrollbar-width: thin;
+  scrollbar-color: #CACACA #F4F4F4;
+}
+
+.job-filter-list::-webkit-scrollbar {
+  width: 24px;
+  border-left: 2px solid #EDEDED;
+  background: #F4F4F4;
+}
+
+.job-filter-list::-webkit-scrollbar-thumb {
+  width: 16px;
+  height: 108px;
+  border-radius: 16px;
+  background: #CACACA;
+  border: 4px solid #F4F4F4;
+}
+
+.job-filter-area-item {
+  display: flex;
+  flex-direction: row;
+  padding: 8px 24px;
+  align-items: center;
+  gap: 10px;
+  align-self: stretch;
+  cursor: pointer;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.job-filter-area-label {
+  flex: 1;
+  color: var(--Text-primary, #333);
+  font-family: "Open Sans", sans-serif;
+  text-align: left;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 24px;
+}
+
+.job-filter-area-indicator {
+  display: flex;
+  width: 16px;
+  height: 16px;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.job-filter-area-indicator--selected {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  border-radius: 16px;
+  background: var(--Marking-Navigation-selected, #95C23E);
+}
+
+.job-filter-group-item {
+  display: flex;
+  padding-bottom: 0px;
+  align-items: flex-start;
+  gap: 8px;
+  align-self: stretch;
+  padding-left: 24px;
+  color: var(--Typography-label-text, #333);
+  font-family: "Open Sans", sans-serif;
+  font-size: var(--label-font-size, 18px);
+  font-style: normal;
+  font-weight: 400;
+  line-height: var(--label-line-height, 27px);
+}
+
+/* Söksektion */
+.job-filter-area-col-header {
+  display: flex;
+  flex-direction: column;
+  padding: 12px 16px 8px 16px;
+  gap: 8px;
+  align-self: stretch;
+}
+
+.job-filter-hint {
+  padding: 16px 24px;
+  color: #666;
+  font-family: "Open Sans", sans-serif;
+  font-size: 16px;
+}
+
+.job-filter-error {
+  color: #c00;
+  font-family: "Open Sans", sans-serif;
+}
