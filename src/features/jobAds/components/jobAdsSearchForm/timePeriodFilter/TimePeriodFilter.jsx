@@ -1,8 +1,21 @@
+/*
+ * TimePeriodFilter
+ *
+ * A dropdown filter component for selecting a time period.
+ *
+ * Features:
+ * - Toggleable overlay
+ * - "Select all" checkbox
+ * - List of selectable years
+ * - Uses Digi design system components
+ */
+
 import './TimePeriodFilter.css';
 import { useState } from 'react';
 
 import {
   DigiButton,
+  DigiFormCheckbox,
   DigiIconClock,
   DigiIconChevronDown,
   DigiIconChevronRight,
@@ -10,12 +23,12 @@ import {
 } from '@designsystem-se/af-react';
 
 function TimePeriodFilter() {
-  // Controls whether overlay is open or closed
+  // Controls whether the filter overlay is visible
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <div className="time-period-filter">
-      {/* Trigger button */}
+      {/* Filter trigger button */}
       <div className="time-period-trigger">
         <DigiButton
           afVariation="secondary"
@@ -27,12 +40,12 @@ function TimePeriodFilter() {
             {/* Clock icon */}
             <DigiIconClock />
 
-            {/* Button label */}
+            {/* Trigger label */}
             <span className="time-period-trigger-label">
               Tidsperiod
             </span>
 
-            {/* Chevron icon */}
+            {/* Expand/collapse chevron */}
             <span
               className={
                 isOpen
@@ -46,11 +59,12 @@ function TimePeriodFilter() {
         </DigiButton>
       </div>
 
-      {/* Overlay */}
+      {/* Dropdown overlay */}
       {isOpen && (
         <div className="time-period-overlay">
-          {/* Top row */}
+          {/* Overlay top actions */}
           <div className="time-period-top-row">
+            {/* Clear filter button */}
             <button
               type="button"
               className="time-period-clear-button"
@@ -58,6 +72,7 @@ function TimePeriodFilter() {
               Rensa alla
             </button>
 
+            {/* Close overlay button */}
             <button
               type="button"
               className="time-period-close-button"
@@ -69,46 +84,52 @@ function TimePeriodFilter() {
             </button>
           </div>
 
-          {/* Columns */}
+          {/* Two-column layout */}
           <div className="time-period-columns">
             {/* Left column */}
             <div className="time-period-left-column">
+              {/* Section title */}
               <h2 className="time-period-title">
                 Årtal
               </h2>
 
+              {/* Section divider */}
               <div className="time-period-divider"></div>
 
-              <label className="time-period-checkbox-row">
-                <input type="checkbox" />
+              {/* Select all checkbox */}
+              <div className="time-period-checkbox-row">
+                <DigiFormCheckbox afLabel="Välj alla" />
+              </div>
 
-                <span>Välj alla</span>
-              </label>
-
+              {/* Year list */}
               <div className="time-period-years">
                 <button type="button">
                   <span>2026</span>
+
                   <DigiIconChevronRight />
                 </button>
 
                 <button type="button">
                   <span>2025</span>
+
                   <DigiIconChevronRight />
                 </button>
 
                 <button type="button">
                   <span>2024</span>
+
                   <DigiIconChevronRight />
                 </button>
 
                 <button type="button">
                   <span>2023</span>
+
                   <DigiIconChevronRight />
                 </button>
               </div>
             </div>
 
-            {/* Empty right column */}
+            {/* Right column placeholder */}
             <div className="time-period-right-column">
               <div className="time-period-divider"></div>
             </div>
