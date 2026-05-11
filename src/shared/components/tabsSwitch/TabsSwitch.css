@@ -1,0 +1,46 @@
+.tab-menu-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin-top: 30%;
+}
+
+.reset-button-container {
+  text-align: right;
+  margin-bottom: 10px;
+}
+
+#form-reset-button {
+  color: white;
+}
+
+#tab-switch-button {
+  border-radius: 100px;
+}
+
+.tabs-switch-container {
+  display: inline-flex;
+  flex-wrap: wrap;
+  border-radius: 5px;
+  margin-bottom: 30px;
+}
+
+#button-platsannonser {
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+  margin: 0;
+  border: none;
+}
+
+#button-statistik {
+  border-radius: 0px;
+  margin: 0;
+  border: none;
+}
+
+#button-om-datan {
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+  margin: 0;
+  border: none;
+}
