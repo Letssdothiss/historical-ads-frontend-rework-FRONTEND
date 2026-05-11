@@ -1,0 +1,62 @@
+.tab-menu-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin-top: 30%;
+}
+
+.reset-button-container {
+  text-align: right;
+  margin-bottom: 10px;
+}
+
+#form-reset-button {
+  color: white;
+}
+
+.tabs-switch-container {
+  display: inline-flex;
+  flex-wrap: wrap;
+  border-radius: 5px;
+  margin-bottom: 30px;
+}
+
+/* Granskott på host: afId sitter inne i shadow; #button-* träffar inte digi-button. */
+.tabs-switch-container digi-button.tabs-switch__tab-host {
+  --digi--button--color--background--primary--default: #02a704;
+  --digi--button--color--background--primary--hover: #028903;
+  --digi--button--color--background--primary--focus: #028903;
+  --digi--button--color--background--primary--active: #028903;
+  --digi--button--color--border--primary--default: #02a704;
+  --digi--button--color--border--primary--hover: #028903;
+  --digi--button--color--border--primary--focus: #028903;
+  --digi--button--color--border--primary--active: #028903;
+  --digi--button--color--text--primary--default: var(--digi--color--text--primary);
+  --digi--button--color--text--primary--hover: var(--digi--color--text--primary);
+  --digi--button--color--text--primary--focus: var(--digi--color--text--primary);
+  --digi--button--color--text--primary--active: var(--digi--color--text--primary);
+  --digi--button--color--icon--primary--default: var(--digi--color--text--primary);
+  --digi--button--color--icon--primary--hover: var(--digi--color--text--primary);
+  --digi--button--color--icon--primary--focus: var(--digi--color--text--primary);
+  --digi--button--color--icon--primary--active: var(--digi--color--text--primary);
+}
+
+#button-platsannonser {
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+  margin: 0;
+  border: none;
+}
+
+#button-statistik {
+  border-radius: 0px;
+  margin: 0;
+  border: none;
+}
+
+#button-om-datan {
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+  margin: 0;
+  border: none;
+}

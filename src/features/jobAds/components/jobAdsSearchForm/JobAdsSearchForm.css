@@ -1,0 +1,68 @@
+.job-ads-search-form-container {}
+
+.free-text-search-field-container {
+  width: 46vw;
+}
+
+.text-above-free-text-search-input-field {
+  text-align: left;
+}
+
+.free-text-search-input-info-button {}
+
+.free-text-input-container {}
+
+#free-text-search-input-field {}
+
+.job-ads-dropdown-inputs-container {}
+
+.geographic-area-dropdown-container {}
+
+.time-period-dropdown-container {}
+
+.trade-category-dropdown-container {}
+
+.employment-information-dropdown-container {}
+
+.employer-and-trade-input-field-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.employer-input-and-text-container {}
+
+.text-above-employer-input-field {
+  text-align: left;
+}
+
+.employer-input-field-container {
+  width: 22vw;
+}
+
+.employer-radio-buttons-container {}
+
+.trade-input-and-text-and-info-container {}
+
+.text-above-trade-input-field {
+  text-align:left;
+}
+
+.trade-input-info-button {}
+
+.trade-input-field-container {
+  width: 22vw;
+}
+
+.search-button-container {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+#job-ads-search-button {
+  background-color: rgb(2, 167, 4);
+}
+
+p {
+  color: white;
+}

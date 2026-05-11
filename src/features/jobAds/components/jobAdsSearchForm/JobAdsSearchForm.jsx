@@ -1,39 +1,77 @@
-import { useJobAdsSearchParams } from '../../hooks/useJobAdsSearchParams'
-import GeographyFilter from './GeographyFilter'
-import JobGroupFilter from './JobGroupFilter'
-import DrivingLicenseFilter from './DrivingLicenseFilter'
+import './JobAdsSearchForm.css';
+import React from 'react';
+import { DigiFormInput, DigiButton } from '@designsystem-se/af-react';
+import { FormInputVariation, FormInputType, FormInputValidation } from '@designsystem-se/af';
+import { ButtonSize, ButtonVariation } from '@designsystem-se/af';
 
-export default function JobAdsSearchForm() {
-  const {
-    lan,
-    kommuner,
-    yrkesomraden,
-    yrkesgrupper,
-    fritext,
-    korkort,
-    setGeographyFilter,
-    setJobFilter,
-    setFreetext,
-    setDriversLicense,
-    clearAll,
-  } = useJobAdsSearchParams()
-
+function JobAdsSearchForm() {
   return (
-    <form>
-      <GeographyFilter
-        initialLan={lan}
-        initialKommuner={kommuner}
-        onApply={setGeographyFilter}
-      />
-      <JobGroupFilter
-        initialAreas={yrkesomraden}
-        initialGroups={yrkesgrupper}
-        onApply={setJobFilter}
-      />
-      <DrivingLicenseFilter
-        value={korkort}
-        onApply={setDriversLicense}
-      />
-    </form>
-  )
-}
+    <section className="job-ads-search-form-container">
+      <div className="free-text-search-field-container">
+        <div className="text-above-free-text-search-input-field">
+          <p>Sök på ord i annons och titel</p>
+        </div>
+        <div className="free-text-search-input-info-button"></div>
+        <div className="free-text-input-container">
+          <DigiFormInput
+            afId="free-text-search-input-field"
+	          afVariation={FormInputVariation.MEDIUM}
+	          afType={FormInputType.TEXT}
+	          afValidation={FormInputValidation.NEUTRAL}			
+          >
+          </DigiFormInput>
+        </div>
+      </div>
+      <div className="job-ads-dropdown-inputs-container">
+        <div className="geographic-area-dropdown-container"></div>
+        <div className="time-period-dropdown-container"></div>
+        <div className="trade-category-dropdown-container"></div>
+        <div className="employment-information-dropdown-container"></div>
+      </div>
+      <div className="employer-and-trade-input-field-container">
+        <div className="employer-input-and-text-container">
+          <div className="text-above-employer-input-field">
+            <p>Arbetsgivare</p>
+          </div>
+          <div className="employer-input-field-container">
+            <DigiFormInput
+              afId="employer-input-field"
+	            afVariation={FormInputVariation.MEDIUM}
+	            afType={FormInputType.TEXT}
+	            afValidation={FormInputValidation.NEUTRAL}			
+            >
+            </DigiFormInput>
+          </div>
+          <div className="employer-radio-buttons-container"></div>
+        </div>
+        <div className="trade-input-and-text-and-info-container">
+          <div className="text-above-trade-input-field">
+            <p>Sök på kompetenser</p>
+          </div>
+          <div className="trade-input-info-button"></div>
+          <div className="trade-input-field-container">
+            <DigiFormInput
+              afId="trade-input-field"
+	            afVariation={FormInputVariation.MEDIUM}
+	            afType={FormInputType.TEXT}
+	            afValidation={FormInputValidation.NEUTRAL}			
+            >
+            </DigiFormInput>
+          </div>
+        </div>
+      </div>
+      <div className="search-button-container">
+        <DigiButton
+          afId="job-ads-search-button"
+	        afSize={ButtonSize.MEDIUM}
+	        afVariation={ButtonVariation.SECONDARY}
+        	afFullWidth={true}
+        >
+	        Sök
+        </DigiButton>
+      </div>
+    </section>
+  );
+};
+
+export default JobAdsSearchForm;

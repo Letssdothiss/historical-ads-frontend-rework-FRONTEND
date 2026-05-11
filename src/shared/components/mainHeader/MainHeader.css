@@ -19,6 +19,10 @@
   margin-left: 36%;
 }
 
+.context-content-container-p {
+  color: black;
+}
+
 #layout-section {
   flex: 1;
   display: flex;

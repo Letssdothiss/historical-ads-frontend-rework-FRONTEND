@@ -31,7 +31,7 @@
 }
 
 /* TRIGGER CONTENT */
-.trigger-content {
+.driving-license-trigger-content {
   display: flex;
 
   align-items: center;
@@ -40,50 +40,50 @@
 }
 
 /* CAR ICON */
-.trigger-content digi-icon-licence-car {
+.driving-license-trigger-content digi-icon-licence-car {
   --digi--icon--width: 24px;
   --digi--icon--height: 24px;
   --digi--icon--color: #1616B2;
 
-  margin-left: 20px;
-  margin-right: 16px;
+  margin-left: 38px;
 
   flex-shrink: 0;
 }
 
 /* LABEL */
-.trigger-label {
+.driving-license-trigger-label {
   color: #1616B2;
 
   font-family: "Open Sans", sans-serif;
 
-  font-size: 18px;
+  font-size: 16px;
 
   font-style: normal;
-  font-weight: 700;
+  font-weight: 600;
 
   line-height: 24px;
+
+  margin-left: 28px;
 }
 
 /* CHEVRON */
-.chevron-wrapper {
+.driving-license-chevron-wrapper {
   display: inline-flex;
 
   align-items: center;
   justify-content: center;
 
-  margin-left: auto;
-  margin-right: 20px;
+  margin-left: 14px;
 
   transition: transform 0.2s ease;
 }
 
-.chevron-wrapper.open {
+.driving-license-chevron-wrapper.open {
   transform: rotate(-180deg);
 }
 
 /* CHEVRON ICON */
-.chevron-wrapper digi-icon-chevron-down {
+.driving-license-chevron-wrapper digi-icon-chevron-down {
   --digi--icon--width: 16px;
   --digi--icon--height: 16px;
   --digi--icon--color: #1616B2;
@@ -111,7 +111,12 @@
   justify-content: space-between;
   align-items: center;
 
-  margin-bottom: 48px;
+  margin-bottom: 32px;
+}
+
+/* Rensa button */
+button.dropdown-text-button {
+  margin-left: -16px;
 }
 
 /* HEADER BUTTONS */
@@ -119,10 +124,8 @@ button.dropdown-text-button,
 button.dropdown-close-button {
   display: flex;
 
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
-
-  gap: 8px;
 
   height: 31px;
 
@@ -138,22 +141,32 @@ button.dropdown-close-button {
 
   text-align: center;
 
-  font-family: "Open Sans", sans-serif !important;
+  font-family: "Open Sans", sans-serif;
 
-  font-size: 14px !important;
+  font-size: 14px;
 
   font-style: normal;
 
-  font-weight: 600 !important;
+  font-weight: 600;
 
-  line-height: 24px !important;
+  line-height: 24px;
+}
+
+/* CLOSE BUTTON */
+button.dropdown-close-button {
+  gap: 8px;
+
+  margin-right: 8px;
 }
 
 /* CLOSE ICON */
 .dropdown-close-button digi-icon-x {
-  --digi--icon--width: 24px;
-  --digi--icon--height: 24px;
+  --digi--icon--width: 21px;
+  --digi--icon--height: 21px;
   --digi--icon--color: #1616B2;
+
+  margin-left: 20px;
+  margin-right: -16px;
 
   flex-shrink: 0;
 }
@@ -171,16 +184,21 @@ button.dropdown-close-button {
 .dropdown-title {
   margin: 0 0 8px;
 
+  width: 67px;
+  height: 27px;
+
+  text-align: left;
+
   color: #333333;
 
   font-family: "Open Sans", sans-serif;
 
-  font-size: 28px;
+  font-size: 18px;
 
   font-style: normal;
   font-weight: 600;
 
-  line-height: 36px;
+  line-height: 27px;
 }
 
 /* DIVIDER */
@@ -201,6 +219,8 @@ button.dropdown-close-button {
   gap: 8px;
 
   width: 100%;
+
+  padding-left: 28px;
 }
 
 /* RADIO BUTTON */
