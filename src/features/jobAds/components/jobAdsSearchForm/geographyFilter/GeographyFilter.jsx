@@ -99,7 +99,7 @@ export default function GeoFilter({ onClose, onApply }) {
           {/* Vänster: Länslista */}
           <div className="geo-filter-lan-col">
             <div className="geo-filter-lan-col-header">
-              <div style={{ display: 'flex', justifyContent: 'flex-end', alignSelf: 'stretch' }}>
+              <div style={{ display: 'flex', justifyContent: 'flex-start', alignSelf: 'stretch' }}>
                 <DigiButton
                   afSize="small"
                   afVariation="function"
@@ -157,23 +157,6 @@ export default function GeoFilter({ onClose, onApply }) {
 
           <div className="geo-filter-kommun-col">
             <div className="geo-filter-lan-col-header">
-              <div style={{ display: 'flex', justifyContent: 'flex-end', alignSelf: 'stretch' }}>
-                <DigiButton
-                  afVariation="function"
-                  afSize="small"
-                  onClick={() => {
-                    handleApply();
-                    onClose();
-                  }}
-                >
-                  Stäng
-                  <span style={{ display: 'inline-flex', alignItems: 'center', marginLeft: '8px', verticalAlign: 'middle' }}>
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path fillRule="evenodd" clipRule="evenodd" d="M20.4972 1.5L22.5 3.50281L14.0024 12L22.5 20.4972L20.4972 22.5L12 14.0024L3.50281 22.5L1.5 20.4972L9.99713 12L1.5 3.50281L3.50281 1.5L12 9.99713L20.4972 1.5Z" fill="#1616B2"/>
-                    </svg>
-                  </span>
-                </DigiButton>
-              </div>
               <div className="geo-filter-rensa-kommuner-row">
                 <DigiButton
                   afSize="small"
@@ -183,9 +166,24 @@ export default function GeoFilter({ onClose, onApply }) {
                 >
                   Rensa alla kommuner
                 </DigiButton>
+                <DigiButton
+                  afVariation="function"
+                  afSize="small"
+                  onClick={() => {
+                    handleApply();
+                    onClose();
+                  }}
+                >
+                  Stäng
+                  <span style={{ display: 'inline-flex', alignItems: 'center', marginLeft: '12px' }}>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path fillRule="evenodd" clipRule="evenodd" d="M20.4972 1.5L22.5 3.50281L14.0024 12L22.5 20.4972L20.4972 22.5L12 14.0024L3.50281 22.5L1.5 20.4972L9.99713 12L1.5 3.50281L3.50281 1.5L12 9.99713L20.4972 1.5Z" fill="#1616B2"/>
+                    </svg>
+                  </span>
+                </DigiButton>
               </div>
               <div className="geo-filter-check-row">
-                <div className="geo-filter-check-row-inner">
+                <div className="geo-filter-check-kommun-row-inner">
                   <DigiFormCheckbox
                     afLabel="Välj alla Kommuner"
                     afVariation="primary"

@@ -70,27 +70,17 @@
 /* Frame 87 — Rensa alla kommuner */
 .geo-filter-rensa-kommuner-row {
   display: flex;
-  margin-top: 37px;
-  height: 39px;
   align-self: stretch;
   align-items: flex-end;
-  justify-content: flex-end;
-  padding: 0 16px;
+  justify-content: space-between;
+  padding: 0px;
 }
 
-.geo-filter-rensa-kommuner-btn {
-  display: flex;
-  height: 31px;
-  justify-content: flex-end;
-  align-items: flex-start;
-  gap: 10px;
-  align-self: stretch;
-}
 
 /* Välj alla */
 .geo-filter-check-row {
   display: flex;
-  padding: 0 24px;
+  padding: 0 10px;
   align-items: center;
   gap: 10px;
   align-self: stretch;
@@ -99,6 +89,12 @@
 .geo-filter-check-row-inner {
   display: flex;
   align-items: flex-start;
+}
+
+.geo-filter-check-kommun-row-inner {
+  display: flex;
+  align-items: flex-start;
+  margin-top: 79px;
 }
 
 
