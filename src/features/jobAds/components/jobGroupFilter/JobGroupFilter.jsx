@@ -6,7 +6,7 @@ import {
   DigiButton,
   DigiIconChevronRight
 } from '@designsystem-se/af-react'
-import { useJobData } from '../../../hooks/useJobData'
+import { useJobData } from '../../hooks/useJobData'
 import './JobGroupFilter.css'
 
 export default function JobGroupFilter({ onClose, onApply }) {
