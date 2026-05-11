@@ -6,11 +6,11 @@ import {
   DigiButton,
   DigiIconChevronRight
 } from '@designsystem-se/af-react'
-import { useLanData } from '../../../hooks/useLanData'
+import { useGeographyData } from '../../../hooks/useGeographyData'
 import './GeographyFilter.css'
 
 export default function GeoFilter({ onClose, onApply }) {
-  const { lanData, loading, error } = useLanData()
+  const { lanData, loading, error } = useGeographyData()
 
   const [selectedLan, setSelectedLan] = useState(new Set())
   const [selectedKommuner, setSelectedKommuner] = useState(new Set())
@@ -154,7 +154,6 @@ export default function GeoFilter({ onClose, onApply }) {
           </div>
 
           {/* Höger: Kommunlista */}
-
           <div className="geo-filter-kommun-col">
             <div className="geo-filter-lan-col-header">
               <div className="geo-filter-rensa-kommuner-row">
@@ -212,7 +211,7 @@ export default function GeoFilter({ onClose, onApply }) {
                 ))}
               </ul>
             ) : (
-              <p className="geo-filter-hint">Välj ett län för att se kommuner</p>
+              <p className="geo-filter-hint"> </p>
             )}
           </div>
         </div>
