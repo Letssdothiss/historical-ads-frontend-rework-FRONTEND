@@ -83,15 +83,46 @@
 
 /* TOP ROW */
 .time-period-top-row {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  column-gap: 24px;
   align-items: center;
 
   margin-bottom: 28px;
 }
 
-/* CLEAR + CLOSE BUTTONS */
-.time-period-clear-button,
+/* TOP MIDDLE */
+.time-period-top-middle {
+  display: flex;
+  justify-content: flex-start;
+}
+
+/* RIGHT SIDE ACTIONS */
+.time-period-top-actions {
+  margin-left: auto;
+
+  display: flex;
+  align-items: center;
+}
+
+/* CLEAR BUTTON */
+.time-period-clear-button {
+  padding: 0;
+
+  border: none;
+  background: none;
+  cursor: pointer;
+
+  color: #1616B2;
+  font-family: "Open Sans", sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 24px;
+
+  text-align: left;
+}
+
+/* CLOSE BUTTON */
 .time-period-close-button {
   display: flex;
   align-items: center;
@@ -138,14 +169,14 @@
 
 /* RIGHT COLUMN */
 .time-period-right-column {
-  padding-top: 35px;
+  padding-top: 0;
 }
 
 /* TITLE */
 .time-period-title {
   align-self: flex-start;
 
-  margin: 0 0 8px;
+  margin: 0;
 
   color: #333333;
   font-family: "Open Sans", sans-serif;
@@ -176,6 +207,8 @@
   font-family: "Open Sans", sans-serif;
   font-size: 18px;
   font-weight: 600;
+
+  cursor: pointer;
 }
 
 /* YEARS */
@@ -217,11 +250,64 @@
   margin-left: 28px;
 }
 
+/* ACTIVE DOT */
+.time-period-active-dot {
+  width: 16px;
+  height: 16px;
+
+  margin-left: auto;
+  margin-right: 24px;
+
+  border-radius: 50%;
+
+  background: #009322;
+
+  flex-shrink: 0;
+}
+
+/* EMPTY SPACE WHEN DOT IS NOT VISIBLE */
+.time-period-dot-placeholder {
+  width: 16px;
+  height: 16px;
+
+  margin-left: auto;
+  margin-right: 24px;
+
+  flex-shrink: 0;
+}
+
 /* YEAR CHEVRON */
 .time-period-years button digi-icon-chevron-right {
   --digi--icon--width: 9px;
   --digi--icon--height: 14px;
   --digi--icon--color: #333333;
 
-  margin-left: auto;
+  flex-shrink: 0;
+}
+
+/* MONTH LIST */
+.time-period-months {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  margin-left: 48px;
+}
+
+/* MONTH ROW */
+.time-period-month-row {
+  display: flex;
+  align-items: center;
+
+  color: #333333;
+  font-family: "Open Sans", sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 24px;
+}
+
+/* FORCE SAME CHECKBOX ALIGNMENT */
+.time-period-month-row digi-form-checkbox {
+  display: flex;
+  align-items: center;
 }

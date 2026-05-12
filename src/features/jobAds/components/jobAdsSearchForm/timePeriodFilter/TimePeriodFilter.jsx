@@ -7,6 +7,8 @@
  * - Toggleable overlay
  * - "Select all" checkbox
  * - List of selectable years
+ * - Active indicator dots for selected years
+ * - Month selection view for active year
  * - Uses Digi design system components
  */
 
@@ -25,6 +27,85 @@ import {
 function TimePeriodFilter() {
   // Controls whether the filter overlay is visible
   const [isOpen, setIsOpen] = useState(false);
+
+  // Controls whether all years are selected
+  const [allYearsSelected, setAllYearsSelected] =
+    useState(false);
+
+  // Stores selected year for month view
+  const [activeYear, setActiveYear] = useState(null);
+
+  // Stores selected months
+  const [selectedMonths, setSelectedMonths] =
+    useState([]);
+
+  // Available years
+  const years = ['2026', '2025', '2024', '2023'];
+
+  // Available months
+  const months = [
+    'Januari',
+    'Februari',
+    'Mars',
+    'April',
+    'Maj',
+    'Juni',
+    'Juli',
+    'Augusti',
+    'September',
+    'Oktober',
+    'November',
+    'December',
+  ];
+
+  // Toggle single year
+  const handleYearClick = (year) => {
+    setActiveYear(year);
+    setAllYearsSelected(false);
+    setSelectedMonths([]);
+  };
+
+  // Toggle all years
+  const handleSelectAll = () => {
+    setAllYearsSelected((previousValue) => {
+      const nextValue = !previousValue;
+
+      // Remove active year when selecting all
+      if (nextValue) {
+        setActiveYear(null);
+      }
+
+      return nextValue;
+    });
+  };
+
+  // Toggle all months
+  const handleSelectAllMonths = () => {
+    if (selectedMonths.length === months.length) {
+      setSelectedMonths([]);
+    } else {
+      setSelectedMonths(months);
+    }
+  };
+
+  // Toggle single month
+  const handleMonthClick = (month) => {
+    setSelectedMonths((previousMonths) =>
+      previousMonths.includes(month)
+        ? previousMonths.filter(
+            (selectedMonth) =>
+              selectedMonth !== month
+          )
+        : [...previousMonths, month]
+    );
+  };
+
+  // Clears all selected years
+  const handleClearAll = () => {
+    setAllYearsSelected(false);
+    setActiveYear(null);
+    setSelectedMonths([]);
+  };
 
   return (
     <div className="time-period-filter">
@@ -64,24 +145,39 @@ function TimePeriodFilter() {
         <div className="time-period-overlay">
           {/* Overlay top actions */}
           <div className="time-period-top-row">
-            {/* Clear filter button */}
+            {/* Left */}
             <button
               type="button"
               className="time-period-clear-button"
+              onClick={handleClearAll}
             >
               Rensa alla
             </button>
 
-            {/* Close overlay button */}
-            <button
-              type="button"
-              className="time-period-close-button"
-              onClick={() => setIsOpen(false)}
-            >
-              <span>Stäng</span>
+            {/* Center */}
+            <div className="time-period-top-middle">
+              {activeYear && (
+                <button
+                  type="button"
+                  className="time-period-clear-button"
+                >
+                  Rensa
+                </button>
+              )}
+            </div>
 
-              <DigiIconX />
-            </button>
+            {/* Right */}
+            <div className="time-period-top-actions">
+              <button
+                type="button"
+                className="time-period-close-button"
+                onClick={() => setIsOpen(false)}
+              >
+                <span>Stäng</span>
+
+                <DigiIconX />
+              </button>
+            </div>
           </div>
 
           {/* Two-column layout */}
@@ -98,40 +194,84 @@ function TimePeriodFilter() {
 
               {/* Select all checkbox */}
               <div className="time-period-checkbox-row">
-                <DigiFormCheckbox afLabel="Välj alla" />
+                <DigiFormCheckbox
+                  afLabel="Välj alla årtal"
+                  afChecked={allYearsSelected}
+                  onAfOnChange={handleSelectAll}
+                />
               </div>
 
               {/* Year list */}
               <div className="time-period-years">
-                <button type="button">
-                  <span>2026</span>
+                {years.map((year) => (
+                  <button
+                    key={year}
+                    type="button"
+                    onClick={() => handleYearClick(year)}
+                  >
+                    <span>{year}</span>
 
-                  <DigiIconChevronRight />
-                </button>
+                    {/* Active selection indicator only shown when "Select all" is active */}
+                    {allYearsSelected ? (
+                      <div className="time-period-active-dot"></div>
+                    ) : (
+                      <div className="time-period-dot-placeholder"></div>
+                    )}
 
-                <button type="button">
-                  <span>2025</span>
-
-                  <DigiIconChevronRight />
-                </button>
-
-                <button type="button">
-                  <span>2024</span>
-
-                  <DigiIconChevronRight />
-                </button>
-
-                <button type="button">
-                  <span>2023</span>
-
-                  <DigiIconChevronRight />
-                </button>
+                    <DigiIconChevronRight />
+                  </button>
+                ))}
               </div>
             </div>
 
-            {/* Right column placeholder */}
+            {/* Right column */}
             <div className="time-period-right-column">
-              <div className="time-period-divider"></div>
+              {/* Show month section when a year is selected */}
+              {activeYear && (
+                <>
+                  {/* Section title */}
+                  <h2 className="time-period-title">
+                    Månader
+                  </h2>
+
+                  {/* Section divider */}
+                  <div className="time-period-divider"></div>
+
+                  {/* Month select all checkbox */}
+                  <div className="time-period-checkbox-row">
+                    <DigiFormCheckbox
+                      afLabel={`Välj alla månader ${activeYear}`}
+                      afChecked={
+                        selectedMonths.length ===
+                        months.length
+                      }
+                      onAfOnChange={
+                        handleSelectAllMonths
+                      }
+                    />
+                  </div>
+
+                  {/* Month list */}
+                  <div className="time-period-months">
+                    {months.map((month) => (
+                      <div
+                        key={month}
+                        className="time-period-month-row"
+                      >
+                        <DigiFormCheckbox
+                          afLabel={month}
+                          afChecked={selectedMonths.includes(
+                            month
+                          )}
+                          onAfOnChange={() =>
+                            handleMonthClick(month)
+                          }
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </>
+              )}
             </div>
           </div>
         </div>
