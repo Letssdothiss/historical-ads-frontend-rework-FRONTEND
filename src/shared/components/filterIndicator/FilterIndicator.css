@@ -1,0 +1,64 @@
+.filter-indicator {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  outline: none;
+}
+
+.filter-indicator__dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #0f9d2a;
+  box-shadow: 0 0 0 2px #ffffff;
+}
+
+.filter-indicator__popup {
+  position: absolute;
+  top: 50%;
+  left: calc(100% + 12px);
+  transform: translateY(-50%);
+  z-index: 40;
+  width: 240px;
+  padding: 12px 14px;
+  background: #ffffff;
+  color: #2a2a2a;
+  border: 1px solid #1616b2;
+  border-radius: 6px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.18);
+  font-family: 'Open Sans', sans-serif;
+  font-size: 13px;
+  line-height: 1.4;
+  text-align: left;
+}
+
+.filter-indicator__heading {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+  color: #1616b2;
+}
+
+.filter-indicator__group {
+  display: block;
+  margin-top: 8px;
+}
+
+.filter-indicator__group:first-of-type {
+  margin-top: 0;
+}
+
+.filter-indicator__group-label {
+  display: block;
+  font-style: italic;
+  color: #555;
+  margin-bottom: 2px;
+}
+
+.filter-indicator__group ul {
+  margin: 0;
+  padding-left: 16px;
+}
