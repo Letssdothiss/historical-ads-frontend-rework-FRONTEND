@@ -1,15 +1,15 @@
 /* FILTER WRAPPER */
 .time-period-filter {
   position: relative;
-  display: flex;
+  display: inline-flex;
   flex-direction: column;
-  width: 374.5px;
 }
 
 /* TRIGGER */
 .time-period-trigger,
 .time-period-trigger digi-button {
-  width: 100%;
+  width: 374.5px;
+  flex-shrink: 0;
 }
 
 /* BUTTON */
@@ -69,40 +69,40 @@
 
 /* OVERLAY */
 .time-period-overlay {
+  position: absolute;
+  top: calc(100% + 2px);
+  left: 0;
+  z-index: 10;
+
   width: 749px;
   min-height: 440px;
 
-  margin-top: 2px;
   padding: 24px;
 
   border-radius: 6px;
   background: #ffffff;
 
   box-sizing: border-box;
+  overflow-x: hidden;
 }
 
 /* TOP ROW */
 .time-period-top-row {
   display: grid;
-  grid-template-columns: 1fr 1fr auto;
-  column-gap: 24px;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 1.5rem;
   align-items: center;
 
   margin-bottom: 28px;
 }
 
-/* TOP MIDDLE */
-.time-period-top-middle {
-  display: flex;
-  justify-content: flex-start;
-}
-
-/* RIGHT SIDE ACTIONS */
-.time-period-top-actions {
-  margin-left: auto;
-
+/* INNER RIGHT ROW */
+.time-period-right-actions-row {
   display: flex;
   align-items: center;
+  justify-content: space-between;
+
+  width: 100%;
 }
 
 /* CLEAR BUTTON */
@@ -134,6 +134,8 @@
   background: none;
   cursor: pointer;
 
+  margin-left: auto;
+
   color: #1616B2;
   font-family: "Open Sans", sans-serif;
   font-size: 16px;
@@ -143,46 +145,40 @@
 
 /* CLOSE ICON */
 .time-period-close-button digi-icon-x {
-  --digi--icon--width: 16px;
-  --digi--icon--height: 16px;
+  --digi--icon--width: 24px;
+  --digi--icon--height: 24px;
   --digi--icon--color: #1616B2;
+
+  flex-shrink: 0;
 }
 
 /* COLUMNS */
 .time-period-columns {
-  display: flex;
-  gap: 24px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 1.5rem;
 }
 
 /* LEFT + RIGHT COLUMN */
 .time-period-left-column,
 .time-period-right-column {
-  flex: 1;
   display: flex;
   flex-direction: column;
-}
 
-/* LEFT COLUMN */
-.time-period-left-column {
-  padding-right: 12px;
-}
-
-/* RIGHT COLUMN */
-.time-period-right-column {
-  padding-top: 0;
+  min-width: 0;
 }
 
 /* TITLE */
 .time-period-title {
-  align-self: flex-start;
-
-  margin: 0;
+  margin: 0 0 8px 0;
 
   color: #333333;
   font-family: "Open Sans", sans-serif;
   font-size: 18px;
   font-weight: 600;
   line-height: 27px;
+
+  text-align: left;
 }
 
 /* DIVIDER */
@@ -200,13 +196,15 @@
   align-items: center;
   gap: 12px;
 
-  margin-left: 48px;
-  margin-bottom: 48px;
+  width: fit-content;
 
-  color: #333333;
-  font-family: "Open Sans", sans-serif;
-  font-size: 18px;
-  font-weight: 600;
+  margin-bottom: 40px;
+  margin-left: 1.5rem;
+
+  padding: 0;
+
+  border: none;
+  background: none;
 
   cursor: pointer;
 }
@@ -215,22 +213,25 @@
 .time-period-years {
   display: flex;
   flex-direction: column;
-  gap: 36px;
+  gap: 24px;
 
   width: 100%;
-  padding-left: 52px;
+
+  padding-left: 1.5rem;
 
   box-sizing: border-box;
 }
 
 /* YEAR BUTTON */
-.time-period-years button {
+.time-period-year-button {
   display: flex;
   align-items: center;
-
   width: 100%;
+  min-height: 40px;
 
-  padding: 0;
+  padding: 8px 16px;
+
+  gap: 10px;
 
   border: none;
   background: none;
@@ -245,8 +246,24 @@
   box-sizing: border-box;
 }
 
+/* ACTIVE YEAR */
+.time-period-year-button.active {
+  background: var(
+    --Background-Interactive-selected-primary,
+    #009322
+  );
+
+  color: #ffffff;
+}
+
+/* ACTIVE CHEVRON */
+.time-period-year-button.active
+  digi-icon-chevron-right {
+  --digi--icon--color: #ffffff;
+}
+
 /* YEAR LABEL */
-.time-period-years button span {
+.time-period-year-button span {
   margin-left: 28px;
 }
 
@@ -277,7 +294,7 @@
 }
 
 /* YEAR CHEVRON */
-.time-period-years button digi-icon-chevron-right {
+.time-period-year-button digi-icon-chevron-right {
   --digi--icon--width: 9px;
   --digi--icon--height: 14px;
   --digi--icon--color: #333333;
@@ -289,9 +306,9 @@
 .time-period-months {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 12px;
 
-  margin-left: 48px;
+  padding-left: 1.5rem;
 }
 
 /* MONTH ROW */
