@@ -1,38 +1,28 @@
 /* FILTER WRAPPER */
 .time-period-filter {
   position: relative;
-
-  display: flex;
-
+  display: inline-flex;
   flex-direction: column;
-
-  width: 374.5px;
 }
 
 /* TRIGGER */
-.time-period-trigger {
-  width: 100%;
+.time-period-trigger,
+.time-period-trigger digi-button {
+  width: 374.5px;
+  flex-shrink: 0;
 }
 
 /* BUTTON */
-.time-period-trigger digi-button {
-  width: 100%;
-}
-
 .time-period-trigger digi-button::part(button) {
   width: 100%;
-
   height: 56px;
-
   border-radius: 6px;
 }
 
 /* TRIGGER CONTENT */
 .time-period-trigger-content {
   display: flex;
-
   align-items: center;
-
   width: 100%;
 }
 
@@ -43,31 +33,24 @@
   --digi--icon--color: #1616B2;
 
   margin-left: 38px;
-
   flex-shrink: 0;
 }
 
 /* LABEL */
 .time-period-trigger-label {
-  color: #1616B2;
-
-  font-family: "Open Sans", sans-serif;
-
-  font-size: 16px;
-
-  font-weight: 600;
-
-  line-height: 24px;
-
   margin-left: 28px;
+
+  color: #1616B2;
+  font-family: "Open Sans", sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 24px;
 }
 
 /* CHEVRON */
 .time-period-chevron-wrapper {
   display: inline-flex;
-
   align-items: center;
-
   justify-content: center;
 
   margin-left: 14px;
@@ -86,93 +69,103 @@
 
 /* OVERLAY */
 .time-period-overlay {
+  position: absolute;
+  top: calc(100% + 2px);
+  left: 0;
+  z-index: 10;
+
   width: 749px;
-
   min-height: 440px;
-
-  margin-top: 2px;
 
   padding: 24px;
 
   border-radius: 6px;
-
   background: #ffffff;
 
   box-sizing: border-box;
+  overflow-x: hidden;
 }
 
 /* TOP ROW */
 .time-period-top-row {
-  display: flex;
-
-  justify-content: space-between;
-
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 1.5rem;
   align-items: center;
 
-  margin-bottom: 40px;
+  margin-bottom: 28px;
 }
 
-/* CLEAR + CLOSE BUTTONS */
-.time-period-clear-button,
-.time-period-close-button {
+/* INNER RIGHT ROW */
+.time-period-right-actions-row {
   display: flex;
-
   align-items: center;
+  justify-content: space-between;
 
-  gap: 12px;
+  width: 100%;
+}
+
+/* CLEAR BUTTON */
+.time-period-clear-button {
+  padding: 0;
 
   border: none;
-
   background: none;
-
   cursor: pointer;
+
+  color: #1616B2;
+  font-family: "Open Sans", sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 24px;
+
+  text-align: left;
+}
+
+/* CLOSE BUTTON */
+.time-period-close-button {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 
   padding: 0;
 
+  border: none;
+  background: none;
+  cursor: pointer;
+
+  margin-left: auto;
+
   color: #1616B2;
-
   font-family: "Open Sans", sans-serif;
-
   font-size: 16px;
-
   font-weight: 600;
-
   line-height: 24px;
 }
 
 /* CLOSE ICON */
 .time-period-close-button digi-icon-x {
-  --digi--icon--width: 16px;
-  --digi--icon--height: 16px;
+  --digi--icon--width: 24px;
+  --digi--icon--height: 24px;
   --digi--icon--color: #1616B2;
+
+  flex-shrink: 0;
 }
 
 /* COLUMNS */
 .time-period-columns {
-  display: flex;
-
-  gap: 24px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 1.5rem;
 }
 
 /* LEFT + RIGHT COLUMN */
 .time-period-left-column,
 .time-period-right-column {
-  flex: 1;
-
   display: flex;
-
   flex-direction: column;
 
-  align-items: flex-start;
-}
-
-/* COLUMN SPACING */
-.time-period-left-column {
-  padding-right: 12px;
-}
-
-.time-period-right-column {
-  padding-top: 35px;
+  min-width: 0;
 }
 
 /* TITLE */
@@ -180,103 +173,158 @@
   margin: 0 0 8px 0;
 
   color: #333333;
-
   font-family: "Open Sans", sans-serif;
-
   font-size: 18px;
-
   font-weight: 600;
-
   line-height: 27px;
+
+  text-align: left;
 }
 
 /* DIVIDER */
 .time-period-divider {
   width: 100%;
 
-  border-bottom: 1px solid #d9d9d9;
-
   margin-bottom: 24px;
+
+  border-bottom: 1px solid #d9d9d9;
 }
 
 /* CHECKBOX ROW */
 .time-period-checkbox-row {
   display: flex;
-
   align-items: center;
-
   gap: 12px;
 
-  margin-left: 48px;
+  width: fit-content;
 
-  margin-bottom: 48px;
+  margin-bottom: 40px;
+  margin-left: 1.5rem;
 
-  font-family: "Open Sans", sans-serif;
+  padding: 0;
 
-  font-size: 18px;
+  border: none;
+  background: none;
 
-  font-weight: 600;
-
-  color: #333333;
-}
-
-/* CHECKBOX */
-.time-period-checkbox-row input {
-  width: 20px;
-
-  height: 20px;
+  cursor: pointer;
 }
 
 /* YEARS */
 .time-period-years {
   display: flex;
-
   flex-direction: column;
-
-  gap: 36px;
+  gap: 24px;
 
   width: 100%;
+
+  padding-left: 1.5rem;
+
+  box-sizing: border-box;
 }
 
 /* YEAR BUTTON */
-.time-period-years button {
+.time-period-year-button {
   display: flex;
-
   align-items: center;
+  width: 100%;
+  min-height: 40px;
 
-  width: 340px;
+  padding: 8px 16px;
+
+  gap: 10px;
 
   border: none;
-
   background: none;
-
   cursor: pointer;
 
-  padding: 0;
-
-  margin-left: 52px;
-
   color: #333333;
-
   font-family: "Open Sans", sans-serif;
-
   font-size: 18px;
-
   font-weight: 400;
-
   line-height: 24px;
+
+  box-sizing: border-box;
+}
+
+/* ACTIVE YEAR */
+.time-period-year-button.active {
+  background: var(
+    --Background-Interactive-selected-primary,
+    #009322
+  );
+
+  color: #ffffff;
+}
+
+/* ACTIVE CHEVRON */
+.time-period-year-button.active
+  digi-icon-chevron-right {
+  --digi--icon--color: #ffffff;
+}
+
+/* YEAR LABEL */
+.time-period-year-button span {
+  margin-left: 28px;
+}
+
+/* ACTIVE DOT */
+.time-period-active-dot {
+  width: 16px;
+  height: 16px;
+
+  margin-left: auto;
+  margin-right: 24px;
+
+  border-radius: 50%;
+
+  background: #009322;
+
+  flex-shrink: 0;
+}
+
+/* EMPTY SPACE WHEN DOT IS NOT VISIBLE */
+.time-period-dot-placeholder {
+  width: 16px;
+  height: 16px;
+
+  margin-left: auto;
+  margin-right: 24px;
+
+  flex-shrink: 0;
 }
 
 /* YEAR CHEVRON */
-.time-period-years button digi-icon-chevron-right {
+.time-period-year-button digi-icon-chevron-right {
   --digi--icon--width: 9px;
   --digi--icon--height: 14px;
   --digi--icon--color: #333333;
 
-  margin-left: auto;
+  flex-shrink: 0;
 }
 
-/* YEAR LABEL */
-.time-period-years button span {
-  margin-left: 28px;
+/* MONTH LIST */
+.time-period-months {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  padding-left: 1.5rem;
+}
+
+/* MONTH ROW */
+.time-period-month-row {
+  display: flex;
+  align-items: center;
+
+  color: #333333;
+  font-family: "Open Sans", sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 24px;
+}
+
+/* FORCE SAME CHECKBOX ALIGNMENT */
+.time-period-month-row digi-form-checkbox {
+  display: flex;
+  align-items: center;
 }
