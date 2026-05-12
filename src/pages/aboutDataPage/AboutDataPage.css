@@ -1,0 +1,24 @@
+.about-data-page {
+  padding: 12px 28px 36px;
+  color: #ffffff;
+  font-family: 'Open Sans', sans-serif;
+  text-align: left;
+  max-width: 760px;
+}
+
+.about-data-page h2 {
+  color: #ffffff;
+  margin-bottom: 12px;
+}
+
+.about-data-page p {
+  margin: 12px 0;
+  line-height: 1.55;
+}
+
+.about-data-page code {
+  background: rgba(255, 255, 255, 0.08);
+  color: #b9eb55;
+  border-radius: 3px;
+  padding: 1px 6px;
+}
