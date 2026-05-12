@@ -1,0 +1,40 @@
+.info-tooltip {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.info-tooltip__trigger {
+  --digi--icon--width: 20px;
+  --digi--icon--height: 20px;
+  --digi--icon--color: #ffffff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.info-tooltip__trigger:focus-visible {
+  outline: 2px solid #b9eb55;
+  outline-offset: 2px;
+  border-radius: 50%;
+}
+
+.info-tooltip__bubble {
+  position: absolute;
+  left: 28px;
+  top: -8px;
+  z-index: 50;
+  width: 240px;
+  padding: 12px 14px;
+  background: #ffffff;
+  color: #2a2a2a;
+  border: 1px solid #1616b2;
+  border-radius: 6px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.18);
+  font-family: 'Open Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.4;
+  text-align: left;
+}
