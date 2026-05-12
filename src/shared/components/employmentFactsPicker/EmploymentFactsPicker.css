@@ -1,0 +1,286 @@
+.employment-facts-picker {
+  position: relative;
+  width: 100%;
+  max-width: 374px;
+}
+
+.employment-facts-picker__trigger-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.employment-facts-picker__trigger {
+  flex: 1;
+}
+
+.employment-facts-picker__trigger digi-button {
+  width: 100%;
+}
+
+.employment-facts-picker__trigger digi-button::part(button) {
+  width: 100%;
+  min-height: 56px;
+  border-radius: 6px;
+  border: 1px solid #1616b2;
+  box-shadow: none;
+  padding: 0;
+  background: #ffffff;
+  color: #1616b2;
+  transition: background 0.18s ease, color 0.18s ease, border-color 0.18s ease;
+}
+
+.employment-facts-picker__trigger digi-button::part(button):hover {
+  background: #e6f0ff;
+  border-color: #1144d1;
+}
+
+.employment-facts-picker__trigger--open digi-button::part(button) {
+  background: #dbe9ff;
+  border-color: #1144d1;
+}
+
+.employment-facts-picker__trigger-content {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 0 8px;
+}
+
+.employment-facts-picker__trigger-content digi-icon-list-ul {
+  --digi--icon--width: 24px;
+  --digi--icon--height: 24px;
+  --digi--icon--color: #1616b2;
+  margin-left: 12px;
+  flex-shrink: 0;
+}
+
+.employment-facts-picker__trigger-label {
+  margin-left: 12px;
+  color: #1616b2;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 24px;
+}
+
+.employment-facts-picker__chevron {
+  margin-left: auto;
+  margin-right: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease;
+}
+
+.employment-facts-picker__chevron--open {
+  transform: rotate(180deg);
+}
+
+.employment-facts-picker__chevron digi-icon-chevron-down {
+  --digi--icon--width: 16px;
+  --digi--icon--height: 16px;
+  --digi--icon--color: #1616b2;
+}
+
+.employment-facts-picker__dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  z-index: 40;
+  width: 720px;
+  max-width: 90vw;
+  padding: 20px 24px 24px;
+  box-sizing: border-box;
+  background: #ffffff;
+  border-radius: 6px;
+  border: none;
+  box-shadow: 0 8px 24px rgba(2, 8, 32, 0.18);
+}
+
+.employment-facts-picker__top-row,
+.employment-facts-picker__right-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.employment-facts-picker__top-row {
+  margin-bottom: 18px;
+}
+
+.employment-facts-picker__content {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 24px;
+}
+
+.employment-facts-picker__left-column,
+.employment-facts-picker__right-column {
+  min-width: 0;
+}
+
+.employment-facts-picker__title,
+.employment-facts-picker__subtitle {
+  margin: 0;
+  color: #333333;
+  font-family: 'Open Sans', sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 27px;
+}
+
+.employment-facts-picker__title {
+  font-size: 18px;
+}
+
+.employment-facts-picker__subtitle {
+  font-size: 16px;
+}
+
+.employment-facts-picker__divider {
+  width: 100%;
+  margin: 8px 0 14px;
+  border-bottom: 1px solid #d9d9d9;
+}
+
+.employment-facts-picker__divider--compact {
+  margin-bottom: 12px;
+}
+
+.employment-facts-picker__text-button,
+.employment-facts-picker__close-button {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: #1144d1;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 24px;
+  cursor: pointer;
+}
+
+.employment-facts-picker__close-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.employment-facts-picker__close-button digi-icon-x {
+  --digi--icon--width: 20px;
+  --digi--icon--height: 20px;
+  --digi--icon--color: #1616b2;
+}
+
+.employment-facts-picker__checkbox-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 12px;
+  color: #333333;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 22px;
+}
+
+.employment-facts-picker__checkbox-row--section {
+  margin-bottom: 14px;
+}
+
+.employment-facts-picker__checkbox-row input,
+.employment-facts-picker__option-row input {
+  accent-color: #0f9d2a;
+  flex-shrink: 0;
+}
+
+.employment-facts-picker__section-list,
+.employment-facts-picker__option-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.employment-facts-picker__section-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 8px;
+  border: 0;
+  background: transparent;
+  color: #333333;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 22px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.employment-facts-picker__section-item:hover {
+  background: #f4f4f4;
+}
+
+.employment-facts-picker__section-item--active,
+.employment-facts-picker__section-item--active:hover {
+  background: #0f9d2a;
+  color: #ffffff;
+}
+
+.employment-facts-picker__section-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.employment-facts-picker__section-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #0f9d2a;
+  flex-shrink: 0;
+}
+
+.employment-facts-picker__section-item--active .employment-facts-picker__section-dot {
+  background: #ffffff;
+}
+
+.employment-facts-picker__section-chevron {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.employment-facts-picker__section-chevron digi-icon-chevron-right {
+  --digi--icon--width: 16px;
+  --digi--icon--height: 16px;
+  --digi--icon--color: currentColor;
+}
+
+.employment-facts-picker__option-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 10px;
+  color: #333333;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 22px;
+}
+
+.employment-facts-picker__option-row:last-child,
+.employment-facts-picker__section-item:last-child {
+  margin-bottom: 0;
+}
+
+@media (max-width: 720px) {
+  .employment-facts-picker__content {
+    grid-template-columns: 1fr;
+  }
+  .employment-facts-picker__dropdown {
+    width: 95vw;
+    padding: 20px;
+  }
+}
