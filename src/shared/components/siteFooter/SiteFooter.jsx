@@ -21,32 +21,27 @@ import {
 const SiteFooter = () => {
   return (
     <DigiFooter afVariation={FooterVariation.LARGE}>
-      <div slot="content-top">
-        <div>
+      <div slot="content-top" className="footer-content-top">
+        <div className="footer-content-top__cards">
+          <div>
           <DigiFooterCard afType={FooterCardVariation.ICON}>
             <ul>
               <li>
                 <a href="#">
-                  <DigiIconAccessibilityUniversal></DigiIconAccessibilityUniversal>
-                  Tillgänglighetsredogörelse
+                  <digi-icon-web-tv></digi-icon-web-tv>
+                  Kontakta oss
                 </a>
               </li>
               <li>
-                <a href="#">
-                  <DigiIconSign></DigiIconSign>
-                  Teckenspråk
+                <a href="https://github.com/Letssdothiss/historical-ads-frontend-rework-FRONTEND">
+                <digi-icon-external-link-alt></digi-icon-external-link-alt>
+                  Github Frontend
                 </a>
               </li>
               <li>
-                <a href="#">
-                  <DigiIconGlobe></DigiIconGlobe>
-                  Other languages
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <DigiIconEnvelope></DigiIconEnvelope>
-                  Mejla vår funktionbrevlåda
+                <a href="https://github.com/Letssdothiss/historical-ads-frontend-rework-BACKEND">
+                <digi-icon-external-link-alt></digi-icon-external-link-alt>
+                  Github Backend
                 </a>
               </li>
             </ul>
@@ -56,50 +51,35 @@ const SiteFooter = () => {
           <DigiFooterCard>
             <ul>
               <li>
-                <a href="#">Tillgänglighetsredogörelse</a>
+                <a href="https://arbetsformedlingen.se/om-oss/press">För press och media</a>
               </li>
               <li>
-                <a href="#">Teckenspråk</a>
+                <a href="https://arbetsformedlingen.se/varden">För hälso- och sjukvården</a>
               </li>
               <li>
-                <a href="#">Other languages</a>
-                <br />
-              </li>
-              <li>
-                <a href="#">Mejla vår funktionbrevlåda</a>
-              </li>
-              <li>
-                <a href="#">Mejla vår funktionbrevlåda</a>
-              </li>
-              <li>
-                <a href="#">Mejla vår funktionbrevlåda</a>
+                <a href="https://arbetsformedlingen.se/for-kommuner">För kommuner</a>
               </li>
             </ul>
           </DigiFooterCard>
         </div>
-        <div>
-          <DigiFooterCard afType={FooterCardVariation.ICON}>
-            <h2>Fokus abacus dolores</h2>
-            <p>
-              Vivamus feugiat nunc vel enim fermentum dolores ab. Nuj vel enim fermentum dolores abacus. Vivanna helam conkista
-            </p>
-            <a href="#"><DigiIconExternalLinkAlt></DigiIconExternalLinkAlt>
-              Mejla vår funktionbrevlåda
-            </a>
-          </DigiFooterCard>
         </div>
-        <div>
-          <DigiFooterCard afType={FooterCardVariation.BORDER}>
-            <a href="#">Forium dolores</a>
-            <p>Vivamus feugiat nunc vel enim fermentum, ac aliquet tortor.</p>
+        <div className="footer-card-border-container">
+          <DigiFooterCard
+          afType={FooterCardVariation.BORDER}>
+            <a href="https://arbetsformedlingen.se/for-arbetsgivare">För Arbetsgivare</a>
+            <p>När du behöver rekrytera hjälper vi dig att hitta värdefull kompetens</p>
           </DigiFooterCard>
           <DigiFooterCard afType={FooterCardVariation.BORDER}>
-            <a href="#">Leveante lipsum</a>
-            <p>Vivamus feugiat nunc vel enim.</p>
+            <a href="https://arbetsformedlingen.se/for-leverantorer">För Leverantörer</a>
+            <p>När du är leverantör av våra tjänster</p>
           </DigiFooterCard>
           <DigiFooterCard afType={FooterCardVariation.BORDER}>
-            <a href="#">Acta estium</a>
-            <p>fermentum, ac aliquet tortor cursus. Curabitur cursus eros.</p>
+            <a href="https://arbetsformedlingen.se/om-oss">Om oss</a>
+            <p>När du vill veta mer om vår myndighet och våra uppdrag</p>
+          </DigiFooterCard>
+          <DigiFooterCard afType={FooterCardVariation.BORDER}>
+            <a href="https://arbetsformedlingen.se/statistik">Statistik och analyser</a>
+            <p>När du vill se statistik och ta del av våra analyser för arbetsmarknaden</p>
           </DigiFooterCard>
         </div>
       </div>
@@ -110,10 +90,10 @@ const SiteFooter = () => {
       </div>
       <div slot="content-bottom-right">
         <p>Följ oss på</p>
-        <a href="#">Facebook</a>
-        <a href="#">Youtube</a>
-        <a href="#">Linkedin</a>
-        <a href="#">Instagram</a>
+        <a href="https://www.facebook.com/Arbetsformedlingen">Facebook</a>
+        <a href="https://www.youtube.com/Arbetsformedlingen">Youtube</a>
+        <a href="https://www.linkedin.com/company/arbetsformedlingen">Linkedin</a>
+        <a href="https://www.instagram.com/arbetsformedlingen">Instagram</a>
       </div>
     </DigiFooter>
   );

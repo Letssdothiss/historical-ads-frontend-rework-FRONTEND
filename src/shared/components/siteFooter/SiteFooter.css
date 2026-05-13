@@ -1,0 +1,28 @@
+.footer-content-top[slot='content-top'] {
+  display: flex !important;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 2rem;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  grid-template-columns: unset !important;
+  grid-template-rows: unset !important;
+}
+
+.footer-content-top__cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+  width: 100%;
+}
+
+.footer-card-border-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: left;
+  gap: 1rem;
+  width: 100%;
+  text-align: center;
+}

@@ -1,6 +1,7 @@
 /* In flow with the page; short pages still pin footer to viewport bottom via flex chain below */
 .footer-container {
   flex-shrink: 0;
+  margin-top: 25px;
 }
 
 /* Sticky footer: grow middle, footer follows document (scrolls away on long pages) */
