@@ -4,11 +4,6 @@ import { Link } from 'react-router-dom';
 import {
   DigiFooter,
   DigiFooterCard,
-  DigiIconAccessibilityUniversal,
-  DigiIconSign,
-  DigiIconGlobe,
-  DigiIconEnvelope,
-  DigiIconExternalLinkAlt,
   DigiLogo,
 } from '@designsystem-se/af-react';
 import {
@@ -35,13 +30,13 @@ const SiteFooter = () => {
               <li>
                 <a href="https://github.com/Letssdothiss/historical-ads-frontend-rework-FRONTEND">
                 <digi-icon-external-link-alt></digi-icon-external-link-alt>
-                  Github Frontend
+                  Github källkod till Frontend
                 </a>
               </li>
               <li>
                 <a href="https://github.com/Letssdothiss/historical-ads-frontend-rework-BACKEND">
                 <digi-icon-external-link-alt></digi-icon-external-link-alt>
-                  Github Backend
+                  Github källkod till Backend
                 </a>
               </li>
             </ul>
