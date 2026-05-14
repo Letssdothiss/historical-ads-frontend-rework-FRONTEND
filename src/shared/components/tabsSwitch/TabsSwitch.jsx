@@ -1,6 +1,6 @@
 import './TabsSwitch.css';
 import React, { useState } from 'react';
-import { DigiButton, DigiIconCopy } from '@designsystem-se/af-react';
+import { DigiButton } from '@designsystem-se/af-react';
 import { ButtonSize, ButtonVariation } from '@designsystem-se/af';
 
 function TabsSwitch() {
@@ -15,7 +15,6 @@ function TabsSwitch() {
 	        afFullWidth={false}
           afId="form-reset-button"
           >
-          <DigiIconCopy />
 	        Reset
         </DigiButton>
       </div>
