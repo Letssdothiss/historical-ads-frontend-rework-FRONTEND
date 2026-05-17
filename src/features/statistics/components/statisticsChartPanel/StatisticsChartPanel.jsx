@@ -1,38 +1,51 @@
-import { useState, useMemo } from 'react'
-import './StatisticsChartPanel.css'
+import {
+  ButtonType,
+  ButtonVariation,
+  TableVariation,
+} from '@designsystem-se/af'
 import {
   DigiButton,
-  DigiDialog,
-  DigiTable,
   DigiFormRadiobutton,
   DigiFormRadiogroup,
+  DigiIconBookmarkOutline,
+  DigiIconChevronRight,
+  DigiIconChevronUp,
+  DigiIconFileExport,
+  DigiIconPen,
+  DigiTable,
 } from '@designsystem-se/af-react'
-import { ButtonVariation, ButtonType, TableVariation } from '@designsystem-se/af'
+import { useEffect, useMemo, useRef, useState } from 'react'
+import { exportStatistics } from '../../api/StatisticsApi'
+import { toAndel } from '../../utils/StatisticsTransformers'
 import BarChart from '../charts/barChart/BarChart'
 import LineChart from '../charts/lineChart/LineChart'
-import { toAndel } from '../../utils/StatisticsTransformers'
-import { exportStatistics } from '../../api/StatisticsApi'
+import './StatisticsChartPanel.css'
 
 const VISNING_OPTIONS = [
-  { id: 'tabell', label: 'Tabell – Sorterad' },
-  { id: 'kolumn', label: 'Diagram – Kolumn' },
-  { id: 'stapel', label: 'Diagram – Staplad kolumn' },
-  { id: 'linje', label: 'Diagram – Linje' },
+  { id: 'tabell', label: 'Tabell - Sorterad' },
+  { id: 'kolumn', label: 'Diagram - Kolumn' },
+  { id: 'stapel', label: 'Diagram - Staplad kolumn' },
+  { id: 'linje', label: 'Diagram - Linje' },
+]
+
+const PIVOT_OPTIONS = [
+  { id: 'manuellt', label: 'Pivotera manuellt' },
+  { id: 'medsols', label: 'Pivotera medsols' },
+  { id: 'motsols', label: 'Pivotera motsols' },
+]
+
+const DETAIL_LEVELS = [
+  { id: 'ar', label: 'Visa år' },
+  { id: 'manader', label: 'Visa månader' },
+  { id: 'lan', label: 'Visa län' },
+  { id: 'kommuner', label: 'Visa kommuner' },
 ]
 
 const EXPORT_OPTIONS = [
   { id: 'xlsx', label: 'Excel (*.xlsx)' },
-  { id: 'json', label: 'JSON (.json)' },
+  { id: 'json', label: 'Json (json)' },
   { id: 'png', label: 'Diagram som PNG' },
   { id: 'pdf', label: 'Diagram som PDF' },
-]
-
-const MOCK_DATA = [
-  { lan: 'Stockholms län', '2024': 2950, '2025': 3420, '2026': 3980 },
-  { lan: 'Skåne län',      '2024': 1420, '2025': 1630, '2026': 1650 },
-  { lan: 'Uppsala län',    '2024': 320,  '2025': 390,  '2026': 450  },
-  { lan: 'Hallands län',   '2024': 320,  '2025': 390,  '2026': 450  },
-  { lan: 'Örebro län',     '2024': 1231, '2025': 2123, '2026': 4121 },
 ]
 
 function buildSummary(params) {
@@ -44,19 +57,54 @@ function buildSummary(params) {
   return parts.length > 0 ? parts.join(' — ') : 'Sökresultat'
 }
 
-function StatisticsChartPanel({ data = MOCK_DATA, searchParams = {} }) {
+function StatisticsChartPanel({ data = [], searchParams = {} }) {
   const [visning, setVisning] = useState('tabell')
   const [enhet, setEnhet] = useState('antal')
-  const [exportOpen, setExportOpen] = useState(false)
+  const [pivot, setPivot] = useState(null)
+  const [detailLevels, setDetailLevels] = useState(['ar'])
   const [presentationOpen, setPresentationOpen] = useState(false)
+  const [activePresentationSection, setActivePresentationSection] =
+    useState('visning')
+  const [exportOpen, setExportOpen] = useState(false)
+  const [exportFormat, setExportFormat] = useState(null)
   const [exporting, setExporting] = useState(false)
   const [toast, setToast] = useState(null)
   const [sortCol, setSortCol] = useState(null)
   const [sortDir, setSortDir] = useState('desc')
 
-  const years = data.length > 0 ? Object.keys(data[0]).filter(k => k !== 'lan') : []
+  const presentationRef = useRef(null)
+  const exportRef = useRef(null)
+
+  useEffect(() => {
+    const onDocClick = (event) => {
+      if (
+        presentationOpen &&
+        !presentationRef.current?.contains(event.target)
+      ) {
+        setPresentationOpen(false)
+      }
+      if (exportOpen && !exportRef.current?.contains(event.target)) {
+        setExportOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', onDocClick)
+    return () => document.removeEventListener('mousedown', onDocClick)
+  }, [presentationOpen, exportOpen])
+
+  const years =
+    data.length > 0 ? Object.keys(data[0]).filter((k) => k !== 'lan') : []
   const searchSummary = buildSummary(searchParams)
   const displayData = enhet === 'andel' ? toAndel(data) : data
+  const totalAnnonser = useMemo(
+    () =>
+      data.reduce(
+        (sum, row) =>
+          sum +
+          years.reduce((rowSum, y) => rowSum + (Number(row[y]) || 0), 0),
+        0,
+      ),
+    [data, years],
+  )
 
   const sortedData = useMemo(() => {
     if (!sortCol) return displayData
@@ -74,7 +122,7 @@ function StatisticsChartPanel({ data = MOCK_DATA, searchParams = {} }) {
 
   const handleSort = (col) => {
     if (sortCol === col) {
-      setSortDir(prev => prev === 'asc' ? 'desc' : 'asc')
+      setSortDir((prev) => (prev === 'asc' ? 'desc' : 'asc'))
     } else {
       setSortCol(col)
       setSortDir('desc')
@@ -91,15 +139,24 @@ function StatisticsChartPanel({ data = MOCK_DATA, searchParams = {} }) {
     setTimeout(() => setToast(null), 4000)
   }
 
+  const toggleDetailLevel = (id) => {
+    setDetailLevels((prev) =>
+      prev.includes(id) ? prev.filter((entry) => entry !== id) : [...prev, id],
+    )
+  }
+
   const handleExport = async (format) => {
-    setExportOpen(false)
+    if (!format) return
 
     if (format === 'png' || format === 'pdf') {
-      alert(`${format.toUpperCase()}-export är inte tillgänglig ännu.`)
+      showToast(`${format.toUpperCase()}-export är inte tillgänglig ännu.`)
+      setExportOpen(false)
+      setExportFormat(null)
       return
     }
 
     setExporting(true)
+    setExportOpen(false)
     try {
       await exportStatistics(searchParams, format)
       showToast(`${format === 'xlsx' ? 'Excel' : 'JSON'}-fil laddades ned ✓`)
@@ -108,37 +165,85 @@ function StatisticsChartPanel({ data = MOCK_DATA, searchParams = {} }) {
       showToast('Export misslyckades — se konsolen')
     } finally {
       setExporting(false)
+      setExportFormat(null)
+    }
+  }
+
+  const saveSearch = async () => {
+    try {
+      await navigator.clipboard.writeText(window.location.href)
+      showToast('Länk till sökningen kopierad ✓')
+    } catch {
+      showToast('Kunde inte kopiera länken')
     }
   }
 
   return (
     <div className="statistics-chart-panel">
+      {toast && <div className="statistics-chart-panel__toast">{toast}</div>}
 
-      {toast && (
-        <div className="statistics-chart-panel__toast">{toast}</div>
-      )}
+      <div className="statistics-chart-panel__buttons">
+        <div
+          className="statistics-chart-panel__dropdown-wrapper"
+          ref={presentationRef}
+        >
+          <DigiButton
+            afVariation={ButtonVariation.SECONDARY}
+            afType={ButtonType.BUTTON}
+            onAfOnClick={() => setPresentationOpen((prev) => !prev)}
+          >
+            <span className="statistics-chart-panel__btn-content">
+              <DigiIconPen />
+              <span>Välj presentationsform</span>
+              <DigiIconChevronUp
+                className={
+                  presentationOpen
+                    ? 'statistics-chart-panel__chevron statistics-chart-panel__chevron--open'
+                    : 'statistics-chart-panel__chevron'
+                }
+              />
+            </span>
+          </DigiButton>
 
-      <div className="statistics-chart-panel__toolbar">
-        <h2 className="statistics-chart-panel__summary">{searchSummary}</h2>
-
-        <div className="statistics-chart-panel__buttons">
-
-          <div className="statistics-chart-panel__dropdown-wrapper">
-            <DigiButton
-              afVariation={ButtonVariation.SECONDARY}
-              afType={ButtonType.BUTTON}
-              onAfOnClick={() => setPresentationOpen(prev => !prev)}
-            >
-              Välj presentationsform
-            </DigiButton>
-            {presentationOpen && (
-              <ul className="statistics-chart-panel__dropdown-menu" role="menu">
-                {VISNING_OPTIONS.map(opt => (
-                  <li key={opt.id} role="menuitem">
+          {presentationOpen && (
+            <div className="statistics-chart-panel__presentation-menu">
+              <ul
+                className="statistics-chart-panel__menu-col"
+                role="menu"
+                aria-label="Presentationsform"
+              >
+                {[
+                  { id: 'visning', label: 'Visa resultatet som' },
+                  { id: 'pivot', label: 'Pivotera' },
+                  { id: 'detalj', label: 'Val av detaljnivå' },
+                ].map((section) => (
+                  <li key={section.id}>
                     <button
+                      type="button"
                       className={
-                        'statistics-chart-panel__dropdown-item' +
-                        (visning === opt.id ? ' statistics-chart-panel__dropdown-item--active' : '')
+                        activePresentationSection === section.id
+                          ? 'statistics-chart-panel__menu-row statistics-chart-panel__menu-row--active'
+                          : 'statistics-chart-panel__menu-row'
+                      }
+                      onClick={() => setActivePresentationSection(section.id)}
+                    >
+                      <span>{section.label}</span>
+                      <DigiIconChevronRight />
+                    </button>
+                  </li>
+                ))}
+              </ul>
+
+              <div className="statistics-chart-panel__menu-col statistics-chart-panel__menu-col--right">
+                {activePresentationSection === 'visning' &&
+                  VISNING_OPTIONS.map((opt) => (
+                    <button
+                      key={opt.id}
+                      type="button"
+                      className={
+                        visning === opt.id
+                          ? 'statistics-chart-panel__menu-item statistics-chart-panel__menu-item--selected'
+                          : 'statistics-chart-panel__menu-item'
                       }
                       onClick={() => {
                         setVisning(opt.id)
@@ -147,46 +252,150 @@ function StatisticsChartPanel({ data = MOCK_DATA, searchParams = {} }) {
                     >
                       {opt.label}
                     </button>
+                  ))}
+
+                {activePresentationSection === 'pivot' &&
+                  PIVOT_OPTIONS.map((opt) => (
+                    <label
+                      key={opt.id}
+                      className="statistics-chart-panel__menu-check"
+                    >
+                      <input
+                        type="checkbox"
+                        checked={pivot === opt.id}
+                        onChange={() =>
+                          setPivot(pivot === opt.id ? null : opt.id)
+                        }
+                      />
+                      <span>{opt.label}</span>
+                    </label>
+                  ))}
+
+                {activePresentationSection === 'detalj' &&
+                  DETAIL_LEVELS.map((opt) => (
+                    <label
+                      key={opt.id}
+                      className="statistics-chart-panel__menu-check"
+                    >
+                      <input
+                        type="checkbox"
+                        checked={detailLevels.includes(opt.id)}
+                        onChange={() => toggleDetailLevel(opt.id)}
+                      />
+                      <span>{opt.label}</span>
+                    </label>
+                  ))}
+              </div>
+            </div>
+          )}
+        </div>
+
+        <div
+          className="statistics-chart-panel__dropdown-wrapper"
+          ref={exportRef}
+        >
+          <DigiButton
+            afVariation={ButtonVariation.SECONDARY}
+            afType={ButtonType.BUTTON}
+            onAfOnClick={() => setExportOpen((prev) => !prev)}
+          >
+            <span className="statistics-chart-panel__btn-content">
+              <DigiIconFileExport />
+              <span>
+                {exporting ? 'Exporterar...' : 'Exportera sökresultat'}
+              </span>
+              <DigiIconChevronUp
+                className={
+                  exportOpen
+                    ? 'statistics-chart-panel__chevron statistics-chart-panel__chevron--open'
+                    : 'statistics-chart-panel__chevron'
+                }
+              />
+            </span>
+          </DigiButton>
+
+          {exportOpen && (
+            <div className="statistics-chart-panel__export-menu">
+              <ul className="statistics-chart-panel__export-list">
+                {EXPORT_OPTIONS.map((opt) => (
+                  <li key={opt.id}>
+                    <button
+                      type="button"
+                      className={
+                        exportFormat === opt.id
+                          ? 'statistics-chart-panel__export-row statistics-chart-panel__export-row--selected'
+                          : 'statistics-chart-panel__export-row'
+                      }
+                      onClick={() => setExportFormat(opt.id)}
+                    >
+                      {exportFormat === opt.id && <span>✓ </span>}
+                      {opt.label}
+                    </button>
                   </li>
                 ))}
               </ul>
-            )}
-          </div>
-
-          <DigiButton
-            afVariation={ButtonVariation.SECONDARY}
-            afType={ButtonType.BUTTON}
-            onAfOnClick={() => console.log('Spara sökning — ej implementerat')}
-          >
-            Spara sökning
-          </DigiButton>
-
-          <DigiButton
-            afVariation={ButtonVariation.SECONDARY}
-            afType={ButtonType.BUTTON}
-            onAfOnClick={() => setExportOpen(true)}
-          >
-            {exporting ? 'Exporterar...' : 'Exportera sökresultat'}
-          </DigiButton>
-
+              {exportFormat && (
+                <button
+                  type="button"
+                  className="statistics-chart-panel__export-confirm"
+                  onClick={() => handleExport(exportFormat)}
+                  disabled={exporting}
+                >
+                  Exportera
+                </button>
+              )}
+            </div>
+          )}
         </div>
+
+        <DigiButton
+          afVariation={ButtonVariation.SECONDARY}
+          afType={ButtonType.BUTTON}
+          onAfOnClick={saveSearch}
+        >
+          <span className="statistics-chart-panel__btn-content">
+            <DigiIconBookmarkOutline />
+            <span>Spara sökning</span>
+          </span>
+        </DigiButton>
+      </div>
+
+      <div className="statistics-chart-panel__summary-row">
+        <h2 className="statistics-chart-panel__summary">{searchSummary}</h2>
+        <p className="statistics-chart-panel__count">
+          Totalt {totalAnnonser.toLocaleString('sv-SE')} annonser i valt
+          geografiskt område under vald tidsperiod
+        </p>
       </div>
 
       <div className="statistics-chart-panel__content">
-        {visning === 'tabell' && (
+        {data.length === 0 && (
+          <p className="statistics-chart-panel__empty">
+            Inga resultat för den valda sökningen.
+          </p>
+        )}
+
+        {data.length > 0 && visning === 'tabell' && (
           <DigiTable afVariation={TableVariation.PRIMARY}>
             <table>
               <thead>
                 <tr>
                   <th scope="col">
-                    <button className="statistics-chart-panel__sort-btn" onClick={() => handleSort('lan')}>
+                    <button
+                      className="statistics-chart-panel__sort-btn"
+                      onClick={() => handleSort('lan')}
+                    >
                       Län{sortIcon('lan')}
                     </button>
                   </th>
-                  {years.map(y => (
+                  {years.map((y) => (
                     <th key={y} scope="col">
-                      <button className="statistics-chart-panel__sort-btn" onClick={() => handleSort(y)}>
-                        {y}{sortIcon(y)}
+                      <button
+                        className="statistics-chart-panel__sort-btn"
+                        onClick={() => handleSort(y)}
+                      >
+                        {y}
+                        {sortIcon(y)}
                       </button>
                     </th>
                   ))}
@@ -197,13 +406,19 @@ function StatisticsChartPanel({ data = MOCK_DATA, searchParams = {} }) {
                 {sortedData.map((row, i) => (
                   <tr key={i}>
                     <td>{row.lan}</td>
-                    {years.map(y => <td key={y}>{row[y]}</td>)}
+                    {years.map((y) => (
+                      <td key={y}>
+                        {enhet === 'andel' ? `${row[y]}%` : row[y]}
+                      </td>
+                    ))}
                     {years.length > 1 && (
                       <td>
                         {enhet === 'antal'
-                          ? years.reduce((sum, y) => sum + (Number(row[y]) || 0), 0)
-                          : '100%'
-                        }
+                          ? years.reduce(
+                              (sum, y) => sum + (Number(row[y]) || 0),
+                              0,
+                            )
+                          : '100%'}
                       </td>
                     )}
                   </tr>
@@ -213,12 +428,13 @@ function StatisticsChartPanel({ data = MOCK_DATA, searchParams = {} }) {
           </DigiTable>
         )}
 
-        {(visning === 'kolumn' || visning === 'stapel') && (
-          <BarChart data={data} stacked={visning === 'stapel'} />
-        )}
+        {data.length > 0 &&
+          (visning === 'kolumn' || visning === 'stapel') && (
+            <BarChart data={displayData} stacked={visning === 'stapel'} />
+          )}
 
-        {visning === 'linje' && (
-          <LineChart data={data} />
+        {data.length > 0 && visning === 'linje' && (
+          <LineChart data={displayData} />
         )}
       </div>
 
@@ -238,27 +454,6 @@ function StatisticsChartPanel({ data = MOCK_DATA, searchParams = {} }) {
           />
         </DigiFormRadiogroup>
       </div>
-
-      <DigiDialog
-        afShowDialog={exportOpen}
-        afHeading="Exportera sökresultat"
-        afCloseButtonText="Stäng"
-        onAfOnClose={() => setExportOpen(false)}
-      >
-        <ul className="statistics-chart-panel__export-list">
-          {EXPORT_OPTIONS.map(opt => (
-            <li key={opt.id}>
-              <button
-                className="statistics-chart-panel__export-option"
-                onClick={() => handleExport(opt.id)}
-              >
-                {opt.label}
-              </button>
-            </li>
-          ))}
-        </ul>
-      </DigiDialog>
-
     </div>
   )
 }
