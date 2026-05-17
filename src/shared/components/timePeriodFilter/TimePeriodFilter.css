@@ -282,6 +282,11 @@
   flex-shrink: 0;
 }
 
+/* WHITE DOT WHEN A SELECTED YEAR IS ALSO THE ACTIVE (GREEN) ROW */
+.time-period-active-dot--on-active {
+  background: #ffffff;
+}
+
 /* EMPTY SPACE WHEN DOT IS NOT VISIBLE */
 .time-period-dot-placeholder {
   width: 16px;

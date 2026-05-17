@@ -13,7 +13,7 @@
  */
 
 import './TimePeriodFilter.css';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import {
   DigiButton,
@@ -24,12 +24,26 @@ import {
   DigiIconX,
 } from '@designsystem-se/af-react';
 
-function TimePeriodFilter() {
+function TimePeriodFilter({ onChange } = {}) {
   const [isOpen, setIsOpen] = useState(false);
+  const wrapperRef = useRef(null);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    const onDocClick = (event) => {
+      if (!wrapperRef.current?.contains(event.target)) setIsOpen(false);
+    };
+    document.addEventListener('mousedown', onDocClick);
+    return () => document.removeEventListener('mousedown', onDocClick);
+  }, [isOpen]);
 
   const [allYearsSelected, setAllYearsSelected] =
     useState(false);
 
+  // The years the user has chosen as filter values.
+  const [selectedYears, setSelectedYears] = useState([]);
+
+  // Which year's months panel is currently shown (visual focus only).
   const [activeYear, setActiveYear] = useState(null);
 
   const [selectedMonths, setSelectedMonths] =
@@ -53,9 +67,13 @@ function TimePeriodFilter() {
   ];
 
   const handleYearClick = (year) => {
-    setActiveYear(year);
     setAllYearsSelected(false);
-    setSelectedMonths([]);
+    setActiveYear(year);
+    setSelectedYears((previousYears) =>
+      previousYears.includes(year)
+        ? previousYears.filter((entry) => entry !== year)
+        : [...previousYears, year]
+    );
   };
 
   const handleSelectAll = () => {
@@ -64,6 +82,7 @@ function TimePeriodFilter() {
 
       if (nextValue) {
         setActiveYear(null);
+        setSelectedYears([]);
       }
 
       return nextValue;
@@ -92,11 +111,21 @@ function TimePeriodFilter() {
   const handleClearAll = () => {
     setAllYearsSelected(false);
     setActiveYear(null);
+    setSelectedYears([]);
     setSelectedMonths([]);
   };
 
+  useEffect(() => {
+    if (!onChange) return;
+    onChange({
+      years: allYearsSelected ? years : selectedYears,
+      months: selectedMonths,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [allYearsSelected, selectedYears, selectedMonths]);
+
   return (
-    <div className="time-period-filter">
+    <div className="time-period-filter" ref={wrapperRef}>
       <div className="time-period-trigger">
         <DigiButton
           afVariation="secondary"
@@ -184,28 +213,39 @@ function TimePeriodFilter() {
               </button>
 
               <div className="time-period-years">
-                {years.map((year) => (
-                  <button
-                    key={year}
-                    type="button"
-                    onClick={() => handleYearClick(year)}
-                    className={
-                      activeYear === year
-                        ? 'time-period-year-button active'
-                        : 'time-period-year-button'
-                    }
-                  >
-                    <span>{year}</span>
+                {years.map((year) => {
+                  const isActive = activeYear === year;
+                  const isSelected =
+                    allYearsSelected || selectedYears.includes(year);
+                  return (
+                    <button
+                      key={year}
+                      type="button"
+                      onClick={() => handleYearClick(year)}
+                      className={
+                        isActive
+                          ? 'time-period-year-button active'
+                          : 'time-period-year-button'
+                      }
+                    >
+                      <span>{year}</span>
 
-                    {allYearsSelected ? (
-                      <div className="time-period-active-dot"></div>
-                    ) : (
-                      <div className="time-period-dot-placeholder"></div>
-                    )}
+                      {isSelected ? (
+                        <div
+                          className={
+                            isActive
+                              ? 'time-period-active-dot time-period-active-dot--on-active'
+                              : 'time-period-active-dot'
+                          }
+                        ></div>
+                      ) : (
+                        <div className="time-period-dot-placeholder"></div>
+                      )}
 
-                    <DigiIconChevronRight />
-                  </button>
-                ))}
+                      <DigiIconChevronRight />
+                    </button>
+                  );
+                })}
               </div>
             </div>
 
