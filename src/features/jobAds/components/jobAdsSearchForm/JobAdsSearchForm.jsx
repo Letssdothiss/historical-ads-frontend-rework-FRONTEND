@@ -1,77 +1,256 @@
-import './JobAdsSearchForm.css';
-import React from 'react';
-import { DigiFormInput, DigiButton } from '@designsystem-se/af-react';
-import { FormInputVariation, FormInputType, FormInputValidation } from '@designsystem-se/af';
-import { ButtonSize, ButtonVariation } from '@designsystem-se/af';
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import {
+  DigiButton,
+  DigiFormInput,
+  DigiIconGlobe,
+  DigiIconUserAlt,
+  DigiIconChevronDown,
+} from '@designsystem-se/af-react'
+import {
+  ButtonSize,
+  ButtonVariation,
+  ButtonType,
+  FormInputVariation,
+  FormInputType,
+  FormInputValidation,
+} from '@designsystem-se/af'
+import GeographyFilter from '../../../../shared/components/geographyFilter/GeographyFilter'
+import JobGroupFilter from '../jobGroupFilter/JobGroupFilter'
+import TimePeriodFilter from '../../../../shared/components/timePeriodFilter/TimePeriodFilter'
+import CompetencySearch from '../../../../shared/components/competencySearch/CompetencySearch'
+import EmploymentFactsPicker from '../../../../shared/components/employmentFactsPicker/EmploymentFactsPicker'
+import FilterIndicator from '../../../../shared/components/filterIndicator/FilterIndicator'
+import InfoTooltip from '../../../../shared/components/infoTooltip/InfoTooltip'
+import './JobAdsSearchForm.css'
 
-function JobAdsSearchForm() {
+export default function JobAdsSearchForm() {
+  const navigate = useNavigate()
+  const [q, setQ] = useState('')
+  const [geoOpen, setGeoOpen] = useState(false)
+  const [jobOpen, setJobOpen] = useState(false)
+  const [geography, setGeography] = useState({ lan: [], kommuner: [] })
+  const [occupations, setOccupations] = useState({ areas: [], groups: [] })
+  const [timePeriod, setTimePeriod] = useState({ years: [], months: [] })
+  const [employment, setEmployment] = useState({
+    type: [],
+    duration: [],
+    scope: [],
+  })
+  const [employerType, setEmployerType] = useState('name')
+  const [employer, setEmployer] = useState('')
+  const [organizationNumber, setOrganizationNumber] = useState('')
+  const [skills, setSkills] = useState('')
+
+  const handleSubmit = (event) => {
+    event.preventDefault()
+    const params = new URLSearchParams()
+    if (q.trim()) params.set('q', q.trim())
+    geography.lan.forEach((l) => params.append('lan', l))
+    geography.kommuner.forEach((k) => params.append('kommun', k))
+    occupations.areas.forEach((a) => params.append('yrkesomrade', a))
+    occupations.groups.forEach((g) => params.append('yrkesgrupp', g))
+    timePeriod.years.forEach((y) => params.append('years', y))
+    timePeriod.months.forEach((m) => params.append('months', m))
+    employment.type.forEach((t) => params.append('employment_type', t))
+    employment.duration.forEach((d) => params.append('duration', d))
+    employment.scope.forEach((s) => params.append('working_hours_type', s))
+    if (employerType === 'name' && employer.trim()) {
+      params.set('employer', employer.trim())
+    } else if (employerType === 'org' && organizationNumber.trim()) {
+      params.set('organization_number', organizationNumber.trim())
+    }
+    skills
+      .split(',')
+      .map((s) => s.trim())
+      .filter(Boolean)
+      .forEach((skill) => params.append('skills', skill))
+
+    navigate({ pathname: '/platsannonser/resultat', search: params.toString() })
+  }
+
+  const geoLabel = 'Geografiskt område'
+  const jobLabel = 'Yrkesgrupper'
+
   return (
-    <section className="job-ads-search-form-container">
-      <div className="free-text-search-field-container">
-        <div className="text-above-free-text-search-input-field">
-          <p>Sök på ord i annons och titel</p>
+    <form className="job-ads-search-form" onSubmit={handleSubmit}>
+      <div className="job-ads-search-form__free-text">
+        <div className="job-ads-search-form__field-label">
+          <label htmlFor="free-text-search-input-field">
+            Sök på ord i annons och titel
+          </label>
+          <InfoTooltip label="Information om fritextsökning">
+            Det här sökfältet gör det möjligt att göra en fritextsökning bland
+            samtliga kategorier i annonstexten.
+          </InfoTooltip>
         </div>
-        <div className="free-text-search-input-info-button"></div>
-        <div className="free-text-input-container">
-          <DigiFormInput
-            afId="free-text-search-input-field"
-	          afVariation={FormInputVariation.MEDIUM}
-	          afType={FormInputType.TEXT}
-	          afValidation={FormInputValidation.NEUTRAL}			
+        <DigiFormInput
+          afId="free-text-search-input-field"
+          afLabel="Sök på ord i annons och titel"
+          afLabelDescription="Söker i titel, beskrivning och arbetsgivarens namn"
+          afVariation={FormInputVariation.MEDIUM}
+          afType={FormInputType.TEXT}
+          afValidation={FormInputValidation.NEUTRAL}
+          afValue={q}
+          afPlaceholder="Sök på ord"
+          onAfOnInput={(event) => setQ(event.detail.target.value)}
+        />
+      </div>
+
+      <div className="job-ads-search-form__filters">
+        <div className="job-ads-search-form__filter-cell">
+          <DigiButton
+            afVariation={ButtonVariation.SECONDARY}
+            afSize={ButtonSize.MEDIUM}
+            afFullWidth
+            onAfOnClick={() => setGeoOpen(true)}
           >
-          </DigiFormInput>
+            <div className="job-ads-search-form__filter-trigger">
+              <DigiIconGlobe />
+              <span>{geoLabel}</span>
+              <DigiIconChevronDown />
+            </div>
+          </DigiButton>
+          <FilterIndicator
+            heading="Valt område"
+            groups={[
+              { label: 'Län', items: geography.lan },
+              { label: 'Kommuner', items: geography.kommuner },
+            ]}
+          />
+        </div>
+
+        <div className="job-ads-search-form__filter-cell">
+          <TimePeriodFilter onChange={setTimePeriod} />
+          <FilterIndicator
+            heading="Vald tidsperiod"
+            groups={[
+              { label: 'Årtal', items: timePeriod.years },
+              { label: 'Månader', items: timePeriod.months },
+            ]}
+          />
+        </div>
+
+        <div className="job-ads-search-form__filter-cell">
+          <DigiButton
+            afVariation={ButtonVariation.SECONDARY}
+            afSize={ButtonSize.MEDIUM}
+            afFullWidth
+            onAfOnClick={() => setJobOpen(true)}
+          >
+            <div className="job-ads-search-form__filter-trigger">
+              <DigiIconUserAlt />
+              <span>{jobLabel}</span>
+              <DigiIconChevronDown />
+            </div>
+          </DigiButton>
+          <FilterIndicator
+            heading="Valda yrken"
+            groups={[
+              { label: 'Yrkesområden', items: occupations.areas },
+              { label: 'Yrkesgrupper', items: occupations.groups },
+            ]}
+          />
+        </div>
+
+        <div className="job-ads-search-form__filter-cell">
+          <EmploymentFactsPicker
+            value={employment}
+            onChange={setEmployment}
+          />
         </div>
       </div>
-      <div className="job-ads-dropdown-inputs-container">
-        <div className="geographic-area-dropdown-container"></div>
-        <div className="time-period-dropdown-container"></div>
-        <div className="trade-category-dropdown-container"></div>
-        <div className="employment-information-dropdown-container"></div>
-      </div>
-      <div className="employer-and-trade-input-field-container">
-        <div className="employer-input-and-text-container">
-          <div className="text-above-employer-input-field">
-            <p>Arbetsgivare</p>
-          </div>
-          <div className="employer-input-field-container">
+
+      <div className="job-ads-search-form__inputs">
+        <div className="job-ads-search-form__input-block">
+          <label
+            className="job-ads-search-form__field-label"
+            htmlFor="employer-input-field"
+          >
+            Arbetsgivare
+          </label>
+          {employerType === 'name' ? (
             <DigiFormInput
               afId="employer-input-field"
-	            afVariation={FormInputVariation.MEDIUM}
-	            afType={FormInputType.TEXT}
-	            afValidation={FormInputValidation.NEUTRAL}			
-            >
-            </DigiFormInput>
-          </div>
-          <div className="employer-radio-buttons-container"></div>
-        </div>
-        <div className="trade-input-and-text-and-info-container">
-          <div className="text-above-trade-input-field">
-            <p>Sök på kompetenser</p>
-          </div>
-          <div className="trade-input-info-button"></div>
-          <div className="trade-input-field-container">
+              afLabel="Arbetsgivarens namn"
+              afVariation={FormInputVariation.MEDIUM}
+              afType={FormInputType.TEXT}
+              afValidation={FormInputValidation.NEUTRAL}
+              afPlaceholder="Skriv här"
+              afValue={employer}
+              onAfOnInput={(event) => setEmployer(event.detail.target.value)}
+            />
+          ) : (
             <DigiFormInput
-              afId="trade-input-field"
-	            afVariation={FormInputVariation.MEDIUM}
-	            afType={FormInputType.TEXT}
-	            afValidation={FormInputValidation.NEUTRAL}			
-            >
-            </DigiFormInput>
+              afId="employer-input-field"
+              afLabel="Organisationsnummer"
+              afVariation={FormInputVariation.MEDIUM}
+              afType={FormInputType.TEXT}
+              afValidation={FormInputValidation.NEUTRAL}
+              afPlaceholder="Skriv organisationsnummer"
+              afValue={organizationNumber}
+              onAfOnInput={(event) =>
+                setOrganizationNumber(event.detail.target.value)
+              }
+            />
+          )}
+          <div className="job-ads-search-form__radio-group" role="radiogroup">
+            <label className="job-ads-search-form__radio">
+              <input
+                type="radio"
+                name="employer-type"
+                value="name"
+                checked={employerType === 'name'}
+                onChange={() => setEmployerType('name')}
+              />
+              <span>Namn</span>
+            </label>
+            <label className="job-ads-search-form__radio">
+              <input
+                type="radio"
+                name="employer-type"
+                value="org"
+                checked={employerType === 'org'}
+                onChange={() => setEmployerType('org')}
+              />
+              <span>Organisationsnummer</span>
+            </label>
           </div>
+        </div>
+
+        <div className="job-ads-search-form__input-block">
+          <CompetencySearch value={skills} onChange={setSkills} />
         </div>
       </div>
-      <div className="search-button-container">
+
+      <div className="job-ads-search-form__actions">
         <DigiButton
           afId="job-ads-search-button"
-	        afSize={ButtonSize.MEDIUM}
-	        afVariation={ButtonVariation.SECONDARY}
-        	afFullWidth={true}
+          afSize={ButtonSize.MEDIUM}
+          afVariation={ButtonVariation.PRIMARY}
+          afType={ButtonType.SUBMIT}
+          afFullWidth
         >
-	        Sök
+          Sök
         </DigiButton>
       </div>
-    </section>
-  );
-};
 
-export default JobAdsSearchForm;
+      {geoOpen && (
+        <GeographyFilter
+          onClose={() => setGeoOpen(false)}
+          onApply={({ lan, kommuner }) =>
+            setGeography({ lan: lan ?? [], kommuner: kommuner ?? [] })
+          }
+        />
+      )}
+      {jobOpen && (
+        <JobGroupFilter
+          onClose={() => setJobOpen(false)}
+          onApply={({ areas, groups }) =>
+            setOccupations({ areas: areas ?? [], groups: groups ?? [] })
+          }
+        />
+      )}
+    </form>
+  )
+}
