@@ -18,18 +18,37 @@ export function mapStatisticsResponse(yearResults) {
   const regionMap = new Map()
 
   for (const { year, raw } of yearResults) {
-    const regions = raw?.stats?.region ?? []
-    console.log(`[StatisticsMapper] År="${year}" — ${regions.length} regioner:`, regions)
+    // Handle error responses
+    if (raw?.error) {
+      console.warn(`[StatisticsMapper] Error for year ${year}:`, raw.error)
+      continue
+    }
+
+    // Extract regions - backend can return different formats:
+    // 1. { stats: { region: [...] } } - wrapped format
+    // 2. { region: [...] } - direct format
+    // 3. { stats: { region: [...] }, ... } - stats object
+    const regions = raw?.stats?.region ?? raw?.region ?? []
+
+    console.log(
+      `[StatisticsMapper] År="${year}" — ${regions.length} regioner:`,
+      regions.slice(0, 3), // Log first 3 regions to prevent console spam
+    )
 
     for (const { label, occurrences } of regions) {
       if (!regionMap.has(label)) {
         regionMap.set(label, { lan: label })
       }
+      const before = regionMap.get(label)[year]
       regionMap.get(label)[year] = occurrences
+      console.log(
+        `[StatisticsMapper] ${label} - ${year}: ${before || 'NEW'} → ${occurrences}`,
+      )
     }
   }
 
   const result = Array.from(regionMap.values())
-  console.log('[StatisticsMapper] Slutresultat (', result.length, 'rader):', result)
+  console.log('[StatisticsMapper] Slutresultat (', result.length, 'rader):')
+  console.table(result.slice(0, 5)) // Log first 5 rows as table
   return result
 }
