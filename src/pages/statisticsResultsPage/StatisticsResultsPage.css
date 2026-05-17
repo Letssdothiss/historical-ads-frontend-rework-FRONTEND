@@ -1,0 +1,28 @@
+.statistics-results {
+  width: min(1080px, 92vw);
+  margin: 24px auto 60px;
+  text-align: left;
+}
+
+.statistics-results__hint {
+  color: #555;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.statistics-results__error {
+  background: #fff;
+  border-radius: 8px;
+  padding: 18px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+}
+
+.statistics-results__error button {
+  margin-top: 12px;
+  padding: 8px 16px;
+  background: #1616b2;
+  color: #fff;
+  border: 0;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: 'Open Sans', sans-serif;
+}
