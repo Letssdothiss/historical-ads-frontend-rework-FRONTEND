@@ -1,148 +1,201 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import {
+  DigiButton,
+  DigiFormInput,
+  DigiIconGlobe,
+  DigiIconUserAlt,
+  DigiIconChevronDown,
+} from '@designsystem-se/af-react'
+import {
+  ButtonSize,
+  ButtonVariation,
+  ButtonType,
+  FormInputVariation,
+  FormInputType,
+  FormInputValidation,
+} from '@designsystem-se/af'
+import GeographyFilter from '../../../../shared/components/geographyFilter/GeographyFilter'
+import JobGroupFilter from '../../../jobAds/components/jobGroupFilter/JobGroupFilter'
+import TimePeriodFilter from '../../../../shared/components/timePeriodFilter/TimePeriodFilter'
+import CompetencySearch from '../../../../shared/components/competencySearch/CompetencySearch'
+import EmploymentFactsPicker from '../../../../shared/components/employmentFactsPicker/EmploymentFactsPicker'
+import TrendsFilter from '../trendsFilter/TrendsFilter'
+import DrivingLicenseFilter from '../DrivingLicenseFilter/DrivingLicenseFilter'
+import FilterIndicator from '../../../../shared/components/filterIndicator/FilterIndicator'
+import InfoTooltip from '../../../../shared/components/infoTooltip/InfoTooltip'
 import './StatisticsSearchForm.css'
-import { DigiFormInputSearch, DigiButton } from '@designsystem-se/af-react'
-import { FormInputSearchVariation, ButtonVariation, ButtonType } from '@designsystem-se/af'
 
-const YEARS = ['2015','2016','2017','2018','2019','2020','2021','2022','2023','2024','2025']
+export default function StatisticsSearchForm() {
+  const navigate = useNavigate()
+  const [q, setQ] = useState('')
+  const [trend, setTrend] = useState('')
+  const [drivingLicense, setDrivingLicense] = useState('')
+  const [geoOpen, setGeoOpen] = useState(false)
+  const [jobOpen, setJobOpen] = useState(false)
+  const [geography, setGeography] = useState({ lan: [], kommuner: [] })
+  const [occupations, setOccupations] = useState({ areas: [], groups: [] })
+  const [timePeriod, setTimePeriod] = useState({ years: [], months: [] })
+  const [employment, setEmployment] = useState({
+    type: [],
+    duration: [],
+    scope: [],
+  })
+  const [skills, setSkills] = useState('')
 
-const LAN = [
-  'Stockholms län','Uppsala län','Södermanlands län','Östergötlands län',
-  'Jönköpings län','Kronobergs län','Kalmar län','Gotlands län','Blekinge län',
-  'Skåne län','Hallands län','Västra Götalands län','Värmlands län','Örebro län',
-  'Västmanlands län','Dalarnas län','Gävleborgs län','Västernorrlands län',
-  'Jämtlands län','Västerbottens län','Norrbottens län',
-]
+  const handleSubmit = (event) => {
+    event.preventDefault()
+    const params = new URLSearchParams()
+    if (q.trim()) params.set('q', q.trim())
+    if (trend) params.set('trend', trend)
+    if (drivingLicense) params.set('korkort', drivingLicense)
+    geography.lan.forEach((l) => params.append('lan', l))
+    geography.kommuner.forEach((k) => params.append('kommun', k))
+    occupations.areas.forEach((a) => params.append('yrkesomrade', a))
+    occupations.groups.forEach((g) => params.append('yrkesgrupp', g))
+    timePeriod.years.forEach((y) => params.append('years', y))
+    timePeriod.months.forEach((m) => params.append('months', m))
+    employment.type.forEach((t) => params.append('employment_type', t))
+    employment.duration.forEach((d) => params.append('duration', d))
+    employment.scope.forEach((s) => params.append('working_hours_type', s))
+    skills
+      .split(',')
+      .map((s) => s.trim())
+      .filter(Boolean)
+      .forEach((skill) => params.append('skills', skill))
 
-function StatisticsSearchForm({ onSearch, onReset }) {
-  const [kompetens, setKompetens] = useState('')
-  const [selectedLan, setSelectedLan] = useState([])
-  const [selectedAr, setSelectedAr] = useState([])
-  const [openFilter, setOpenFilter] = useState(null)
-
-  const toggleOption = (setter, current, value) => {
-    setter(current.includes(value)
-      ? current.filter(v => v !== value)
-      : [...current, value]
-    )
+    navigate({ pathname: '/statistik/resultat', search: params.toString() })
   }
 
-  const toggleFilter = (name) => setOpenFilter(prev => prev === name ? null : name)
-
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    const params = { kompetens, lan: selectedLan, ar: selectedAr }
-    console.log('[StatisticsSearchForm] Söker med params:', params)
-    onSearch?.(params)
-  }
-
-  const handleReset = () => {
-    setKompetens('')
-    setSelectedLan([])
-    setSelectedAr([])
-    setOpenFilter(null)
-    onReset?.()
-  }
+  const geoLabel = 'Geografiskt område'
+  const jobLabel = 'Yrkesgrupper'
 
   return (
     <form className="statistics-search-form" onSubmit={handleSubmit}>
+      <div className="statistics-search-form__top-row">
+        <div className="statistics-search-form__free-text">
+          <div className="statistics-search-form__field-label">
+            <label htmlFor="stat-free-text-input">
+              Sök på ord i annons och titel
+            </label>
+            <InfoTooltip label="Information om fritextsökning">
+              Sökfältet gör en fritextsökning bland samtliga kategorier i
+              annonstexten.
+            </InfoTooltip>
+          </div>
+          <DigiFormInput
+            afId="stat-free-text-input"
+            afLabel="Sök på ord i annons och titel"
+            afLabelDescription="Söker i titel, beskrivning och arbetsgivarens namn"
+            afVariation={FormInputVariation.MEDIUM}
+            afType={FormInputType.TEXT}
+            afValidation={FormInputValidation.NEUTRAL}
+            afValue={q}
+            afPlaceholder="Sök på ord"
+            onAfOnInput={(event) => setQ(event.detail.target.value)}
+          />
+        </div>
+
+        <TrendsFilter value={trend} onChange={setTrend} />
+      </div>
+
       <div className="statistics-search-form__filters">
-
-        <DigiFormInputSearch
-          afLabel="Sök på kompetenser"
-          afVariation={FormInputSearchVariation.LARGE}
-          afValue={kompetens}
-          afHideButton={true}
-          onAfOnInput={(e) => { const val = e.detail?.target?.value ?? ''; console.log('[StatisticsSearchForm] onAfOnInput val:', val); setKompetens(val) }}
-          onAfOnSubmitSearch={(e) => setKompetens(e.detail)}
-        />
-
-        {/* Geografiskt område */}
-        <div className="statistics-search-form__filter-wrapper">
+        <div className="statistics-search-form__filter-cell">
           <DigiButton
             afVariation={ButtonVariation.SECONDARY}
-            afType={ButtonType.BUTTON}
-            onAfOnClick={() => toggleFilter('lan')}
+            afSize={ButtonSize.MEDIUM}
+            afFullWidth
+            onAfOnClick={() => setGeoOpen(true)}
           >
-            {selectedLan.length > 0 ? `Geografiskt område (${selectedLan.length})` : 'Geografiskt område'}
+            <div className="statistics-search-form__filter-trigger">
+              <DigiIconGlobe />
+              <span>{geoLabel}</span>
+              <DigiIconChevronDown />
+            </div>
           </DigiButton>
-          {openFilter === 'lan' && (
-            <ul className="statistics-search-form__filter-dropdown">
-              {LAN.map(l => (
-                <li key={l}>
-                  <label className="statistics-search-form__filter-option">
-                    <input
-                      type="checkbox"
-                      checked={selectedLan.includes(l)}
-                      onChange={() => toggleOption(setSelectedLan, selectedLan, l)}
-                    />
-                    {l}
-                  </label>
-                </li>
-              ))}
-            </ul>
-          )}
+          <FilterIndicator
+            heading="Valt område"
+            groups={[
+              { label: 'Län', items: geography.lan },
+              { label: 'Kommuner', items: geography.kommuner },
+            ]}
+          />
         </div>
 
-        {/* Tidsperiod */}
-        <div className="statistics-search-form__filter-wrapper">
+        <div className="statistics-search-form__filter-cell">
+          <TimePeriodFilter onChange={setTimePeriod} />
+          <FilterIndicator
+            heading="Vald tidsperiod"
+            groups={[
+              { label: 'Årtal', items: timePeriod.years },
+              { label: 'Månader', items: timePeriod.months },
+            ]}
+          />
+        </div>
+
+        <div className="statistics-search-form__filter-cell">
           <DigiButton
             afVariation={ButtonVariation.SECONDARY}
-            afType={ButtonType.BUTTON}
-            onAfOnClick={() => toggleFilter('ar')}
+            afSize={ButtonSize.MEDIUM}
+            afFullWidth
+            onAfOnClick={() => setJobOpen(true)}
           >
-            {selectedAr.length > 0 ? `Tidsperiod (${selectedAr.length})` : 'Tidsperiod'}
+            <div className="statistics-search-form__filter-trigger">
+              <DigiIconUserAlt />
+              <span>{jobLabel}</span>
+              <DigiIconChevronDown />
+            </div>
           </DigiButton>
-          {openFilter === 'ar' && (
-            <ul className="statistics-search-form__filter-dropdown statistics-search-form__filter-dropdown--years">
-              {YEARS.map(y => (
-                <li key={y}>
-                  <label className="statistics-search-form__filter-option">
-                    <input
-                      type="checkbox"
-                      checked={selectedAr.includes(y)}
-                      onChange={() => toggleOption(setSelectedAr, selectedAr, y)}
-                    />
-                    {y}
-                  </label>
-                </li>
-              ))}
-            </ul>
-          )}
+          <FilterIndicator
+            heading="Valda yrken"
+            groups={[
+              { label: 'Yrkesområden', items: occupations.areas },
+              { label: 'Yrkesgrupper', items: occupations.groups },
+            ]}
+          />
         </div>
 
-        {/* Yrkesgrupper — ej implementerat */}
-        <div className="statistics-search-form__filter-wrapper">
-          <DigiButton afVariation={ButtonVariation.SECONDARY} afType={ButtonType.BUTTON}>
-            Yrkesgrupper
-          </DigiButton>
+        <div className="statistics-search-form__filter-cell">
+          <EmploymentFactsPicker
+            value={employment}
+            onChange={setEmployment}
+          />
         </div>
+      </div>
 
-        {/* Fakta anställning — ej implementerat */}
-        <div className="statistics-search-form__filter-wrapper">
-          <DigiButton afVariation={ButtonVariation.SECONDARY} afType={ButtonType.BUTTON}>
-            Fakta anställning
-          </DigiButton>
-        </div>
-
+      <div className="statistics-search-form__bottom-row">
+        <DrivingLicenseFilter onChange={setDrivingLicense} />
+        <CompetencySearch value={skills} onChange={setSkills} />
       </div>
 
       <div className="statistics-search-form__actions">
         <DigiButton
-          afVariation={ButtonVariation.SECONDARY}
-          afType={ButtonType.BUTTON}
-          onAfOnClick={handleReset}
-        >
-          Rensa
-        </DigiButton>
-        <DigiButton
+          afId="statistics-search-button"
+          afSize={ButtonSize.MEDIUM}
           afVariation={ButtonVariation.PRIMARY}
           afType={ButtonType.SUBMIT}
+          afFullWidth
         >
           Sök
         </DigiButton>
       </div>
+
+      {geoOpen && (
+        <GeographyFilter
+          onClose={() => setGeoOpen(false)}
+          onApply={({ lan, kommuner }) =>
+            setGeography({ lan: lan ?? [], kommuner: kommuner ?? [] })
+          }
+        />
+      )}
+      {jobOpen && (
+        <JobGroupFilter
+          onClose={() => setJobOpen(false)}
+          onApply={({ areas, groups }) =>
+            setOccupations({ areas: areas ?? [], groups: groups ?? [] })
+          }
+        />
+      )}
     </form>
   )
 }
-
-export default StatisticsSearchForm

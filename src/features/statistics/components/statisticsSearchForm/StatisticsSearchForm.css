@@ -1,58 +1,137 @@
 .statistics-search-form {
+  position: relative;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 22px;
+  width: 100%;
+  padding: 4px 28px 28px;
+  box-sizing: border-box;
+}
+
+/* Vi har egna vita labels ovanför inputs — dölj AF-systemets interna label,
+   men behåll afLabel-propet för tillgänglighet. */
+.statistics-search-form digi-form-input > digi-form-label,
+.statistics-search-form .digi-form-input__label {
+  display: none !important;
+}
+
+.statistics-search-form__top-row,
+.statistics-search-form__bottom-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 16px 24px;
+  align-items: end;
+}
+
+.statistics-search-form__free-text {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.statistics-search-form__field-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #ffffff;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  text-align: left;
+}
+
+.statistics-search-form__field-label label {
+  color: #ffffff;
+}
+
+.statistics-search-form__field-label digi-icon-info-circle-solid {
+  --digi--icon--width: 18px;
+  --digi--icon--height: 18px;
+  --digi--icon--color: #ffffff;
 }
 
 .statistics-search-form__filters {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 16px 24px;
+  align-items: start;
 }
 
-.statistics-search-form__filter-wrapper {
+.statistics-search-form__filter-cell {
   position: relative;
-  display: inline-flex;
-  flex-direction: column;
 }
 
-.statistics-search-form__filter-dropdown {
+.statistics-search-form__filter-cell > .filter-indicator {
   position: absolute;
-  top: calc(100% + 4px);
-  left: 0;
-  z-index: 100;
-  background: #fff;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  padding: 0.5rem 0;
-  margin: 0;
-  list-style: none;
-  min-width: 220px;
-  max-height: 280px;
-  overflow-y: auto;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+  top: 6px;
+  right: 6px;
+  pointer-events: auto;
+  z-index: 2;
 }
 
-.statistics-search-form__filter-dropdown--years {
-  min-width: 120px;
+.statistics-search-form__filter-cell digi-button::part(button) {
+  min-height: 56px;
+  border-radius: 6px;
+  background: #ffffff;
+  border: 1px solid #1616b2;
+  color: #1616b2;
 }
 
-.statistics-search-form__filter-option {
+.statistics-search-form__filter-cell digi-button::part(button):hover {
+  background: #e6f0ff;
+}
+
+.statistics-search-form__filter-trigger {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.4rem 1rem;
-  cursor: pointer;
-  font-size: 0.95rem;
+  gap: 14px;
+  width: 100%;
+  padding: 0 6px;
+  color: #1616b2;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 600;
 }
 
-.statistics-search-form__filter-option:hover {
-  background: #f0f0f0;
+.statistics-search-form__filter-trigger digi-icon-globe,
+.statistics-search-form__filter-trigger digi-icon-user-alt {
+  --digi--icon--width: 22px;
+  --digi--icon--height: 22px;
+  --digi--icon--color: #1616b2;
+  flex-shrink: 0;
+}
+
+.statistics-search-form__filter-trigger digi-icon-chevron-down {
+  --digi--icon--width: 14px;
+  --digi--icon--height: 14px;
+  --digi--icon--color: #1616b2;
+  margin-left: auto;
 }
 
 .statistics-search-form__actions {
   display: flex;
-  gap: 0.5rem;
-  justify-content: flex-end;
-  margin-top: 0.5rem;
+  margin-top: 10px;
+}
+
+.statistics-search-form__actions digi-button {
+  width: 100%;
+}
+
+#statistics-search-button::part(button) {
+  background: #b9eb55;
+  color: #1a1a1a;
+  font-weight: 700;
+  border-radius: 6px;
+  min-height: 52px;
+}
+
+#statistics-search-button::part(button):hover {
+  background: #a6d54a;
+}
+
+@media (max-width: 800px) {
+  .statistics-search-form__top-row,
+  .statistics-search-form__bottom-row,
+  .statistics-search-form__filters {
+    grid-template-columns: 1fr;
+  }
 }
