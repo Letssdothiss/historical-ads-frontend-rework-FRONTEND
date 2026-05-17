@@ -1,68 +1,162 @@
-.job-ads-search-form-container {}
-
-.free-text-search-field-container {
-  width: 46vw;
-}
-
-.text-above-free-text-search-input-field {
-  text-align: left;
-}
-
-.free-text-search-input-info-button {}
-
-.free-text-input-container {}
-
-#free-text-search-input-field {}
-
-.job-ads-dropdown-inputs-container {}
-
-.geographic-area-dropdown-container {}
-
-.time-period-dropdown-container {}
-
-.trade-category-dropdown-container {}
-
-.employment-information-dropdown-container {}
-
-.employer-and-trade-input-field-container {
+.job-ads-search-form {
+  position: relative;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+  gap: 22px;
+  width: 100%;
+  padding: 4px 28px 28px;
+  box-sizing: border-box;
 }
 
-.employer-input-and-text-container {}
+/* Vi har egna vita labels ovanför inputs — dölj AF-systemets interna label,
+   men behåll afLabel-propet för tillgänglighet. */
+.job-ads-search-form digi-form-input > digi-form-label,
+.job-ads-search-form .digi-form-input__label {
+  display: none !important;
+}
 
-.text-above-employer-input-field {
+.job-ads-search-form__free-text {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.job-ads-search-form__field-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #ffffff;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
   text-align: left;
 }
 
-.employer-input-field-container {
-  width: 22vw;
+.job-ads-search-form__field-label label {
+  color: #ffffff;
 }
 
-.employer-radio-buttons-container {}
-
-.trade-input-and-text-and-info-container {}
-
-.text-above-trade-input-field {
-  text-align:left;
+.job-ads-search-form__field-label digi-icon-info-circle-solid {
+  --digi--icon--width: 18px;
+  --digi--icon--height: 18px;
+  --digi--icon--color: #ffffff;
 }
 
-.trade-input-info-button {}
-
-.trade-input-field-container {
-  width: 22vw;
+.job-ads-search-form__filters {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 16px 24px;
+  align-items: start;
 }
 
-.search-button-container {
-  margin-top: 20px;
-  margin-bottom: 20px;
+.job-ads-search-form__filter-cell {
+  position: relative;
 }
 
-#job-ads-search-button {
-  background-color: rgb(2, 167, 4);
+.job-ads-search-form__filter-cell > .filter-indicator {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  pointer-events: auto;
+  z-index: 2;
 }
 
-p {
-  color: white;
+.job-ads-search-form__filter-cell digi-button::part(button) {
+  min-height: 56px;
+  border-radius: 6px;
+  background: #ffffff;
+  border: 1px solid #1616b2;
+  color: #1616b2;
+}
+
+.job-ads-search-form__filter-cell digi-button::part(button):hover {
+  background: #e6f0ff;
+}
+
+.job-ads-search-form__filter-trigger {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  padding: 0 6px;
+  color: #1616b2;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 600;
+}
+
+.job-ads-search-form__filter-trigger digi-icon-globe,
+.job-ads-search-form__filter-trigger digi-icon-user-alt {
+  --digi--icon--width: 22px;
+  --digi--icon--height: 22px;
+  --digi--icon--color: #1616b2;
+  flex-shrink: 0;
+}
+
+.job-ads-search-form__filter-trigger digi-icon-chevron-down {
+  --digi--icon--width: 14px;
+  --digi--icon--height: 14px;
+  --digi--icon--color: #1616b2;
+  margin-left: auto;
+}
+
+.job-ads-search-form__inputs {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 24px;
+}
+
+.job-ads-search-form__input-block {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.job-ads-search-form__radio-group {
+  display: flex;
+  gap: 24px;
+  margin-top: 6px;
+}
+
+.job-ads-search-form__radio {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #ffffff;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.job-ads-search-form__radio input {
+  accent-color: #0f9d2a;
+  width: 16px;
+  height: 16px;
+}
+
+.job-ads-search-form__actions {
+  display: flex;
+  margin-top: 10px;
+}
+
+.job-ads-search-form__actions digi-button {
+  width: 100%;
+}
+
+#job-ads-search-button::part(button) {
+  background: #b9eb55;
+  color: #1a1a1a;
+  font-weight: 700;
+  border-radius: 6px;
+  min-height: 52px;
+}
+
+#job-ads-search-button::part(button):hover {
+  background: #a6d54a;
+}
+
+@media (max-width: 800px) {
+  .job-ads-search-form__filters,
+  .job-ads-search-form__inputs {
+    grid-template-columns: 1fr;
+  }
 }
