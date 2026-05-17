@@ -5,6 +5,12 @@
   width: 100%;
 }
 
+/* Dölj AF-internt label — vi använder den egna vita labeln ovanför. */
+.competency-search digi-form-input > digi-form-label,
+.competency-search .digi-form-input__label {
+  display: none !important;
+}
+
 .competency-search-label-row {
   display: flex;
   align-items: center;
@@ -23,9 +29,9 @@
   line-height: 27px;
 }
 
-.competency-search-label-row digi-icon-info-circle-solid {
-  --digi--icon--width: 24px;
-  --digi--icon--height: 24px;
+.competency-search-label-row .info-tooltip digi-icon-notification-info {
+  --digi--icon--width: 22px;
+  --digi--icon--height: 22px;
   --digi--icon--color: #ffffff;
 
   flex-shrink: 0;
