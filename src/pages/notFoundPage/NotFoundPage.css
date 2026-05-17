@@ -1,0 +1,35 @@
+.not-found-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 24px;
+  text-align: center;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.not-found-page h1 {
+  font-size: 5rem;
+  margin: 0;
+  color: #1616b2;
+}
+
+.not-found-page h2 {
+  margin: 12px 0;
+  color: #1a1a1a;
+}
+
+.not-found-page p {
+  margin: 0 0 24px;
+  color: #555;
+}
+
+.not-found-page__link {
+  color: #1616b2;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.not-found-page__link:hover {
+  text-decoration: underline;
+}
