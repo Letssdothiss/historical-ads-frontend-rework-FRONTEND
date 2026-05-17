@@ -10,7 +10,7 @@ import {
   DigiButton,
   DigiFormInput,
   DigiIconChevronDown,
-  DigiIconGlobe,
+  DigiIconGlobeFilled,
   DigiIconUserAlt,
 } from '@designsystem-se/af-react'
 import { useState } from 'react'
@@ -112,7 +112,7 @@ export default function StatisticsSearchForm() {
             onAfOnClick={() => setGeoOpen(true)}
           >
             <div className="statistics-search-form__filter-trigger">
-              <DigiIconGlobe />
+              <DigiIconGlobeFilled />
               <span>{geoLabel}</span>
               <DigiIconChevronDown />
               {hasGeoSelection && (

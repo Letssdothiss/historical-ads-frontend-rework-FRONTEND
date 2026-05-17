@@ -40,6 +40,7 @@
 /* LABEL */
 .time-period-trigger-label {
   margin-left: 28px;
+  white-space: nowrap;
 
   color: #1616B2;
   font-family: "Open Sans", sans-serif;

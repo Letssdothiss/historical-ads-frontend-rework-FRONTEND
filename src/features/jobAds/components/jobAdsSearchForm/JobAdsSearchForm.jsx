@@ -10,7 +10,7 @@ import {
   DigiButton,
   DigiFormInput,
   DigiIconChevronDown,
-  DigiIconGlobe,
+  DigiIconGlobeFilled,
   DigiIconUserAlt,
 } from '@designsystem-se/af-react'
 import { useState } from 'react'
@@ -110,7 +110,7 @@ export default function JobAdsSearchForm() {
             onAfOnClick={() => setGeoOpen(true)}
           >
             <div className="job-ads-search-form__filter-trigger">
-              <DigiIconGlobe />
+              <DigiIconGlobeFilled />
               <span>{geoLabel}</span>
               <DigiIconChevronDown />
               {hasGeoSelection && (

@@ -33,14 +33,9 @@
 
 /* TRIGGER CONTENT */
 .trends-trigger-content {
-  position: relative;
-
   display: flex;
 
   align-items: center;
-  justify-content: center;
-
-  gap: 10px;
 
   width: 100%;
 }
@@ -51,15 +46,16 @@
   --digi--icon--height: 24px;
   --digi--icon--color: #1616B2;
 
-  position: absolute;
-
-  left: 28px;
+  margin-left: 38px;
 
   flex-shrink: 0;
 }
 
 /* LABEL */
 .trends-trigger-label {
+  margin-left: 28px;
+  white-space: nowrap;
+
   color: #1616B2;
 
   font-family: "Open Sans", sans-serif;
@@ -79,6 +75,8 @@
   align-items: center;
   justify-content: center;
 
+  margin-left: 14px;
+
   transition: transform 0.2s ease;
 }
 
@@ -97,11 +95,8 @@
   width: 16px;
   height: 16px;
 
-  position: absolute;
-  top: 50%;
-  right: 18px;
-
-  transform: translateY(-50%);
+  margin-left: auto;
+  margin-right: 24px;
 
   border-radius: 50%;
   background: #009322;

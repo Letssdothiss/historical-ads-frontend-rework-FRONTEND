@@ -55,6 +55,8 @@
 
 /* LABEL */
 .driving-license-trigger-label {
+  white-space: nowrap;
+
   color: #1616B2;
 
   font-family: "Open Sans", sans-serif;
