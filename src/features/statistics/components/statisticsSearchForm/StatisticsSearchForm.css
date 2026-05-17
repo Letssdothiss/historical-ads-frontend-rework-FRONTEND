@@ -23,6 +23,10 @@
   align-items: end;
 }
 
+.statistics-search-form__top-row {
+  grid-template-columns: minmax(0, 1.85fr) minmax(0, 0.85fr);
+}
+
 .statistics-search-form__free-text {
   display: flex;
   flex-direction: column;
