@@ -6,7 +6,14 @@ import { toChartData } from '../../../utils/StatisticsTransformers'
 function BarChart({ data, stacked = false }) {
   const chartData = toChartData(data)
 
-  if (!chartData) return <p>Ingen data att visa</p>
+  if (!chartData) {
+    return (
+      <p>
+        Välj minst två tidsperioder (t.ex. två årtal) för att kunna visa
+        diagrammet.
+      </p>
+    )
+  }
 
   return (
     <div className="bar-chart">
