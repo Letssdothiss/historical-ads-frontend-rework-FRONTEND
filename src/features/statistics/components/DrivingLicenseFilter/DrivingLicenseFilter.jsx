@@ -1,5 +1,5 @@
-import './DrivingLicenseFilter.css';
-import { useState } from 'react';
+import './DrivingLicenseFilter.css'
+import { useEffect, useRef, useState } from 'react'
 
 import {
   DigiButton,
@@ -8,14 +8,29 @@ import {
   DigiIconX,
   DigiFormRadiogroup,
   DigiFormRadiobutton,
-} from '@designsystem-se/af-react';
+} from '@designsystem-se/af-react'
 
-function DrivingLicenseFilter() {
-  const [isOpen, setIsOpen] = useState(false);
-  const [licenseChoice, setLicenseChoice] = useState('');
+function DrivingLicenseFilter({ onChange } = {}) {
+  const [isOpen, setIsOpen] = useState(false)
+  const [licenseChoice, setLicenseChoice] = useState('')
+  const wrapperRef = useRef(null)
+
+  useEffect(() => {
+    onChange?.(licenseChoice)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [licenseChoice])
+
+  useEffect(() => {
+    if (!isOpen) return
+    const onDocClick = (event) => {
+      if (!wrapperRef.current?.contains(event.target)) setIsOpen(false)
+    }
+    document.addEventListener('mousedown', onDocClick)
+    return () => document.removeEventListener('mousedown', onDocClick)
+  }, [isOpen])
 
   return (
-    <div className="driving-license-filter">
+    <div className="driving-license-filter" ref={wrapperRef}>
       <div className="driving-license-trigger">
         <DigiButton
           afVariation="secondary"
@@ -26,9 +41,7 @@ function DrivingLicenseFilter() {
           <div className="driving-license-trigger-content">
             <DigiIconLicenceCar />
 
-            <span className="driving-license-trigger-label">
-              Körkort
-            </span>
+            <span className="driving-license-trigger-label">Körkort</span>
 
             <span
               className={
@@ -66,9 +79,7 @@ function DrivingLicenseFilter() {
           </div>
 
           <div className="dropdown-content">
-            <h2 className="dropdown-title">
-              Körkort
-            </h2>
+            <h2 className="dropdown-title">Körkort</h2>
 
             <div className="dropdown-divider"></div>
 
@@ -78,9 +89,7 @@ function DrivingLicenseFilter() {
                 afName="driving-license-group"
                 afValue="required"
                 afChecked={licenseChoice === 'required'}
-                onAfOnChange={() =>
-                  setLicenseChoice('required')
-                }
+                onAfOnChange={() => setLicenseChoice('required')}
               />
 
               <DigiFormRadiobutton
@@ -88,16 +97,14 @@ function DrivingLicenseFilter() {
                 afName="driving-license-group"
                 afValue="not-required"
                 afChecked={licenseChoice === 'not-required'}
-                onAfOnChange={() =>
-                  setLicenseChoice('not-required')
-                }
+                onAfOnChange={() => setLicenseChoice('not-required')}
               />
             </DigiFormRadiogroup>
           </div>
         </div>
       )}
     </div>
-  );
+  )
 }
 
-export default DrivingLicenseFilter;
+export default DrivingLicenseFilter
