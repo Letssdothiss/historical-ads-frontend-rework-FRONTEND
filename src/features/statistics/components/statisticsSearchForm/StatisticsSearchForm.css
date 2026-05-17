@@ -59,6 +59,14 @@
 
 .statistics-search-form__filter-cell {
   position: relative;
+  display: flex;
+  align-items: stretch;
+  min-width: 0;
+}
+
+.statistics-search-form__filter-cell > * {
+  flex: 1 1 auto;
+  min-width: 0;
 }
 
 .statistics-search-form__filter-cell > .filter-indicator {
@@ -67,10 +75,11 @@
   right: 6px;
   pointer-events: auto;
   z-index: 2;
+  flex: 0 0 auto;
 }
 
 .statistics-search-form__filter-cell digi-button::part(button) {
-  min-height: 56px;
+  min-height: 52px;
   border-radius: 6px;
   background: #ffffff;
   border: 1px solid #1616b2;
@@ -79,6 +88,16 @@
 
 .statistics-search-form__filter-cell digi-button::part(button):hover {
   background: #e6f0ff;
+}
+
+/* Ensure Digi buttons render their content centered and share the same height */
+.statistics-search-form digi-button,
+.statistics-search-form button.digi-button,
+.statistics-search-form digi-button::part(button) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 52px !important;
 }
 
 .statistics-search-form__filter-trigger {

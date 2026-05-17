@@ -1,6 +1,7 @@
 .competency-search {
   display: flex;
   flex-direction: column;
+  gap: 6px;
 
   width: 100%;
 }
@@ -12,11 +13,11 @@
 }
 
 .competency-search-label-row {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 8px;
 
-  margin-bottom: 8px;
+  margin: 0;
 }
 
 .competency-search-label {
@@ -24,14 +25,14 @@
 
   color: #ffffff;
   font-family: "Open Sans", sans-serif;
-  font-size: 18px;
-  font-weight: 400;
-  line-height: 27px;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.4;
 }
 
 .competency-search-label-row .info-tooltip digi-icon-notification-info {
-  --digi--icon--width: 22px;
-  --digi--icon--height: 22px;
+  --digi--icon--width: 18px;
+  --digi--icon--height: 18px;
   --digi--icon--color: #ffffff;
 
   flex-shrink: 0;

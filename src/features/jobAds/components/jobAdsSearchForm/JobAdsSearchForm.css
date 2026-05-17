@@ -46,11 +46,19 @@
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 16px 24px;
-  align-items: start;
+  align-items: center;
 }
 
 .job-ads-search-form__filter-cell {
   position: relative;
+  display: flex;
+  align-items: stretch;
+  min-width: 0;
+}
+
+.job-ads-search-form__filter-cell > * {
+  flex: 1 1 auto;
+  min-width: 0;
 }
 
 .job-ads-search-form__filter-cell > .filter-indicator {
@@ -62,7 +70,7 @@
 }
 
 .job-ads-search-form__filter-cell digi-button::part(button) {
-  min-height: 56px;
+  min-height: 52px;
   border-radius: 6px;
   background: #ffffff;
   border: 1px solid #1616b2;
@@ -84,6 +92,16 @@
   font-weight: 600;
 }
 
+/* Ensure Digi buttons render their content centered and share the same height */
+.job-ads-search-form digi-button,
+.job-ads-search-form button.digi-button,
+.job-ads-search-form digi-button::part(button) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 52px !important;
+}
+
 .job-ads-search-form__filter-trigger digi-icon-globe,
 .job-ads-search-form__filter-trigger digi-icon-user-alt {
   --digi--icon--width: 22px;
@@ -103,6 +121,7 @@
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 24px;
+  align-items: start;
 }
 
 .job-ads-search-form__input-block {

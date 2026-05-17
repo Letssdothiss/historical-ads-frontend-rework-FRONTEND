@@ -1,7 +1,6 @@
 .employment-facts-picker {
   position: relative;
   width: 100%;
-  max-width: 374px;
 }
 
 .employment-facts-picker__trigger-row {
@@ -20,7 +19,7 @@
 
 .employment-facts-picker__trigger digi-button::part(button) {
   width: 100%;
-  min-height: 56px;
+  min-height: 52px;
   border-radius: 6px;
   border: 1px solid #1616b2;
   box-shadow: none;
