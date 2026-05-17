@@ -91,7 +91,6 @@
 .job-ads-search-form__filter-trigger {
   display: flex;
   align-items: center;
-  gap: 14px;
   width: 100%;
   padding: 0 6px;
   color: #1616b2;
@@ -111,17 +110,22 @@
 
 .job-ads-search-form__filter-trigger digi-icon-globe,
 .job-ads-search-form__filter-trigger digi-icon-user-alt {
-  --digi--icon--width: 22px;
-  --digi--icon--height: 22px;
+  --digi--icon--width: 24px;
+  --digi--icon--height: 24px;
   --digi--icon--color: #1616b2;
+  margin-left: 38px;
   flex-shrink: 0;
+}
+
+.job-ads-search-form__filter-trigger > span:not(.job-ads-search-form__trigger-dot) {
+  margin-left: 28px;
 }
 
 .job-ads-search-form__filter-trigger digi-icon-chevron-down {
   --digi--icon--width: 14px;
   --digi--icon--height: 14px;
   --digi--icon--color: #1616b2;
-  margin-left: auto;
+  margin-left: 14px;
 }
 
 .job-ads-search-form__trigger-dot {
