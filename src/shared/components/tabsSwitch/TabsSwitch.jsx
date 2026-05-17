@@ -1,72 +1,34 @@
-import './TabsSwitch.css';
-import React, { useState } from 'react';
-import { DigiButton, DigiIconCopy } from '@designsystem-se/af-react';
-import { ButtonSize, ButtonVariation } from '@designsystem-se/af';
+import { NavLink, useLocation } from 'react-router-dom'
+import { ROUTES } from '../../constants/routes'
+import './TabsSwitch.css'
 
-function TabsSwitch() {
-  const [activeTab, setActiveTab] = useState("platsannonser");
+const TABS = [
+  { to: ROUTES.JOB_ADS, label: 'Platsannonser', prefix: '/platsannonser' },
+  { to: ROUTES.STATISTICS, label: 'Statistik', prefix: '/statistik' },
+  { to: ROUTES.ABOUT, label: 'Om datan', prefix: '/om-datan' },
+]
+
+export default function TabsSwitch() {
+  const location = useLocation()
 
   return (
-    <div className="tab-menu-container">
-      <div className="reset-button-container">
-        <DigiButton
-	        afSize={ButtonSize.SMALL}
-	        afVariation={ButtonVariation.FUNCTION}
-	        afFullWidth={false}
-          afId="form-reset-button"
+    <nav className="tabs-switch" aria-label="Huvudnavigering">
+      {TABS.map((tab) => {
+        const isActive = location.pathname.startsWith(tab.prefix)
+        return (
+          <NavLink
+            key={tab.to}
+            to={tab.to}
+            className={
+              isActive
+                ? 'tabs-switch__link tabs-switch__link--active'
+                : 'tabs-switch__link'
+            }
           >
-          <DigiIconCopy />
-	        Reset
-        </DigiButton>
-      </div>
-      <div className="tabs-switch-container">
-        <DigiButton
-          className="tabs-switch__tab-host"
-          afId="button-platsannonser"
-	        afSize={ButtonSize.MEDIUM}
-	        afVariation={
-            activeTab === 'platsannonser'
-              ? ButtonVariation.PRIMARY
-              : ButtonVariation.SECONDARY
-          }
-	        afFullWidth={false}
-          onAfOnClick={() => setActiveTab('platsannonser')}
-          >
-	        Platsannonser
-        </DigiButton>
-
-        <DigiButton
-          className="tabs-switch__tab-host"
-          afId="button-statistik"
-	        afSize={ButtonSize.MEDIUM}
-	        afVariation={
-            activeTab === 'statistik'
-              ? ButtonVariation.PRIMARY
-              : ButtonVariation.SECONDARY
-          }
-	        afFullWidth={false}
-          onAfOnClick={() => setActiveTab('statistik')}
-          >
-	        Statistik
-        </DigiButton>
-
-        <DigiButton
-          className="tabs-switch__tab-host"
-          afId="button-om-datan"
-	        afSize={ButtonSize.MEDIUM}
-	        afVariation={
-            activeTab === 'om-datan'
-              ? ButtonVariation.PRIMARY
-              : ButtonVariation.SECONDARY
-          }
-	        afFullWidth={false}
-          onAfOnClick={() => setActiveTab("om-datan")}
-          >
-	        Om datan
-        </DigiButton>
-      </div>
-    </div>
-  );
-};
-
-export default TabsSwitch;
+            {tab.label}
+          </NavLink>
+        )
+      })}
+    </nav>
+  )
+}
