@@ -1,5 +1,5 @@
 import './TrendsFilter.css';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import {
   DigiButton,
@@ -7,12 +7,29 @@ import {
   DigiIconChevronDown,
 } from '@designsystem-se/af-react';
 
-function TrendsFilter() {
+const TREND_OPTIONS = [
+  { value: 'top5_occupations', label: '5 vanligaste yrkesgrupperna' },
+  { value: 'top5_skills', label: '5 vanligaste kompetenserna' },
+  { value: 'top5_growing', label: '5 yrkesgrupper - ökat mest' },
+  { value: 'top5_declining', label: '5 yrkesgrupper - minskat mest' },
+];
+
+function TrendsFilter({ value = '', onChange } = {}) {
   // Controls whether the dropdown is open or closed
   const [isOpen, setIsOpen] = useState(false);
+  const wrapperRef = useRef(null);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    const onDocClick = (event) => {
+      if (!wrapperRef.current?.contains(event.target)) setIsOpen(false);
+    };
+    document.addEventListener('mousedown', onDocClick);
+    return () => document.removeEventListener('mousedown', onDocClick);
+  }, [isOpen]);
 
   return (
-    <div className="trends-filter">
+    <div className="trends-filter" ref={wrapperRef}>
       {/* Trigger button for opening/closing dropdown */}
       <div className="trends-trigger">
         <DigiButton
@@ -47,22 +64,21 @@ function TrendsFilter() {
       {/* Dropdown menu */}
       {isOpen && (
         <div className="trends-dropdown">
-          {/* Trend options */}
-          <button type="button">
-            5 vanligaste yrkesgrupperna
-          </button>
-
-          <button type="button">
-            5 vanligaste kompetenserna
-          </button>
-
-          <button type="button">
-            5 yrkesgrupper - ökat mest
-          </button>
-
-          <button type="button">
-            5 yrkesgrupper - minskat mest
-          </button>
+          {TREND_OPTIONS.map((option) => (
+            <button
+              key={option.value}
+              type="button"
+              className={
+                value === option.value ? 'trends-option active' : 'trends-option'
+              }
+              onClick={() => {
+                onChange?.(value === option.value ? '' : option.value);
+                setIsOpen(false);
+              }}
+            >
+              {option.label}
+            </button>
+          ))}
         </div>
       )}
     </div>
