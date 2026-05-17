@@ -1,0 +1,115 @@
+.job-ad-detail {
+  width: min(1080px, 92vw);
+  margin: 24px auto 60px;
+  text-align: left;
+}
+
+.job-ad-detail__nav-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 8px auto 0;
+  padding: 6px 18px;
+  background: transparent;
+  border: 0;
+  color: #ffffff;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.job-ad-detail__nav {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+
+.job-ad-detail__nav-link {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: #1616b2;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.job-ad-detail__nav-link:hover {
+  text-decoration: underline;
+}
+
+.job-ad-detail__hint {
+  color: #555;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.job-ad-detail__error {
+  background: #fff;
+  border-radius: 8px;
+  padding: 18px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+}
+
+.job-ad-detail__card {
+  background: #f4f4f4;
+  border-radius: 8px;
+  padding: 28px 36px;
+  color: #1a1a1a;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.job-ad-detail__header h1 {
+  margin: 0 0 6px;
+  font-size: 1.9rem;
+  font-weight: 600;
+  color: #222;
+}
+
+.job-ad-detail__employer {
+  margin: 0 0 18px;
+  color: #444;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.job-ad-detail__card section {
+  margin: 22px 0;
+}
+
+.job-ad-detail__card h2 {
+  margin: 0 0 8px;
+  color: #1a1a1a;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+.job-ad-detail__card p {
+  margin: 4px 0;
+  line-height: 1.5;
+  color: #222;
+}
+
+.job-ad-detail__description {
+  white-space: pre-line;
+}
+
+.job-ad-detail__external {
+  color: #1616b2;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.job-ad-detail__external:hover {
+  text-decoration: underline;
+}
+
+.job-ad-detail__quality {
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  padding: 14px 18px;
+}
