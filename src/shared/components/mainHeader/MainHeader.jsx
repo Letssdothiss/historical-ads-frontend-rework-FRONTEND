@@ -1,31 +1,14 @@
-import './MainHeader.css';
-import React from 'react';
-import { DigiLayoutBlock, DigiLogo } from '@designsystem-se/af-react'
-import { LayoutBlockVariation, LogoColor } from '@designsystem-se/af'
+import { DigiLogo } from '@designsystem-se/af-react'
+import { LogoColor } from '@designsystem-se/af'
+import './MainHeader.css'
 
-
-const MainHeader = () => {
+export default function MainHeader() {
   return (
-    <section id="layout-section">
+    <header id="layout-section">
       <div className="logo-container">
-        <DigiLogo
-          afOnlySymbol={false}
-          afColor={LogoColor.PRIMARY}
-        ></DigiLogo>
+        <DigiLogo afOnlySymbol={false} afColor={LogoColor.PRIMARY} />
       </div>
-      <div className="logo-divider" aria-hidden="true"></div>
-
-      <div className="context-container">
-        <DigiLayoutBlock afVariation={LayoutBlockVariation.SECONDARY}>
-          <div className="context-content-container">
-            <h2>Historiska platsannonser</h2>
-            <p className="context-content-container-p">Sök data från platsannonser tidigare</p>
-            <p className="context-content-container-p">publicerade på Platsbanken</p>
-          </div>
-        </DigiLayoutBlock>
-      </div>
-    </section>
-  );
-};
-
-export default MainHeader;
+      <div className="logo-divider" aria-hidden="true" />
+    </header>
+  )
+}
