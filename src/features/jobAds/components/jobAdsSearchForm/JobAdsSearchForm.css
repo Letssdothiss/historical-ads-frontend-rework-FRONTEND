@@ -143,15 +143,31 @@
 }
 
 #job-ads-search-button::part(button) {
-  background: #b9eb55;
-  color: #1a1a1a;
+  background: var(--job-ads-color) !important;
+  color: #1a1a1a !important;
   font-weight: 700;
   border-radius: 6px;
   min-height: 52px;
 }
 
 #job-ads-search-button::part(button):hover {
-  background: #a6d54a;
+  background: var(--job-ads-color-hover) !important;
+}
+
+/* Fallback for when DigiButton renders a plain <button> element
+   (some environments render without shadow DOM/part selectors). */
+button#job-ads-search-button,
+#job-ads-search-button {
+  background: var(--job-ads-color) !important;
+  color: #1a1a1a !important;
+  font-weight: 700;
+  border-radius: 6px;
+  min-height: 52px;
+}
+
+button#job-ads-search-button:hover,
+#job-ads-search-button:hover {
+  background: var(--job-ads-color-hover) !important;
 }
 
 @media (max-width: 800px) {

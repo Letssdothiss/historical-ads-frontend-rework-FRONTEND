@@ -26,6 +26,6 @@
 
 .tabs-switch__link--active,
 .tabs-switch__link--active:hover {
-  background: #b9eb55;
+  background: var(--job-ads-color);
   color: #1a1a1a;
 }
