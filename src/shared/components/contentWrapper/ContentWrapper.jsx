@@ -1,9 +1,27 @@
-import './ContentWrapper.css';
-import TabsSwitch from '../tabsSwitch/TabsSwitch';
-import JobAdsSearchForm from '../../../features/jobAds/components/jobAdsSearchForm/JobAdsSearchForm';
-import React from 'react';
+import { useLocation, useNavigate } from 'react-router-dom'
+import TabsSwitch from '../tabsSwitch/TabsSwitch'
+import { ROUTES } from '../../constants/routes'
+import './ContentWrapper.css'
 
-function ContentWrapper({ children }) {
+export default function ContentWrapper({
+  children,
+  onReset,
+  hideRensaLink = false,
+}) {
+  const navigate = useNavigate()
+  const location = useLocation()
+
+  const handleClear = () => {
+    onReset?.()
+    if (location.pathname.startsWith(ROUTES.STATISTICS)) {
+      navigate(ROUTES.STATISTICS, { replace: true })
+    } else if (location.pathname.startsWith(ROUTES.ABOUT)) {
+      navigate(ROUTES.ABOUT, { replace: true })
+    } else {
+      navigate(ROUTES.JOB_ADS, { replace: true })
+    }
+  }
+
   return (
     <section className="shell-section">
       <div className="shell-top-row">
@@ -16,15 +34,20 @@ function ContentWrapper({ children }) {
         </div>
 
         <div className="tabsswitch-component-container">
+          {!hideRensaLink && (
+            <button
+              type="button"
+              className="shell-reset-link"
+              onClick={handleClear}
+            >
+              Rensa
+            </button>
+          )}
           <TabsSwitch />
         </div>
       </div>
 
-      <div className="shell-form-container">
-        {children}
-      </div>
+      <div className="shell-form-container">{children}</div>
     </section>
-  );
-};
-
-export default ContentWrapper;
+  )
+}
