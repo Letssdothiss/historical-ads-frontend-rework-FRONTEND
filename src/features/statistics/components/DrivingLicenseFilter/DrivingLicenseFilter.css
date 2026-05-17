@@ -10,6 +10,7 @@
   gap: 2px;
 
   width: 100%;
+  z-index: 2;
 }
 
 /* TRIGGER */
@@ -91,7 +92,13 @@
 
 /* DROPDOWN */
 .driving-license-dropdown {
+  position: absolute;
+  top: calc(100% + 2px);
+  left: 0;
+
   width: 100%;
+  max-height: min(360px, calc(100vh - 220px));
+  overflow: auto;
 
   padding: 24px 32px 32px;
 
@@ -102,6 +109,8 @@
   border: 1px solid #1616B2;
 
   border-radius: 6px;
+
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
 }
 
 /* HEADER */
