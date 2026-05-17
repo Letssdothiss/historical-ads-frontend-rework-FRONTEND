@@ -132,6 +132,18 @@
   margin-left: auto;
 }
 
+.statistics-search-form__trigger-dot {
+  width: 16px;
+  height: 16px;
+
+  margin-left: auto;
+  margin-right: 24px;
+
+  border-radius: 50%;
+  background: #009322;
+  flex-shrink: 0;
+}
+
 .statistics-search-form__actions {
   display: flex;
   margin-top: 10px;

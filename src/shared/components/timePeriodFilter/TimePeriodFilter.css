@@ -57,6 +57,19 @@
   margin-left: 14px;
 }
 
+/* RIGHT-SIDE STATUS DOT INSIDE THE TRIGGER BUTTON */
+.time-period-trigger-dot {
+  width: 16px;
+  height: 16px;
+
+  margin-left: auto;
+  margin-right: 24px;
+
+  border-radius: 50%;
+  background: #009322;
+  flex-shrink: 0;
+}
+
 .time-period-chevron-wrapper.open {
   transform: rotate(-180deg);
 }
@@ -268,6 +281,35 @@
   margin-left: 28px;
 }
 
+/* YEAR DOT */
+.time-period-year-dot {
+  width: 16px;
+  height: 16px;
+
+  margin-left: auto;
+  margin-right: 24px;
+
+  border-radius: 50%;
+  background: #009322;
+  flex-shrink: 0;
+}
+
+/* WHITE DOT WHEN THE ACTIVE YEAR ROW IS GREEN */
+.time-period-year-dot--on-active {
+  background: #ffffff;
+}
+
+/* EMPTY SPACE WHEN YEAR DOT IS NOT VISIBLE */
+.time-period-year-dot-placeholder {
+  width: 16px;
+  height: 16px;
+
+  margin-left: auto;
+  margin-right: 24px;
+
+  flex-shrink: 0;
+}
+
 /* ACTIVE DOT */
 .time-period-active-dot {
   width: 16px;
@@ -279,22 +321,6 @@
   border-radius: 50%;
 
   background: #009322;
-
-  flex-shrink: 0;
-}
-
-/* WHITE DOT WHEN A SELECTED YEAR IS ALSO THE ACTIVE (GREEN) ROW */
-.time-period-active-dot--on-active {
-  background: #ffffff;
-}
-
-/* EMPTY SPACE WHEN DOT IS NOT VISIBLE */
-.time-period-dot-placeholder {
-  width: 16px;
-  height: 16px;
-
-  margin-left: auto;
-  margin-right: 24px;
 
   flex-shrink: 0;
 }

@@ -124,6 +124,18 @@
   margin-left: auto;
 }
 
+.job-ads-search-form__trigger-dot {
+  width: 16px;
+  height: 16px;
+
+  margin-left: auto;
+  margin-right: 24px;
+
+  border-radius: 50%;
+  background: #009322;
+  flex-shrink: 0;
+}
+
 .job-ads-search-form__inputs {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);

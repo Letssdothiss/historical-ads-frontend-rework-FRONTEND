@@ -1,27 +1,26 @@
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import {
+  ButtonSize,
+  ButtonType,
+  ButtonVariation,
+  FormInputType,
+  FormInputValidation,
+  FormInputVariation,
+} from '@designsystem-se/af'
 import {
   DigiButton,
   DigiFormInput,
+  DigiIconChevronDown,
   DigiIconGlobe,
   DigiIconUserAlt,
-  DigiIconChevronDown,
 } from '@designsystem-se/af-react'
-import {
-  ButtonSize,
-  ButtonVariation,
-  ButtonType,
-  FormInputVariation,
-  FormInputType,
-  FormInputValidation,
-} from '@designsystem-se/af'
-import GeographyFilter from '../../../../shared/components/geographyFilter/GeographyFilter'
-import JobGroupFilter from '../jobGroupFilter/JobGroupFilter'
-import TimePeriodFilter from '../../../../shared/components/timePeriodFilter/TimePeriodFilter'
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import CompetencySearch from '../../../../shared/components/competencySearch/CompetencySearch'
 import EmploymentFactsPicker from '../../../../shared/components/employmentFactsPicker/EmploymentFactsPicker'
-import FilterIndicator from '../../../../shared/components/filterIndicator/FilterIndicator'
+import GeographyFilter from '../../../../shared/components/geographyFilter/GeographyFilter'
 import InfoTooltip from '../../../../shared/components/infoTooltip/InfoTooltip'
+import TimePeriodFilter from '../../../../shared/components/timePeriodFilter/TimePeriodFilter'
+import JobGroupFilter from '../jobGroupFilter/JobGroupFilter'
 import './JobAdsSearchForm.css'
 
 export default function JobAdsSearchForm() {
@@ -41,6 +40,11 @@ export default function JobAdsSearchForm() {
   const [employer, setEmployer] = useState('')
   const [organizationNumber, setOrganizationNumber] = useState('')
   const [skills, setSkills] = useState('')
+
+  const hasGeoSelection =
+    geography.lan.length > 0 || geography.kommuner.length > 0
+  const hasJobSelection =
+    occupations.areas.length > 0 || occupations.groups.length > 0
 
   const handleSubmit = (event) => {
     event.preventDefault()
@@ -109,26 +113,18 @@ export default function JobAdsSearchForm() {
               <DigiIconGlobe />
               <span>{geoLabel}</span>
               <DigiIconChevronDown />
+              {hasGeoSelection && (
+                <span
+                  className="job-ads-search-form__trigger-dot"
+                  aria-hidden="true"
+                />
+              )}
             </div>
           </DigiButton>
-          <FilterIndicator
-            heading="Valt område"
-            groups={[
-              { label: 'Län', items: geography.lan },
-              { label: 'Kommuner', items: geography.kommuner },
-            ]}
-          />
         </div>
 
         <div className="job-ads-search-form__filter-cell">
           <TimePeriodFilter onChange={setTimePeriod} />
-          <FilterIndicator
-            heading="Vald tidsperiod"
-            groups={[
-              { label: 'Årtal', items: timePeriod.years },
-              { label: 'Månader', items: timePeriod.months },
-            ]}
-          />
         </div>
 
         <div className="job-ads-search-form__filter-cell">
@@ -142,22 +138,18 @@ export default function JobAdsSearchForm() {
               <DigiIconUserAlt />
               <span>{jobLabel}</span>
               <DigiIconChevronDown />
+              {hasJobSelection && (
+                <span
+                  className="job-ads-search-form__trigger-dot"
+                  aria-hidden="true"
+                />
+              )}
             </div>
           </DigiButton>
-          <FilterIndicator
-            heading="Valda yrken"
-            groups={[
-              { label: 'Yrkesområden', items: occupations.areas },
-              { label: 'Yrkesgrupper', items: occupations.groups },
-            ]}
-          />
         </div>
 
         <div className="job-ads-search-form__filter-cell">
-          <EmploymentFactsPicker
-            value={employment}
-            onChange={setEmployment}
-          />
+          <EmploymentFactsPicker value={employment} onChange={setEmployment} />
         </div>
       </div>
 

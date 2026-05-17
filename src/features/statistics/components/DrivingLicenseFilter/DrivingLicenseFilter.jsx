@@ -1,19 +1,20 @@
-import './DrivingLicenseFilter.css'
 import { useEffect, useRef, useState } from 'react'
+import './DrivingLicenseFilter.css'
 
 import {
   DigiButton,
-  DigiIconLicenceCar,
-  DigiIconChevronDown,
-  DigiIconX,
-  DigiFormRadiogroup,
   DigiFormRadiobutton,
+  DigiFormRadiogroup,
+  DigiIconChevronDown,
+  DigiIconLicenceCar,
+  DigiIconX,
 } from '@designsystem-se/af-react'
 
 function DrivingLicenseFilter({ onChange } = {}) {
   const [isOpen, setIsOpen] = useState(false)
   const [licenseChoice, setLicenseChoice] = useState('')
   const wrapperRef = useRef(null)
+  const hasSelection = licenseChoice !== ''
 
   useEffect(() => {
     onChange?.(licenseChoice)
@@ -52,6 +53,13 @@ function DrivingLicenseFilter({ onChange } = {}) {
             >
               <DigiIconChevronDown />
             </span>
+
+            {hasSelection && (
+              <span
+                className="driving-license-trigger-dot"
+                aria-hidden="true"
+              />
+            )}
           </div>
         </DigiButton>
       </div>

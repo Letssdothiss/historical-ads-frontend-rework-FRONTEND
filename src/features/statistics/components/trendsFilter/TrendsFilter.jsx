@@ -1,32 +1,33 @@
-import './TrendsFilter.css';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react'
+import './TrendsFilter.css'
 
 import {
   DigiButton,
   DigiIconChart,
   DigiIconChevronDown,
-} from '@designsystem-se/af-react';
+} from '@designsystem-se/af-react'
 
 const TREND_OPTIONS = [
   { value: 'top5_occupations', label: '5 vanligaste yrkesgrupperna' },
   { value: 'top5_skills', label: '5 vanligaste kompetenserna' },
   { value: 'top5_growing', label: '5 yrkesgrupper - ökat mest' },
   { value: 'top5_declining', label: '5 yrkesgrupper - minskat mest' },
-];
+]
 
 function TrendsFilter({ value = '', onChange } = {}) {
   // Controls whether the dropdown is open or closed
-  const [isOpen, setIsOpen] = useState(false);
-  const wrapperRef = useRef(null);
+  const [isOpen, setIsOpen] = useState(false)
+  const wrapperRef = useRef(null)
+  const hasSelection = value !== ''
 
   useEffect(() => {
-    if (!isOpen) return;
+    if (!isOpen) return
     const onDocClick = (event) => {
-      if (!wrapperRef.current?.contains(event.target)) setIsOpen(false);
-    };
-    document.addEventListener('mousedown', onDocClick);
-    return () => document.removeEventListener('mousedown', onDocClick);
-  }, [isOpen]);
+      if (!wrapperRef.current?.contains(event.target)) setIsOpen(false)
+    }
+    document.addEventListener('mousedown', onDocClick)
+    return () => document.removeEventListener('mousedown', onDocClick)
+  }, [isOpen])
 
   return (
     <div className="trends-filter" ref={wrapperRef}>
@@ -43,9 +44,7 @@ function TrendsFilter({ value = '', onChange } = {}) {
             <DigiIconChart />
 
             {/* Button label */}
-            <span className="trends-trigger-label">
-              Trender
-            </span>
+            <span className="trends-trigger-label">Trender</span>
 
             {/* Chevron icon rotates when dropdown is open */}
             <span
@@ -57,6 +56,10 @@ function TrendsFilter({ value = '', onChange } = {}) {
             >
               <DigiIconChevronDown />
             </span>
+
+            {hasSelection && (
+              <span className="trends-trigger-dot" aria-hidden="true" />
+            )}
           </div>
         </DigiButton>
       </div>
@@ -69,11 +72,13 @@ function TrendsFilter({ value = '', onChange } = {}) {
               key={option.value}
               type="button"
               className={
-                value === option.value ? 'trends-option active' : 'trends-option'
+                value === option.value
+                  ? 'trends-option active'
+                  : 'trends-option'
               }
               onClick={() => {
-                onChange?.(value === option.value ? '' : option.value);
-                setIsOpen(false);
+                onChange?.(value === option.value ? '' : option.value)
+                setIsOpen(false)
               }}
             >
               {option.label}
@@ -82,7 +87,7 @@ function TrendsFilter({ value = '', onChange } = {}) {
         </div>
       )}
     </div>
-  );
+  )
 }
 
-export default TrendsFilter;
+export default TrendsFilter

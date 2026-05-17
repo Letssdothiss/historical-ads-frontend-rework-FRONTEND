@@ -12,44 +12,42 @@
  * - Uses Digi design system components
  */
 
-import './TimePeriodFilter.css';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react'
+import './TimePeriodFilter.css'
 
 import {
   DigiButton,
   DigiFormCheckbox,
-  DigiIconClock,
   DigiIconChevronDown,
   DigiIconChevronRight,
+  DigiIconClock,
   DigiIconX,
-} from '@designsystem-se/af-react';
+} from '@designsystem-se/af-react'
 
 function TimePeriodFilter({ onChange } = {}) {
-  const [isOpen, setIsOpen] = useState(false);
-  const wrapperRef = useRef(null);
+  const [isOpen, setIsOpen] = useState(false)
+  const wrapperRef = useRef(null)
 
   useEffect(() => {
-    if (!isOpen) return;
+    if (!isOpen) return
     const onDocClick = (event) => {
-      if (!wrapperRef.current?.contains(event.target)) setIsOpen(false);
-    };
-    document.addEventListener('mousedown', onDocClick);
-    return () => document.removeEventListener('mousedown', onDocClick);
-  }, [isOpen]);
+      if (!wrapperRef.current?.contains(event.target)) setIsOpen(false)
+    }
+    document.addEventListener('mousedown', onDocClick)
+    return () => document.removeEventListener('mousedown', onDocClick)
+  }, [isOpen])
 
-  const [allYearsSelected, setAllYearsSelected] =
-    useState(false);
+  const [allYearsSelected, setAllYearsSelected] = useState(false)
 
   // The years the user has chosen as filter values.
-  const [selectedYears, setSelectedYears] = useState([]);
+  const [selectedYears, setSelectedYears] = useState([])
 
   // Which year's months panel is currently shown (visual focus only).
-  const [activeYear, setActiveYear] = useState(null);
+  const [activeYear, setActiveYear] = useState(null)
 
-  const [selectedMonths, setSelectedMonths] =
-    useState([]);
+  const [selectedMonths, setSelectedMonths] = useState([])
 
-  const years = ['2026', '2025', '2024', '2023'];
+  const years = ['2026', '2025', '2024', '2023']
 
   const months = [
     'Januari',
@@ -64,65 +62,65 @@ function TimePeriodFilter({ onChange } = {}) {
     'Oktober',
     'November',
     'December',
-  ];
+  ]
+
+  const hasSelection =
+    allYearsSelected || selectedYears.length > 0 || selectedMonths.length > 0
 
   const handleYearClick = (year) => {
-    setAllYearsSelected(false);
-    setActiveYear(year);
+    setAllYearsSelected(false)
+    setActiveYear(year)
     setSelectedYears((previousYears) =>
       previousYears.includes(year)
         ? previousYears.filter((entry) => entry !== year)
-        : [...previousYears, year]
-    );
-  };
+        : [...previousYears, year],
+    )
+  }
 
   const handleSelectAll = () => {
     setAllYearsSelected((previousValue) => {
-      const nextValue = !previousValue;
+      const nextValue = !previousValue
 
       if (nextValue) {
-        setActiveYear(null);
-        setSelectedYears([]);
+        setActiveYear(null)
+        setSelectedYears([])
       }
 
-      return nextValue;
-    });
-  };
+      return nextValue
+    })
+  }
 
   const handleSelectAllMonths = () => {
     if (selectedMonths.length === months.length) {
-      setSelectedMonths([]);
+      setSelectedMonths([])
     } else {
-      setSelectedMonths(months);
+      setSelectedMonths(months)
     }
-  };
+  }
 
   const handleMonthClick = (month) => {
     setSelectedMonths((previousMonths) =>
       previousMonths.includes(month)
-        ? previousMonths.filter(
-            (selectedMonth) =>
-              selectedMonth !== month
-          )
-        : [...previousMonths, month]
-    );
-  };
+        ? previousMonths.filter((selectedMonth) => selectedMonth !== month)
+        : [...previousMonths, month],
+    )
+  }
 
   const handleClearAll = () => {
-    setAllYearsSelected(false);
-    setActiveYear(null);
-    setSelectedYears([]);
-    setSelectedMonths([]);
-  };
+    setAllYearsSelected(false)
+    setActiveYear(null)
+    setSelectedYears([])
+    setSelectedMonths([])
+  }
 
   useEffect(() => {
-    if (!onChange) return;
+    if (!onChange) return
     onChange({
       years: allYearsSelected ? years : selectedYears,
       months: selectedMonths,
-    });
+    })
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [allYearsSelected, selectedYears, selectedMonths]);
+  }, [allYearsSelected, selectedYears, selectedMonths])
 
   return (
     <div className="time-period-filter" ref={wrapperRef}>
@@ -136,9 +134,7 @@ function TimePeriodFilter({ onChange } = {}) {
           <div className="time-period-trigger-content">
             <DigiIconClock />
 
-            <span className="time-period-trigger-label">
-              Tidsperiod
-            </span>
+            <span className="time-period-trigger-label">Tidsperiod</span>
 
             <span
               className={
@@ -149,6 +145,10 @@ function TimePeriodFilter({ onChange } = {}) {
             >
               <DigiIconChevronDown />
             </span>
+
+            {hasSelection && (
+              <span className="time-period-trigger-dot" aria-hidden="true" />
+            )}
           </div>
         </DigiButton>
       </div>
@@ -191,9 +191,7 @@ function TimePeriodFilter({ onChange } = {}) {
 
           <div className="time-period-columns">
             <div className="time-period-left-column">
-              <h2 className="time-period-title">
-                Årtal
-              </h2>
+              <h2 className="time-period-title">Årtal</h2>
 
               <div className="time-period-divider"></div>
 
@@ -207,16 +205,14 @@ function TimePeriodFilter({ onChange } = {}) {
                   onAfOnChange={handleSelectAll}
                 />
 
-                <span className="time-period-title">
-                  Välj alla årtal
-                </span>
+                <span className="time-period-title">Välj alla årtal</span>
               </button>
 
               <div className="time-period-years">
                 {years.map((year) => {
-                  const isActive = activeYear === year;
+                  const isActive = activeYear === year
                   const isSelected =
-                    allYearsSelected || selectedYears.includes(year);
+                    allYearsSelected || selectedYears.includes(year)
                   return (
                     <button
                       key={year}
@@ -234,17 +230,17 @@ function TimePeriodFilter({ onChange } = {}) {
                         <div
                           className={
                             isActive
-                              ? 'time-period-active-dot time-period-active-dot--on-active'
-                              : 'time-period-active-dot'
+                              ? 'time-period-year-dot time-period-year-dot--on-active'
+                              : 'time-period-year-dot'
                           }
                         ></div>
                       ) : (
-                        <div className="time-period-dot-placeholder"></div>
+                        <div className="time-period-year-dot-placeholder"></div>
                       )}
 
                       <DigiIconChevronRight />
                     </button>
-                  );
+                  )
                 })}
               </div>
             </div>
@@ -252,9 +248,7 @@ function TimePeriodFilter({ onChange } = {}) {
             <div className="time-period-right-column">
               {(activeYear || allYearsSelected) && (
                 <>
-                  <h2 className="time-period-title">
-                    Månader
-                  </h2>
+                  <h2 className="time-period-title">Månader</h2>
 
                   <div className="time-period-divider"></div>
 
@@ -264,13 +258,8 @@ function TimePeriodFilter({ onChange } = {}) {
                     onClick={handleSelectAllMonths}
                   >
                     <DigiFormCheckbox
-                      afChecked={
-                        selectedMonths.length ===
-                        months.length
-                      }
-                      onAfOnChange={
-                        handleSelectAllMonths
-                      }
+                      afChecked={selectedMonths.length === months.length}
+                      onAfOnChange={handleSelectAllMonths}
                     />
 
                     <span className="time-period-title">
@@ -282,18 +271,11 @@ function TimePeriodFilter({ onChange } = {}) {
 
                   <div className="time-period-months">
                     {months.map((month) => (
-                      <div
-                        key={month}
-                        className="time-period-month-row"
-                      >
+                      <div key={month} className="time-period-month-row">
                         <DigiFormCheckbox
                           afLabel={month}
-                          afChecked={selectedMonths.includes(
-                            month
-                          )}
-                          onAfOnChange={() =>
-                            handleMonthClick(month)
-                          }
+                          afChecked={selectedMonths.includes(month)}
+                          onAfOnChange={() => handleMonthClick(month)}
                         />
                       </div>
                     ))}
@@ -305,7 +287,7 @@ function TimePeriodFilter({ onChange } = {}) {
         </div>
       )}
     </div>
-  );
+  )
 }
 
-export default TimePeriodFilter;
+export default TimePeriodFilter

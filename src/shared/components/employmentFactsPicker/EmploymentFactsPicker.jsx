@@ -1,4 +1,3 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
 import { ButtonSize, ButtonVariation } from '@designsystem-se/af'
 import {
   DigiButton,
@@ -6,11 +5,11 @@ import {
   DigiIconChevronRight,
   DigiIconX,
 } from '@designsystem-se/af-react'
-import FilterIndicator from '../filterIndicator/FilterIndicator'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import {
-  EMPLOYMENT_TYPES,
   EMPLOYMENT_DURATIONS,
   EMPLOYMENT_SCOPES,
+  EMPLOYMENT_TYPES,
 } from '../../constants/ui'
 import './EmploymentFactsPicker.css'
 
@@ -76,11 +75,6 @@ export default function EmploymentFactsPicker({ value = EMPTY, onChange }) {
       selections[section.id].includes(option.value),
     )
 
-  const getSelectedLabels = (section) =>
-    section.options
-      .filter((option) => selections[section.id].includes(option.value))
-      .map((option) => option.label)
-
   const clearAll = () => onChange?.(EMPTY)
 
   const hasAnySelection = FILTER_SECTIONS.some(
@@ -117,16 +111,15 @@ export default function EmploymentFactsPicker({ value = EMPTY, onChange }) {
               >
                 <DigiIconChevronDown />
               </span>
+              {hasAnySelection && (
+                <span
+                  className="employment-facts-picker__trigger-dot"
+                  aria-hidden="true"
+                />
+              )}
             </div>
           </DigiButton>
         </div>
-        <FilterIndicator
-          heading="Fakta anställning"
-          groups={FILTER_SECTIONS.map((section) => ({
-            label: section.label,
-            items: getSelectedLabels(section),
-          }))}
-        />
       </div>
 
       {isOpen && (
@@ -155,7 +148,6 @@ export default function EmploymentFactsPicker({ value = EMPTY, onChange }) {
                 Fakta anställning
               </h2>
               <div className="employment-facts-picker__divider" />
-
               <label className="employment-facts-picker__checkbox-row">
                 <input
                   type="checkbox"

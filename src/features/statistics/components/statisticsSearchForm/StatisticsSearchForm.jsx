@@ -1,29 +1,28 @@
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import {
+  ButtonSize,
+  ButtonType,
+  ButtonVariation,
+  FormInputType,
+  FormInputValidation,
+  FormInputVariation,
+} from '@designsystem-se/af'
 import {
   DigiButton,
   DigiFormInput,
+  DigiIconChevronDown,
   DigiIconGlobe,
   DigiIconUserAlt,
-  DigiIconChevronDown,
 } from '@designsystem-se/af-react'
-import {
-  ButtonSize,
-  ButtonVariation,
-  ButtonType,
-  FormInputVariation,
-  FormInputType,
-  FormInputValidation,
-} from '@designsystem-se/af'
-import GeographyFilter from '../../../../shared/components/geographyFilter/GeographyFilter'
-import JobGroupFilter from '../../../jobAds/components/jobGroupFilter/JobGroupFilter'
-import TimePeriodFilter from '../../../../shared/components/timePeriodFilter/TimePeriodFilter'
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import CompetencySearch from '../../../../shared/components/competencySearch/CompetencySearch'
 import EmploymentFactsPicker from '../../../../shared/components/employmentFactsPicker/EmploymentFactsPicker'
-import TrendsFilter from '../trendsFilter/TrendsFilter'
-import DrivingLicenseFilter from '../DrivingLicenseFilter/DrivingLicenseFilter'
-import FilterIndicator from '../../../../shared/components/filterIndicator/FilterIndicator'
+import GeographyFilter from '../../../../shared/components/geographyFilter/GeographyFilter'
 import InfoTooltip from '../../../../shared/components/infoTooltip/InfoTooltip'
+import TimePeriodFilter from '../../../../shared/components/timePeriodFilter/TimePeriodFilter'
+import JobGroupFilter from '../../../jobAds/components/jobGroupFilter/JobGroupFilter'
+import DrivingLicenseFilter from '../DrivingLicenseFilter/DrivingLicenseFilter'
+import TrendsFilter from '../trendsFilter/TrendsFilter'
 import './StatisticsSearchForm.css'
 
 export default function StatisticsSearchForm() {
@@ -42,6 +41,11 @@ export default function StatisticsSearchForm() {
     scope: [],
   })
   const [skills, setSkills] = useState('')
+
+  const hasGeoSelection =
+    geography.lan.length > 0 || geography.kommuner.length > 0
+  const hasJobSelection =
+    occupations.areas.length > 0 || occupations.groups.length > 0
 
   const handleSubmit = (event) => {
     event.preventDefault()
@@ -111,26 +115,18 @@ export default function StatisticsSearchForm() {
               <DigiIconGlobe />
               <span>{geoLabel}</span>
               <DigiIconChevronDown />
+              {hasGeoSelection && (
+                <span
+                  className="statistics-search-form__trigger-dot"
+                  aria-hidden="true"
+                />
+              )}
             </div>
           </DigiButton>
-          <FilterIndicator
-            heading="Valt område"
-            groups={[
-              { label: 'Län', items: geography.lan },
-              { label: 'Kommuner', items: geography.kommuner },
-            ]}
-          />
         </div>
 
         <div className="statistics-search-form__filter-cell">
           <TimePeriodFilter onChange={setTimePeriod} />
-          <FilterIndicator
-            heading="Vald tidsperiod"
-            groups={[
-              { label: 'Årtal', items: timePeriod.years },
-              { label: 'Månader', items: timePeriod.months },
-            ]}
-          />
         </div>
 
         <div className="statistics-search-form__filter-cell">
@@ -144,22 +140,18 @@ export default function StatisticsSearchForm() {
               <DigiIconUserAlt />
               <span>{jobLabel}</span>
               <DigiIconChevronDown />
+              {hasJobSelection && (
+                <span
+                  className="statistics-search-form__trigger-dot"
+                  aria-hidden="true"
+                />
+              )}
             </div>
           </DigiButton>
-          <FilterIndicator
-            heading="Valda yrken"
-            groups={[
-              { label: 'Yrkesområden', items: occupations.areas },
-              { label: 'Yrkesgrupper', items: occupations.groups },
-            ]}
-          />
         </div>
 
         <div className="statistics-search-form__filter-cell">
-          <EmploymentFactsPicker
-            value={employment}
-            onChange={setEmployment}
-          />
+          <EmploymentFactsPicker value={employment} onChange={setEmployment} />
         </div>
       </div>
 
