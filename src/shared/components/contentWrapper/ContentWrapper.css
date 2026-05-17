@@ -6,6 +6,7 @@
   width: min(1080px, 92vw);
   background-color: #091d54;
   border-radius: 0 0 12px 12px;
+  transform: translateZ(0);
 }
 
 .shell-section .shell-top-row {
