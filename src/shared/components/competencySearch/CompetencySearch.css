@@ -42,6 +42,11 @@
   width: 100%;
 }
 
+.competency-search-input-wrapper digi-form-input {
+  width: 100%;
+  display: block;
+}
+
 #competency-search-input {
   width: 100%;
 }

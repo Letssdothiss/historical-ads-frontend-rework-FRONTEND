@@ -19,6 +19,13 @@
   display: flex;
   flex-direction: column;
   gap: 6px;
+  min-width: 0;
+}
+
+.job-ads-search-form__free-text digi-form-input,
+.job-ads-search-form__input-block digi-form-input {
+  width: 100%;
+  display: block;
 }
 
 .job-ads-search-form__field-label {
