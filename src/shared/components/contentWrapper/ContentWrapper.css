@@ -8,11 +8,18 @@
   border-radius: 0 0 12px 12px;
 }
 
+.shell-section .shell-top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
 .shell-top-row {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   padding: 0 28px;
+  width: 773px;
 }
 
 .shell-header-content-container {
@@ -62,6 +69,8 @@
 
 .shell-form-container {
   padding: 4px 0 28px;
+  display: flex;
+  justify-content: center;
 }
 
 @media (max-width: 720px) {
