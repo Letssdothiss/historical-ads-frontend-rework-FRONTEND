@@ -9,11 +9,13 @@
 .about-data-page h2 {
   color: #ffffff;
   margin-bottom: 12px;
+  margin-left: 20px;
 }
 
 .about-data-page p {
   margin: 12px 0;
   line-height: 1.55;
+  margin-left: 20px;
 }
 
 .about-data-page code {

@@ -81,6 +81,11 @@
   color: #b9eb55;
 }
 
+.shell-reset-link--hidden {
+  visibility: hidden;
+  pointer-events: none;
+}
+
 .shell-form-container {
   padding: 4px 0 28px;
   display: flex;
@@ -89,8 +94,8 @@
 
 @media (max-width: 720px) {
   .shell-top-row {
-    flex-direction: column;
-    gap: 12px;
+    justify-content: left;
+    margin-left: 0;
   }
   .tabsswitch-component-container {
     align-items: flex-start;
