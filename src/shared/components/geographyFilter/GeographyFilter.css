@@ -8,13 +8,12 @@
   z-index: 1000;
 }
 
-/* Overlay geografiväljare */
+/* Filter panel */
 .geo-filter-panel {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto 1fr auto;
   width: 750px;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 10px;
   background: #fff;
   border-radius: 6px;
   overflow: hidden;
@@ -22,83 +21,141 @@
 }
 
 .geo-filter-panel--centered {
+  display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
 }
 
-/* Overlay dubbel listväljare */
-.geo-filter-body {
-  display: flex;
-  height: 619px;
-  justify-content: center;
-  align-items: flex-start;
-  align-self: stretch;
+/* Top row: two columns */
+.geo-filter-top-row {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
 }
 
-/* Vänster kolumn */
-.geo-filter-lan-col {
-  flex: 1;
-  height: 619px;
+.geo-filter-top-row-left {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
+  padding: 10px 16px;
   border-right: 1px solid #DDD;
-  background: #fff;
 }
 
-.geo-filter-kommun-col {
-  flex: 1;
-  height: 619px;
+.geo-filter-top-row-right {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+}
+
+.geo-filter-text-button {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: #1144d1;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 24px;
+  cursor: pointer;
+  padding: 0;
+}
+
+.geo-filter-text-button:hover {
+  text-decoration: underline;
+}
+
+.geo-filter-close-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: #1144d1;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 24px;
+  cursor: pointer;
+  padding: 0;
+}
+
+.geo-filter-close-button:hover {
+  text-decoration: underline;
+}
+
+.geo-filter-close-button digi-icon-x {
+  --digi--icon--width: 20px;
+  --digi--icon--height: 20px;
+  --digi--icon--color: #1616b2;
+}
+
+/* Header row: spans both columns */
+.geo-filter-header {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-bottom: 1px solid #DDD;
+}
+
+.geo-filter-header-left {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  border-radius: 0 6px 6px 0;
-  border-left: 1px solid #DDD;
+  justify-content: flex-end;
+  padding: 12px 16px 8px 16px;
+  gap: 8px;
+  border-right: 1px solid #DDD;
+}
+
+.geo-filter-header-right {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 12px 16px 8px 16px;
+  gap: 8px;
+}
+
+/* Body row: lists */
+.geo-filter-body {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: 440px;
+}
+
+/* Left column */
+.geo-filter-lan-col {
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid #DDD;
   background: #fff;
   overflow: hidden;
 }
 
-/* Frame 129 */
-.geo-filter-kommun-col-inner {
+.geo-filter-kommun-col {
   display: flex;
-  width: 375px;
-  padding-bottom: 16px;
   flex-direction: column;
-  align-items: flex-start;
+  background: #fff;
+  overflow: hidden;
 }
 
-/* Frame 87 — Rensa alla kommuner */
+/* Clear municipalities row */
 .geo-filter-rensa-kommuner-row {
   display: flex;
   align-self: stretch;
   align-items: flex-end;
   justify-content: space-between;
-  padding: 0px;
 }
 
-
-/* Välj alla */
+/* Select all */
 .geo-filter-check-row {
   display: flex;
-  padding: 0 10px;
-  align-items: center;
-  gap: 10px;
+  align-items: flex-start;
   align-self: stretch;
 }
 
-.geo-filter-check-row-inner {
-  display: flex;
-  align-items: flex-start;
-}
-
-.geo-filter-check-kommun-row-inner {
-  display: flex;
-  align-items: flex-start;
-  margin-top: 79px;
-}
-
-
-/* Listor */
+/* Lists */
 ul.geo-filter-list {
   padding: 0;
   margin: 0;
@@ -129,6 +186,7 @@ ul.geo-filter-list {
   border: 4px solid #F4F4F4;
 }
 
+/* Left column: list item */
 .geo-filter-lan-item {
   display: flex;
   flex-direction: row;
@@ -139,6 +197,22 @@ ul.geo-filter-list {
   cursor: pointer;
   box-sizing: border-box;
   width: 100%;
+  transition: background 0.1s;
+}
+
+/* Active or selected — green background */
+.geo-filter-lan-item--selected {
+  background: #009322;
+}
+
+.geo-filter-lan-item--selected .geo-filter-lan-label {
+  color: #fff;
+}
+
+.geo-filter-lan-item--selected digi-icon-chevron-right,
+.geo-filter-lan-item--selected svg {
+  color: #fff;
+  fill: #fff;
 }
 
 .geo-filter-lan-label {
@@ -151,6 +225,7 @@ ul.geo-filter-list {
   line-height: 24px;
 }
 
+/* Indicator dot */
 .geo-filter-lan-indicator {
   display: flex;
   width: 16px;
@@ -160,24 +235,22 @@ ul.geo-filter-list {
   flex-shrink: 0;
 }
 
+/* Green dot — area not selected but has selected municipalities */
 .geo-filter-lan-indicator--selected {
   width: 16px;
   height: 16px;
   flex-shrink: 0;
   border-radius: 16px;
-  background: var(--Marking-Navigation-selected, #95C23E);
+  background: #009322;
 }
 
-.geo-filter-list--kommuner {
-  height: 440px;
+/* White dot — area is selected (green background) and has selected municipalities */
+.geo-filter-lan-indicator--selected-white {
+  width: 16px;
+  height: 16px;
   flex-shrink: 0;
-  align-self: stretch;
-  border-radius: 6px;
-  border-top: 1px solid #DDD;
-  background: #FFF;
-  overflow-y: scroll;
-  scrollbar-width: thin;
-  scrollbar-color: #CACACA #F4F4F4;
+  border-radius: 16px;
+  background: #fff;
 }
 
 .geo-filter-kommun-item {
@@ -195,21 +268,13 @@ ul.geo-filter-list {
   line-height: var(--label-line-height, 27px);
 }
 
-/* Söksektion */
-.geo-filter-lan-col-header {
-  display: flex;
-  flex-direction: column;
-  padding: 12px 16px 8px 16px;
-  gap: 8px;
-  align-self: stretch;
-}
 
-.geo-filter-lan-col-title {
+
+.geo-filter-hint {
+  padding: 16px 24px;
+  color: #666;
   font-family: "Open Sans", sans-serif;
-  font-size: 14px;
-  font-weight: 600;
-  color: #333;
-  margin: 0;
+  font-size: 16px;
 }
 
 .geo-filter-error {
@@ -217,8 +282,35 @@ ul.geo-filter-list {
   font-family: "Open Sans", sans-serif;
 }
 
-.geo-filter-count {
-  font-size: 14px;
-  color: #333;
+/* Footer */
+.geo-filter-footer {
+  grid-column: 1 / -1;
+  display: flex;
+  height: 87px;
+  align-items: center;
+  justify-content: center;
+  background: #f4f4f4;
+  border-top: 1px solid #DDD;
+}
+
+.geo-filter-footer-btn {
+  display: flex;
+  height: 40px;
+  padding: 8px 24px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 6px;
+  border: 2px solid #1B1B6B;
+  background: transparent;
+  color: #1B1B6B;
   font-family: "Open Sans", sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.geo-filter-footer-btn:hover {
+  background: #1B1B6B;
+  color: #fff;
 }
