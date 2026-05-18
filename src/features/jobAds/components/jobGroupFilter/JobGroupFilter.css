@@ -8,7 +8,7 @@
   z-index: 1000;
 }
 
-/* Overlay yrkesväljare */
+/* Filter panel */
 .job-filter-panel {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -27,7 +27,7 @@
   justify-content: center;
 }
 
-/* Top-rad: två kolumner */
+/* Top row: two columns */
 .job-filter-top-row {
   grid-column: 1 / -1;
   display: grid;
@@ -91,7 +91,7 @@
   --digi--icon--color: #1616b2;
 }
 
-/* Header-rad: spänner båda kolumner */
+/* Header row: spans both columns */
 .job-filter-header {
   grid-column: 1 / -1;
   display: grid;
@@ -116,7 +116,7 @@
   gap: 8px;
 }
 
-/* Body-rad: listor */
+/* Body row: lists */
 .job-filter-body {
   grid-column: 1 / -1;
   display: grid;
@@ -124,7 +124,7 @@
   height: 440px;
 }
 
-/* Vänster kolumn */
+/* Left column */
 .job-filter-area-col {
   display: flex;
   flex-direction: column;
@@ -140,7 +140,7 @@
   overflow: hidden;
 }
 
-/* Frame — Rensa yrkesgrupper */
+/* Clear groups row */
 .job-filter-rensa-groups-row {
   display: flex;
   align-self: stretch;
@@ -148,14 +148,14 @@
   justify-content: space-between;
 }
 
-/* Välj alla */
+/* Select all */
 .job-filter-check-row {
   display: flex;
   align-items: flex-start;
   align-self: stretch;
 }
 
-/* Listor */
+/* Lists */
 ul.job-filter-list {
   padding: 0;
   margin: 0;
@@ -186,7 +186,7 @@ ul.job-filter-list {
   border: 4px solid #F4F4F4;
 }
 
-/* Vänsterkolumn: listitem */
+/* Left column: list item */
 .job-filter-area-item {
   display: flex;
   flex-direction: row;
@@ -200,7 +200,7 @@ ul.job-filter-list {
   transition: background 0.1s;
 }
 
-/* Aktivt eller valt — grön bakgrund */
+/* Active or selected — green background */
 .job-filter-area-item--selected {
   background: #009322;
 }
@@ -225,7 +225,7 @@ ul.job-filter-list {
   line-height: 24px;
 }
 
-/* Indikatorprick */
+/* Indicator dot */
 .job-filter-area-indicator {
   display: flex;
   width: 16px;
@@ -235,7 +235,7 @@ ul.job-filter-list {
   flex-shrink: 0;
 }
 
-/* Grön prick — område ej markerat men har valda grupper */
+/* Green dot — area not selected but has selected groups */
 .job-filter-area-indicator--selected {
   width: 16px;
   height: 16px;
@@ -244,7 +244,7 @@ ul.job-filter-list {
   background: #009322;
 }
 
-/* Vit prick — området är markerat (grön bakgrund) och har valda grupper */
+/* White dot — area is selected (green background) and has selected groups */
 .job-filter-area-indicator--selected-white {
   width: 16px;
   height: 16px;

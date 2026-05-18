@@ -2,6 +2,7 @@ import {
   DigiButton,
   DigiFormCheckbox,
   DigiFormInput,
+  DigiFormLabel,
   DigiIconChevronRight,
   DigiIconX,
 } from '@designsystem-se/af-react'
@@ -109,7 +110,7 @@ export default function GeoFilter({ onClose, onApply }) {
               className="geo-filter-text-button"
               onClick={rensaAllt}
             >
-              Rensa alla län
+              Rensa allt
             </button>
           </div>
           <div className="geo-filter-top-row-right">
@@ -135,7 +136,12 @@ export default function GeoFilter({ onClose, onApply }) {
         <div className="geo-filter-header">
           {/* Left header */}
           <div className="geo-filter-header-left">
+            <DigiFormLabel
+              afLabel="Sök län eller kommun"
+              afFor="geography-filter-search"
+            ></DigiFormLabel>
             <DigiFormInput
+              id="geography-filter-search"
               afLabel="Sök län eller kommun"
               afVariation="medium"
               afType="text"

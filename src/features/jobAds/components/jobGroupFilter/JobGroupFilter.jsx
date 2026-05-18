@@ -2,6 +2,7 @@ import {
   DigiButton,
   DigiFormCheckbox,
   DigiFormInput,
+  DigiFormLabel,
   DigiIconChevronRight,
   DigiIconX,
 } from '@designsystem-se/af-react'
@@ -111,7 +112,7 @@ export default function JobGroupFilter({ onClose, onApply }) {
               className="job-filter-text-button"
               onClick={rensaAllt}
             >
-              Rensa alla yrkesområden
+              Rensa allt
             </button>
           </div>
           <div className="job-filter-top-row-right">
@@ -120,7 +121,7 @@ export default function JobGroupFilter({ onClose, onApply }) {
               className="job-filter-text-button"
               onClick={rensaYrkesgrupper}
             >
-              Rensa alla yrkesgrupper
+              Rensa yrkesgrupper
             </button>
             <button
               type="button"
@@ -137,7 +138,12 @@ export default function JobGroupFilter({ onClose, onApply }) {
         <div className="job-filter-header">
           {/* Left header */}
           <div className="job-filter-header-left">
+            <DigiFormLabel
+              afLabel="Sök yrkesområde eller yrkesgrupp"
+              afFor="job-filter-search"
+            ></DigiFormLabel>
             <DigiFormInput
+              id="job-filter-search"
               afLabel="Sök yrkesområde eller yrkesgrupp"
               afVariation="medium"
               afType="text"
