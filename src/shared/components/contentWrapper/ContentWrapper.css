@@ -81,6 +81,11 @@
   color: #b9eb55;
 }
 
+.shell-reset-link--hidden {
+  visibility: hidden;
+  pointer-events: none;
+}
+
 .shell-form-container {
   padding: 4px 0 28px;
   display: flex;
