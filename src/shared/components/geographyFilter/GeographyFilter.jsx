@@ -3,6 +3,7 @@ import {
   DigiFormCheckbox,
   DigiFormInput,
   DigiIconChevronRight,
+  DigiIconX,
 } from '@designsystem-se/af-react'
 import { useMemo, useState } from 'react'
 import { useGeographyData } from '../../hooks/useGeographyData'
@@ -26,6 +27,7 @@ export default function GeoFilter({ onClose, onApply }) {
 
   const allLanSelected =
     allLanNames.length > 0 && selectedLan.size === allLanNames.length
+
   const allKommunerSelected =
     activeLan &&
     lanData[activeLan]?.length > 0 &&
@@ -99,134 +101,128 @@ export default function GeoFilter({ onClose, onApply }) {
         role="dialog"
         aria-label="Välj geografisk filtrering"
       >
-        {/* Body */}
-        <div className="geo-filter-body">
-          {/* Vänster: Länslista */}
-          <div className="geo-filter-lan-col">
-            <div className="geo-filter-lan-col-header">
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'flex-start',
-                  alignSelf: 'stretch',
-                }}
-              >
-                <DigiButton
-                  afSize="small"
-                  afVariation="function"
-                  afFullWidth={false}
-                  onClick={rensaAllt}
-                >
-                  Rensa
-                </DigiButton>
-              </div>
-              <DigiFormInput
-                afLabel="Sök län eller kommun"
-                placeholder="Sök..."
-                afVariation="medium"
-                afType="text"
-                afValidation="neutral"
-                afValue={search}
-                onAfOnInput={(e) => setSearch(e.detail.target.value)}
+        {/* Top-row */}
+        <div className="geo-filter-top-row">
+          <div className="geo-filter-top-row-left">
+            <button
+              type="button"
+              className="geo-filter-text-button"
+              onClick={rensaAllt}
+            >
+              Rensa alla län
+            </button>
+          </div>
+          <div className="geo-filter-top-row-right">
+            <button
+              type="button"
+              className="geo-filter-text-button"
+              onClick={rensaKommuner}
+            >
+              Rensa alla kommuner
+            </button>
+            <button
+              type="button"
+              className="geo-filter-close-button"
+              onClick={() => onClose?.()}
+            >
+              <span>Stäng</span>
+              <DigiIconX />
+            </button>
+          </div>
+        </div>
+
+        {/* Header-row */}
+        <div className="geo-filter-header">
+          {/* Left header */}
+          <div className="geo-filter-header-left">
+            <DigiFormInput
+              afLabel="Sök län eller kommun"
+              afVariation="medium"
+              afType="text"
+              afValidation="neutral"
+              afValue={search}
+              onAfOnInput={(e) => setSearch(e.detail.target.value)}
+            />
+            <div className="geo-filter-check-row">
+              <DigiFormCheckbox
+                afLabel="Välj alla län"
+                afVariation="primary"
+                afChecked={!!allLanSelected}
+                afDisabled={allLanNames.length === 0}
+                onAfOnChange={(e) => toggleAllaLan(e.detail.target.checked)}
               />
             </div>
+          </div>
 
+          {/* Right header */}
+          <div className="geo-filter-header-right">
             <div className="geo-filter-check-row">
-              <div className="geo-filter-check-row-inner">
-                <DigiFormCheckbox
-                  afLabel="Välj alla län"
-                  afVariation="primary"
-                  afChecked={!!allLanSelected}
-                  onAfOnChange={(e) => toggleAllaLan(e.detail.target.checked)}
-                />
-              </div>
+              <DigiFormCheckbox
+                afLabel="Välj alla kommuner"
+                afVariation="primary"
+                afChecked={!!allKommunerSelected}
+                afDisabled={!activeLan}
+                onAfOnChange={(e) =>
+                  toggleAllaKommuner(e.detail.target.checked)
+                }
+              />
             </div>
+          </div>
+        </div>
 
+        {/* Body-row */}
+        <div className="geo-filter-body">
+          {/* Left: Läns list */}
+          <div className="geo-filter-lan-col">
             <ul
               className="geo-filter-list"
               role="listbox"
               aria-label="Länslista"
             >
-              {filteredLan.map((lan) => (
-                <li
-                  key={lan}
-                  className="geo-filter-lan-item"
-                  onClick={() => setActiveLan(lan)}
-                  role="option"
-                  aria-selected={activeLan === lan}
-                >
-                  <span className="geo-filter-lan-label">{lan}</span>
-                  <div className="geo-filter-lan-indicator">
-                    {lanData[lan]?.some((k) => selectedKommuner.has(k)) && (
-                      <div className="geo-filter-lan-indicator--selected" />
-                    )}
-                  </div>
-                  <DigiIconChevronRight />
-                </li>
-              ))}
+              {filteredLan.map((lan) => {
+                const hasSelectedKommuner = lanData[lan]?.some((k) =>
+                  selectedKommuner.has(k),
+                )
+                const isSelected = selectedLan.has(lan)
+                const isActive = activeLan === lan
+
+                return (
+                  <li
+                    key={lan}
+                    className={[
+                      'geo-filter-lan-item',
+                      isSelected || isActive ? 'geo-filter-lan-item--selected' : '',
+                    ]
+                      .filter(Boolean)
+                      .join(' ')}
+                    onClick={() => {
+                      setActiveLan(lan)
+                      setSelectedLan(new Set([lan]))
+                    }}
+                    role="option"
+                    aria-selected={activeLan === lan}
+                  >
+                    <span className="geo-filter-lan-label">{lan}</span>
+                    <div className="geo-filter-lan-indicator">
+                      {hasSelectedKommuner && (
+                        <div
+                          className={
+                            isSelected
+                              ? 'geo-filter-lan-indicator--selected-white'
+                              : 'geo-filter-lan-indicator--selected'
+                          }
+                        />
+                      )}
+                    </div>
+                    <DigiIconChevronRight />
+                  </li>
+                )
+              })}
             </ul>
           </div>
 
-          {/* Höger: Kommunlista */}
+          {/* Right: Kommun list */}
           <div className="geo-filter-kommun-col">
-            <div className="geo-filter-lan-col-header">
-              <div className="geo-filter-rensa-kommuner-row">
-                <DigiButton
-                  afSize="small"
-                  afVariation="function"
-                  afFullWidth={false}
-                  onClick={rensaKommuner}
-                >
-                  Rensa
-                </DigiButton>
-                <DigiButton
-                  afVariation="function"
-                  afSize="small"
-                  onClick={() => {
-                    handleApply()
-                    onClose()
-                  }}
-                >
-                  Stäng
-                  <span
-                    style={{
-                      display: 'inline-flex',
-                      alignItems: 'center',
-                      marginLeft: '12px',
-                    }}
-                  >
-                    <svg
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        clipRule="evenodd"
-                        d="M20.4972 1.5L22.5 3.50281L14.0024 12L22.5 20.4972L20.4972 22.5L12 14.0024L3.50281 22.5L1.5 20.4972L9.99713 12L1.5 3.50281L3.50281 1.5L12 9.99713L20.4972 1.5Z"
-                        fill="#1616B2"
-                      />
-                    </svg>
-                  </span>
-                </DigiButton>
-              </div>
-              <div className="geo-filter-check-row">
-                <div className="geo-filter-check-kommun-row-inner">
-                  <DigiFormCheckbox
-                    afLabel="Välj alla kommuner"
-                    afVariation="primary"
-                    afChecked={!!allKommunerSelected}
-                    afDisabled={!activeLan}
-                    onAfOnChange={(e) =>
-                      toggleAllaKommuner(e.detail.target.checked)
-                    }
-                  />
-                </div>
-              </div>
-            </div>
-
             {activeLan || allLanSelected ? (
               <ul className="geo-filter-list" aria-label="Kommuner">
                 {(allLanSelected
@@ -246,9 +242,24 @@ export default function GeoFilter({ onClose, onApply }) {
                 ))}
               </ul>
             ) : (
-              <p className="geo-filter-hint"> </p>
+              <p className="geo-filter-hint">
+                Välj ett län för att se kommuner
+              </p>
             )}
           </div>
+        </div>
+
+        {/* Footer */}
+        <div className="geo-filter-footer">
+          <button
+            className="geo-filter-footer-btn"
+            onClick={() => {
+              handleApply()
+              onClose?.()
+            }}
+          >
+            Lägg till och stäng
+          </button>
         </div>
       </div>
     </div>

@@ -3,6 +3,7 @@ import {
   DigiFormCheckbox,
   DigiFormInput,
   DigiIconChevronRight,
+  DigiIconX,
 } from '@designsystem-se/af-react'
 import { useMemo, useState } from 'react'
 import { useJobData } from '../../hooks/useJobData'
@@ -102,135 +103,128 @@ export default function JobGroupFilter({ onClose, onApply }) {
         role="dialog"
         aria-label="Välj yrkesfiltrering"
       >
-        {/* Body */}
-        <div className="job-filter-body">
-          {/* Vänster: Yrkesområdeslista */}
-          <div className="job-filter-area-col">
-            <div className="job-filter-area-col-header">
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'flex-start',
-                  alignSelf: 'stretch',
-                }}
-              >
-                <DigiButton
-                  afSize="small"
-                  afVariation="function"
-                  afFullWidth={false}
-                  onClick={rensaAllt}
-                >
-                  Rensa
-                </DigiButton>
-              </div>
-              <DigiFormInput
-                afLabel="Sök yrkesområde eller yrkesgrupp"
-                placeholder="Sök..."
-                afVariation="medium"
-                afType="text"
-                afValidation="neutral"
-                afValue={search}
-                onAfOnInput={(e) => setSearch(e.detail.target.value)}
+        {/* Top-row */}
+        <div className="job-filter-top-row">
+          <div className="job-filter-top-row-left">
+            <button
+              type="button"
+              className="job-filter-text-button"
+              onClick={rensaAllt}
+            >
+              Rensa alla yrkesområden
+            </button>
+          </div>
+          <div className="job-filter-top-row-right">
+            <button
+              type="button"
+              className="job-filter-text-button"
+              onClick={rensaYrkesgrupper}
+            >
+              Rensa alla yrkesgrupper
+            </button>
+            <button
+              type="button"
+              className="job-filter-close-button"
+              onClick={() => onClose?.()}
+            >
+              <span>Stäng</span>
+              <DigiIconX />
+            </button>
+          </div>
+        </div>
+
+        {/* Header */}
+        <div className="job-filter-header">
+          {/* Left header */}
+          <div className="job-filter-header-left">
+            <DigiFormInput
+              afLabel="Sök yrkesområde eller yrkesgrupp"
+              afVariation="medium"
+              afType="text"
+              afValidation="neutral"
+              afValue={search}
+              onAfOnInput={(e) => setSearch(e.detail.target.value)}
+            />
+            <div className="job-filter-check-row">
+              <DigiFormCheckbox
+                afLabel="Välj alla yrkesområden"
+                afVariation="primary"
+                afChecked={!!allAreasSelected}
+                afDisabled={allAreaNames.length === 0}
+                onAfOnChange={(e) => toggleAllaAreas(e.detail.target.checked)}
               />
             </div>
+          </div>
 
+          {/* Right header */}
+          <div className="job-filter-header-right">
             <div className="job-filter-check-row">
-              <div className="job-filter-check-row-inner">
-                <DigiFormCheckbox
-                  afLabel="Välj alla yrkesområden"
-                  afVariation="primary"
-                  afChecked={!!allAreasSelected}
-                  afDisabled={allAreaNames.length === 0}
-                  onAfOnChange={(e) => toggleAllaAreas(e.detail.target.checked)}
-                />
-              </div>
+              <DigiFormCheckbox
+                afLabel="Välj alla yrkesgrupper"
+                afVariation="primary"
+                afChecked={!!allGroupsSelected}
+                afDisabled={!activeArea}
+                onAfOnChange={(e) =>
+                  toggleAllaGroups(e.detail.target.checked)
+                }
+              />
             </div>
+          </div>
+        </div>
 
+        {/* Body-row */}
+        <div className="job-filter-body">
+          {/* Left: Yrkesområdes list */}
+          <div className="job-filter-area-col">
             <ul
               className="job-filter-list"
               role="listbox"
               aria-label="Yrkesområdeslista"
             >
-              {filteredAreas.map((area) => (
-                <li
-                  key={area}
-                  className="job-filter-area-item"
-                  onClick={() => setActiveArea(area)}
-                  role="option"
-                  aria-selected={activeArea === area}
-                >
-                  <span className="job-filter-area-label">{area}</span>
-                  <div className="job-filter-area-indicator">
-                    {jobData[area]?.some((g) => selectedGroups.has(g)) && (
-                      <div className="job-filter-area-indicator--selected" />
-                    )}
-                  </div>
-                  <DigiIconChevronRight />
-                </li>
-              ))}
+              {filteredAreas.map((area) => {
+                const hasSelectedGroups = jobData[area]?.some((g) =>
+                  selectedGroups.has(g),
+                )
+                const isSelected = selectedAreas.has(area)
+                const isActive = activeArea === area
+
+                return (
+                  <li
+                    key={area}
+                    className={[
+                      'job-filter-area-item',
+                      isSelected || isActive ? 'job-filter-area-item--selected' : '',
+                    ]
+                      .filter(Boolean)
+                      .join(' ')}
+                    onClick={() => {
+                      setActiveArea(area)
+                      setSelectedAreas(new Set([area]))
+                    }}
+                    role="option"
+                    aria-selected={activeArea === area}
+                  >
+                    <span className="job-filter-area-label">{area}</span>
+                    <div className="job-filter-area-indicator">
+                      {hasSelectedGroups && (
+                        <div
+                          className={
+                            isSelected
+                              ? 'job-filter-area-indicator--selected-white'
+                              : 'job-filter-area-indicator--selected'
+                          }
+                        />
+                      )}
+                    </div>
+                    <DigiIconChevronRight />
+                  </li>
+                )
+              })}
             </ul>
           </div>
 
-          {/* Höger: Yrkesgruppslista */}
+          {/* Right: Yrkesgrupps list */}
           <div className="job-filter-group-col">
-            <div className="job-filter-area-col-header">
-              <div className="job-filter-rensa-groups-row">
-                <DigiButton
-                  afSize="small"
-                  afVariation="function"
-                  afFullWidth={false}
-                  onClick={rensaYrkesgrupper}
-                >
-                  Rensa
-                </DigiButton>
-                <DigiButton
-                  afVariation="function"
-                  afSize="small"
-                  onClick={() => {
-                    handleApply()
-                    onClose()
-                  }}
-                >
-                  Stäng
-                  <span
-                    style={{
-                      display: 'inline-flex',
-                      alignItems: 'center',
-                      marginLeft: '12px',
-                    }}
-                  >
-                    <svg
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        clipRule="evenodd"
-                        d="M20.4972 1.5L22.5 3.50281L14.0024 12L22.5 20.4972L20.4972 22.5L12 14.0024L3.50281 22.5L1.5 20.4972L9.99713 12L1.5 3.50281L3.50281 1.5L12 9.99713L20.4972 1.5Z"
-                        fill="#1616B2"
-                      />
-                    </svg>
-                  </span>
-                </DigiButton>
-              </div>
-              <div className="job-filter-check-row">
-                <div className="job-filter-check-group-row-inner">
-                  <DigiFormCheckbox
-                    afLabel="Välj alla yrkesgrupper"
-                    afVariation="primary"
-                    afChecked={!!allGroupsSelected}
-                    afDisabled={!activeArea}
-                    onAfOnChange={(e) =>
-                      toggleAllaGroups(e.detail.target.checked)
-                    }
-                  />
-                </div>
-              </div>
-            </div>
-
             {activeArea || allAreasSelected ? (
               <ul className="job-filter-list" aria-label="Yrkesgrupper">
                 {(allAreasSelected
@@ -255,6 +249,19 @@ export default function JobGroupFilter({ onClose, onApply }) {
               </p>
             )}
           </div>
+        </div>
+
+        {/* Footer */}
+        <div className="job-filter-footer">
+          <button
+            className="job-filter-footer-btn"
+            onClick={() => {
+              handleApply()
+              onClose?.()
+            }}
+          >
+            Lägg till och stäng
+          </button>
         </div>
       </div>
     </div>
