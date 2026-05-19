@@ -202,8 +202,8 @@ ul.job-filter-list {
 /* Indicator dot */
 .job-filter-area-indicator {
   display: flex;
-  width: 16px;
-  height: 16px;
+  width: 0.6rem;
+  height: 0.6rem;
   justify-content: center;
   align-items: center;
   flex-shrink: 0;
@@ -211,19 +211,19 @@ ul.job-filter-list {
 
 /* Green dot — area not selected but has selected groups */
 .job-filter-area-indicator--selected {
-  width: 16px;
-  height: 16px;
+  width: 0.6rem;
+  height: 0.6rem;
   flex-shrink: 0;
-  border-radius: 16px;
+  border-radius: 0.6rem;
   background: #009322;
 }
 
 /* White dot — area is selected (green background) and has selected groups */
 .job-filter-area-indicator--selected-white {
-  width: 16px;
-  height: 16px;
+  width: 0.6rem;
+  height: 0.6rem;
   flex-shrink: 0;
-  border-radius: 16px;
+  border-radius: 0.6rem;
   background: #fff;
 }
 
