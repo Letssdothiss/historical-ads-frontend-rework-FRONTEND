@@ -116,21 +116,15 @@ export default function JobGroupFilter({ onClose, onApply }) {
             </button>
           </div>
           <div className="job-filter-top-row-right">
-            <button
-              type="button"
-              className="job-filter-text-button"
-              onClick={rensaYrkesgrupper}
-            >
-              Rensa yrkesgrupper
-            </button>
-            <button
-              type="button"
-              className="job-filter-close-button"
-              onClick={() => onClose?.()}
-            >
-              <span>Stäng</span>
-              <DigiIconX />
-            </button>
+            {activeArea && (
+              <button
+                type="button"
+                className="job-filter-text-button"
+                onClick={rensaYrkesgrupper}
+              >
+                {`Rensa yrkesgrupper inom ${activeArea}`}
+              </button>
+            )}
           </div>
         </div>
 
@@ -166,13 +160,11 @@ export default function JobGroupFilter({ onClose, onApply }) {
           <div className="job-filter-header-right">
             <div className="job-filter-check-row">
               <DigiFormCheckbox
-                afLabel="Välj alla yrkesgrupper"
+                afLabel={activeArea ? `Välj alla yrkesgrupper inom ${activeArea}` : 'Välj alla yrkesgrupper'}
                 afVariation="primary"
                 afChecked={!!allGroupsSelected}
                 afDisabled={!activeArea}
-                onAfOnChange={(e) =>
-                  toggleAllaGroups(e.detail.target.checked)
-                }
+                onAfOnChange={(e) => toggleAllaGroups(e.detail.target.checked)}
               />
             </div>
           </div>
@@ -250,9 +242,7 @@ export default function JobGroupFilter({ onClose, onApply }) {
                 ))}
               </ul>
             ) : (
-              <p className="job-filter-hint">
-                Välj ett yrkesområde för att se yrkesgrupper
-              </p>
+              <p className="job-filter-hint"></p>
             )}
           </div>
         </div>
@@ -260,7 +250,13 @@ export default function JobGroupFilter({ onClose, onApply }) {
         {/* Footer */}
         <div className="job-filter-footer">
           <button
-            className="job-filter-footer-btn"
+            className="job-filter-footer-btn job-filter-footer-btn--secondary"
+            onClick={() => onClose?.()}
+          >
+            Stäng
+          </button>
+          <button
+            className="job-filter-footer-btn job-filter-footer-btn--primary"
             onClick={() => {
               handleApply()
               onClose?.()
