@@ -30,6 +30,7 @@ export default function StatisticsResultsPage() {
   const params = readUiParamsFromUrl(searchParams)
 
   const [data, setData] = useState([])
+  const [yearResults, setYearResults] = useState([])
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState(null)
   const [adjustOpen, setAdjustOpen] = useState(false)
@@ -39,9 +40,10 @@ export default function StatisticsResultsPage() {
     setIsLoading(true)
     setError(null)
     fetchStatistics(params)
-      .then((yearResults) => {
+      .then((results) => {
         if (!alive) return
-        setData(mapStatisticsResponse(yearResults))
+        setYearResults(results)
+        setData(mapStatisticsResponse(results))
       })
       .catch((err) => alive && setError(err))
       .finally(() => alive && setIsLoading(false))
@@ -93,6 +95,7 @@ export default function StatisticsResultsPage() {
         {!isLoading && !error && (
           <StatisticsChartPanel
             data={data}
+            yearResults={yearResults}
             searchParams={{
               kompetens: params.q,
               lan: params.lan,
