@@ -121,8 +121,10 @@ function StatisticsChartPanel({ data = [], yearResults = [], searchParams = {} }
     })
   }, [isPivoted, activeData])
 
-  const years =
-    pivotedData.length > 0 ? Object.keys(pivotedData[0]).filter((k) => k !== 'lan') : []
+  const years = useMemo(
+    () => pivotedData.length > 0 ? Object.keys(pivotedData[0]).filter((k) => k !== 'lan') : [],
+    [pivotedData],
+  )
   const rowLabel = isPivoted ? 'År' : showMonths ? 'Månad' : 'Län'
   const searchSummary = buildSummary(searchParams)
   const displayData = enhet === 'andel' ? toAndel(pivotedData) : pivotedData
