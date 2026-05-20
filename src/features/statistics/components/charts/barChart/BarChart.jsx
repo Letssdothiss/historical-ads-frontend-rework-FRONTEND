@@ -1,16 +1,15 @@
 import './BarChart.css'
 import { DigiBarChart } from '@designsystem-se/af-react'
 import { BarChartVariation } from '@designsystem-se/af'
-import { toChartData } from '../../../utils/StatisticsTransformers'
+import { toBarChartData } from '../../../utils/StatisticsTransformers'
 
 function BarChart({ data, stacked = false }) {
-  const chartData = toChartData(data)
+  const chartData = toBarChartData(data)
 
   if (!chartData) {
     return (
       <p>
-        Välj minst två tidsperioder (t.ex. två årtal) för att kunna visa
-        diagrammet.
+        Välj minst två geografiska områden för att kunna visa diagrammet.
       </p>
     )
   }

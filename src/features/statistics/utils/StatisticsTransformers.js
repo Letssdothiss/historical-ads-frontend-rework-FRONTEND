@@ -1,4 +1,34 @@
-// Converts flat row data [{lan, '2024': n, '2025': n}] to ChartLineData format
+// Converts flat row data to bar chart format: x-axis = regions, series = years.
+// This is the correct structure for DigiBarChart (Vertical/Stacked).
+export function toBarChartData(data, options = {}) {
+  const { title = 'Statistik', xLabel = 'Område', yLabel = 'Antal annonser' } = options
+  if (!data || !Array.isArray(data) || data.length === 0) return null
+  if (!data[0] || typeof data[0] !== 'object') return null
+
+  const years = Object.keys(data[0]).filter((k) => k !== 'lan' && k !== 'title')
+  if (years.length === 0) return null
+
+  const rows = data.filter((row) => row && row.lan)
+  // digi-bar-chart accesses xScale.domain()[1] on resize; need at least 2 x values.
+  if (rows.length < 2) return null
+
+  return {
+    title,
+    x: xLabel,
+    y: yLabel,
+    data: {
+      xValues: rows.map((_, i) => i),
+      xValueNames: rows.map((row) => row.lan),
+      series: years.map((year) => ({
+        title: year,
+        yValues: rows.map((row) => Number(row[year]) || 0),
+      })),
+    },
+  }
+}
+
+// Converts flat row data [{lan, '2024': n, '2025': n}] to ChartLineData format.
+// x-axis = years, series = regions — used for line charts.
 export function toChartData(data, options = {}) {
   const {
     title = 'Statistik',

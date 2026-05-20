@@ -38,62 +38,39 @@ function toBaseApiParams(params = {}) {
 
 export async function fetchStatistics(params) {
   const years = params?.ar?.length > 0 ? params.ar : null
-  const apiParams = toBaseApiParams(params)
+  const baseParams = toBaseApiParams(params)
 
-  // Add years if specified - backend will use per-year aggregation
-  if (years?.length > 0) {
-    apiParams.years = years
-  }
+  if (years) {
+    const apiParams = {
+      ...baseParams,
+      aggregate: 'year_region',
+      years: years.join(','),
+    }
+    console.log('[StatisticsApi] Hämtar med aggregate=year_region:', apiParams)
+    const raw = await get('/stats', apiParams)
+    console.log('[StatisticsApi] Svar:', raw)
 
-  console.log(
-    '[StatisticsApi.fetchStatistics] Fetching with params:',
-    apiParams,
-  )
-
-  try {
-    const response = await get('/stats', apiParams)
-    console.log('[StatisticsApi] Response:', response)
-
-    // Backend now returns stats_by_year with pre-computed region/month counts
-    // Format: { stats_by_year: { "2024": { region: [...], month: [...], total_occurrences }, ... } }
-    if (response.stats_by_year) {
-      const results = Object.entries(response.stats_by_year).map(
-        ([year, yearStats]) => {
-          // Transform backend format to mapper format
-          // yearStats has: { region: [...], month: [...], total_occurrences }
-          // Mapper expects: { stats: { region: [...] } }
-          return {
-            year,
-            raw: {
-              stats: yearStats, // Already has region, month, total_occurrences
-            },
-          }
+    const statsByYear = raw?.stats_by_year
+    if (statsByYear) {
+      return years.map((year) => ({
+        year: String(year),
+        raw: {
+          stats: {
+            region: statsByYear[String(year)]?.region ?? [],
+            month: statsByYear[String(year)]?.month ?? [],
+          },
         },
-      )
-
-      console.log('[StatisticsApi] Transformed results:', results)
-      console.log(
-        '[StatisticsApi] Aggregation source:',
-        response.aggregation_source,
-      )
-      if (response.meta) {
-        console.log('[StatisticsApi] Meta:', response.meta)
-      }
-
-      return results
+      }))
     }
 
-    // Fallback for single year or no year - regular stats format
-    return [
-      {
-        year: years?.length === 1 ? years[0] : 'Totalt',
-        raw: response,
-      },
-    ]
-  } catch (err) {
-    console.error('[StatisticsApi] Error fetching statistics:', err)
-    throw err
+    // Fallback om backend returnerar gammalt format
+    return [{ year: 'Totalt', raw }]
   }
+
+  console.log('[StatisticsApi] Hämtar totalt (inget år valt):', baseParams)
+  const raw = await get('/stats', baseParams)
+  console.log('[StatisticsApi] Svar totalt:', raw)
+  return [{ year: 'Totalt', raw }]
 }
 
 export async function exportStatistics(params, format) {

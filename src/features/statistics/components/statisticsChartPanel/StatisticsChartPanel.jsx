@@ -16,6 +16,7 @@ import {
 } from '@designsystem-se/af-react'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { exportStatistics } from '../../api/StatisticsApi'
+import { mapStatisticsByMonth } from '../../api/StatisticsMapper'
 import { toAndel } from '../../utils/StatisticsTransformers'
 import BarChart from '../charts/barChart/BarChart'
 import LineChart from '../charts/lineChart/LineChart'
@@ -57,7 +58,7 @@ function buildSummary(params) {
   return parts.length > 0 ? parts.join(' — ') : 'Sökresultat'
 }
 
-function StatisticsChartPanel({ data = [], searchParams = {} }) {
+function StatisticsChartPanel({ data = [], yearResults = [], searchParams = {} }) {
   const [visning, setVisning] = useState('tabell')
   const [enhet, setEnhet] = useState('antal')
   const [pivot, setPivot] = useState(null)
@@ -91,19 +92,49 @@ function StatisticsChartPanel({ data = [], searchParams = {} }) {
     return () => document.removeEventListener('mousedown', onDocClick)
   }, [presentationOpen, exportOpen])
 
+  const showMonths = detailLevels.includes('manader')
+
+  const monthDataAvailable = useMemo(
+    () => yearResults.some(({ raw }) => (raw?.stats?.month ?? raw?.month)?.length > 0),
+    [yearResults],
+  )
+
+  const activeData = useMemo(
+    () => (showMonths && monthDataAvailable ? mapStatisticsByMonth(yearResults) : data),
+    [showMonths, monthDataAvailable, yearResults, data],
+  )
+
+  const isPivoted = pivot === 'medsols' || pivot === 'manuellt'
+
+  useEffect(() => {
+    setSortCol(null)
+    setSortDir('desc')
+  }, [isPivoted])
+
+  const pivotedData = useMemo(() => {
+    if (!isPivoted || activeData.length === 0) return activeData
+    const cols = Object.keys(activeData[0]).filter(k => k !== 'lan')
+    return cols.map(col => {
+      const row = { lan: col }
+      activeData.forEach(r => { row[r.lan] = r[col] })
+      return row
+    })
+  }, [isPivoted, activeData])
+
   const years =
-    data.length > 0 ? Object.keys(data[0]).filter((k) => k !== 'lan') : []
+    pivotedData.length > 0 ? Object.keys(pivotedData[0]).filter((k) => k !== 'lan') : []
+  const rowLabel = isPivoted ? 'År' : showMonths ? 'Månad' : 'Län'
   const searchSummary = buildSummary(searchParams)
-  const displayData = enhet === 'andel' ? toAndel(data) : data
+  const displayData = enhet === 'andel' ? toAndel(pivotedData) : pivotedData
   const totalAnnonser = useMemo(
     () =>
-      data.reduce(
+      pivotedData.reduce(
         (sum, row) =>
           sum +
           years.reduce((rowSum, y) => rowSum + (Number(row[y]) || 0), 0),
         0,
       ),
-    [data, years],
+    [pivotedData, years],
   )
 
   const sortedData = useMemo(() => {
@@ -369,13 +400,19 @@ function StatisticsChartPanel({ data = [], searchParams = {} }) {
       </div>
 
       <div className="statistics-chart-panel__content">
-        {data.length === 0 && (
+        {showMonths && !monthDataAvailable && (
+          <p className="statistics-chart-panel__empty">
+            Månadsvy är inte tillgänglig — backend stöder inte månadsaggregering ännu. Visar årsdata istället.
+          </p>
+        )}
+
+        {activeData.length === 0 && !showMonths && (
           <p className="statistics-chart-panel__empty">
             Inga resultat för den valda sökningen.
           </p>
         )}
 
-        {data.length > 0 && visning === 'tabell' && (
+        {activeData.length > 0 && visning === 'tabell' && (
           <DigiTable afVariation={TableVariation.PRIMARY}>
             <table>
               <thead>
@@ -385,7 +422,7 @@ function StatisticsChartPanel({ data = [], searchParams = {} }) {
                       className="statistics-chart-panel__sort-btn"
                       onClick={() => handleSort('lan')}
                     >
-                      Län{sortIcon('lan')}
+                      {rowLabel}{sortIcon('lan')}
                     </button>
                   </th>
                   {years.map((y) => (
@@ -428,12 +465,12 @@ function StatisticsChartPanel({ data = [], searchParams = {} }) {
           </DigiTable>
         )}
 
-        {data.length > 0 &&
+        {activeData.length > 0 &&
           (visning === 'kolumn' || visning === 'stapel') && (
             <BarChart data={displayData} stacked={visning === 'stapel'} />
           )}
 
-        {data.length > 0 && visning === 'linje' && (
+        {activeData.length > 0 && visning === 'linje' && (
           <LineChart data={displayData} />
         )}
       </div>

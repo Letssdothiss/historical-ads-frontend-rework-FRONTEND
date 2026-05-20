@@ -6,6 +6,48 @@
 // Den här funktionen omvandlar det till internt radformat:
 // [{ lan: 'Stockholms län', '2024': 1380100, '2025': 1450000 }, ...]
 
+const MONTH_NAMES = [
+  'Januari','Februari','Mars','April','Maj','Juni',
+  'Juli','Augusti','September','Oktober','November','December',
+]
+
+function parseMonthLabel(label) {
+  // "2024-01" → "Januari"
+  if (/^\d{4}-\d{2}$/.test(label)) {
+    return MONTH_NAMES[parseInt(label.split('-')[1], 10) - 1] ?? label
+  }
+  // "01" eller "1" → "Januari"
+  if (/^\d{1,2}$/.test(label)) {
+    return MONTH_NAMES[parseInt(label, 10) - 1] ?? label
+  }
+  return label
+}
+
+export function mapStatisticsByMonth(yearResults) {
+  console.log('[StatisticsMapper] mapStatisticsByMonth indata:', yearResults)
+  if (!Array.isArray(yearResults) || yearResults.length === 0) return []
+
+  const monthMap = new Map()
+
+  for (const { year, raw } of yearResults) {
+    if (raw?.error) continue
+    const months = raw?.stats?.month ?? raw?.month ?? []
+    console.log(`[StatisticsMapper] månadsdata år="${year}":`, months)
+
+    for (const { label, occurrences } of months) {
+      const monthName = parseMonthLabel(label)
+      if (!monthMap.has(monthName)) {
+        monthMap.set(monthName, { lan: monthName })
+      }
+      monthMap.get(monthName)[year] = occurrences
+    }
+  }
+
+  const result = Array.from(monthMap.values())
+  console.log('[StatisticsMapper] mapStatisticsByMonth resultat:', result)
+  return result
+}
+
 export function mapStatisticsResponse(yearResults) {
   console.log('[StatisticsMapper] Inkommande yearResults:', yearResults)
 
