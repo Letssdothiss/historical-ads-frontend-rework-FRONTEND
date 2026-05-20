@@ -41,22 +41,30 @@ export async function fetchStatistics(params) {
   const baseParams = toBaseApiParams(params)
 
   if (years) {
-    console.log('[StatisticsApi] Hämtar per år:', years, '— basparams:', baseParams)
-    const results = await Promise.all(
-      years.map(async (year) => {
-        const apiParams = {
-          ...baseParams,
-          published_after: `${year}-01-01`,
-          published_before: `${year}-12-31`,
-        }
-        console.log(`[StatisticsApi] Anrop för år ${year}:`, apiParams)
-        const raw = await get('/stats', apiParams)
-        console.log(`[StatisticsApi] Svar för år ${year}:`, raw)
-        return { year: String(year), raw }
-      }),
-    )
-    console.log('[StatisticsApi] Alla år klara:', results)
-    return results
+    const apiParams = {
+      ...baseParams,
+      aggregate: 'year_region',
+      years: years.join(','),
+    }
+    console.log('[StatisticsApi] Hämtar med aggregate=year_region:', apiParams)
+    const raw = await get('/stats', apiParams)
+    console.log('[StatisticsApi] Svar:', raw)
+
+    const statsByYear = raw?.stats_by_year
+    if (statsByYear) {
+      return years.map((year) => ({
+        year: String(year),
+        raw: {
+          stats: {
+            region: statsByYear[String(year)]?.region ?? [],
+            month: statsByYear[String(year)]?.month ?? [],
+          },
+        },
+      }))
+    }
+
+    // Fallback om backend returnerar gammalt format
+    return [{ year: 'Totalt', raw }]
   }
 
   console.log('[StatisticsApi] Hämtar totalt (inget år valt):', baseParams)
