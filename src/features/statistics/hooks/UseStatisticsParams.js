@@ -22,7 +22,11 @@ export function useStatisticsParams() {
     setSearchParams(next)
   }
 
-  const hasParams = params.lan.length > 0 || params.ar.length > 0 || params.yrkesgrupp.length > 0 || params.kompetens
+  const hasParams =
+    params.lan.length > 0 ||
+    params.ar.length > 0 ||
+    params.yrkesgrupp.length > 0 ||
+    Boolean(params.kompetens)
 
   return { params, setParams, hasParams }
 }
