@@ -32,6 +32,7 @@
   grid-column: 1 / -1;
   display: grid;
   grid-template-columns: 1fr 1fr;
+  height: 2.75rem;
 }
 
 .job-filter-top-row-left {
@@ -39,16 +40,25 @@
   align-items: center;
   padding: 0.625rem 1rem;
   border-right: 1px solid #DDD;
+  min-height: 2.75rem;
+  box-sizing: border-box;
 }
 
 .job-filter-top-row-right {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  position: relative;
   padding: 0.625rem 1rem;
 }
 
+.job-filter-top-row-right .job-filter-text-button {
+  position: absolute;
+  top: 0.625rem;
+  left: 1rem;
+  right: 1rem;
+  text-align: left;
+}
+
 .job-filter-text-button {
+  text-align: left;
   appearance: none;
   border: 0;
   background: transparent;
@@ -230,7 +240,7 @@ ul.job-filter-list {
 .job-filter-group-item {
   display: flex;
   padding-bottom: 0px;
-  align-items: flex-start;
+  align-items: baseline;
   gap: 0.5rem;
   align-self: stretch;
   padding-left: 1.5rem;
@@ -240,6 +250,14 @@ ul.job-filter-list {
   font-style: normal;
   font-weight: 400;
   line-height: 1.6875rem;
+}
+
+.job-filter-group-item label {
+  flex: 1;
+  min-width: 0;
+  text-align: left;
+  padding-top: 2px;
+  line-height: 1.2rem;
 }
 
 .job-filter-hint {
