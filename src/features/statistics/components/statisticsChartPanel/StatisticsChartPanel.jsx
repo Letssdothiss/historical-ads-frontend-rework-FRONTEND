@@ -5,6 +5,7 @@ import {
 } from '@designsystem-se/af'
 import {
   DigiButton,
+  DigiFormCheckbox,
   DigiFormRadiobutton,
   DigiFormRadiogroup,
   DigiIconBookmarkOutline,
@@ -289,34 +290,24 @@ function StatisticsChartPanel({ data = [], yearResults = [], searchParams = {} }
 
                 {activePresentationSection === 'pivot' &&
                   PIVOT_OPTIONS.map((opt) => (
-                    <label
+                    <DigiFormCheckbox
                       key={opt.id}
+                      afLabel={opt.label}
+                      afChecked={pivot === opt.id}
+                      onAfOnChange={() => setPivot(pivot === opt.id ? null : opt.id)}
                       className="statistics-chart-panel__menu-check"
-                    >
-                      <input
-                        type="checkbox"
-                        checked={pivot === opt.id}
-                        onChange={() =>
-                          setPivot(pivot === opt.id ? null : opt.id)
-                        }
-                      />
-                      <span>{opt.label}</span>
-                    </label>
+                    />
                   ))}
 
                 {activePresentationSection === 'detalj' &&
                   DETAIL_LEVELS.map((opt) => (
-                    <label
+                    <DigiFormCheckbox
                       key={opt.id}
+                      afLabel={opt.label}
+                      afChecked={detailLevels.includes(opt.id)}
+                      onAfOnChange={() => toggleDetailLevel(opt.id)}
                       className="statistics-chart-panel__menu-check"
-                    >
-                      <input
-                        type="checkbox"
-                        checked={detailLevels.includes(opt.id)}
-                        onChange={() => toggleDetailLevel(opt.id)}
-                      />
-                      <span>{opt.label}</span>
-                    </label>
+                    />
                   ))}
               </div>
             </div>
@@ -368,14 +359,16 @@ function StatisticsChartPanel({ data = [], yearResults = [], searchParams = {} }
                 ))}
               </ul>
               {exportFormat && (
-                <button
-                  type="button"
-                  className="statistics-chart-panel__export-confirm"
-                  onClick={() => handleExport(exportFormat)}
-                  disabled={exporting}
-                >
-                  Exportera
-                </button>
+                <div className="statistics-chart-panel__export-confirm">
+                  <DigiButton
+                    afVariation={ButtonVariation.PRIMARY}
+                    afType={ButtonType.BUTTON}
+                    onAfOnClick={() => handleExport(exportFormat)}
+                    afDisabled={exporting}
+                  >
+                    Exportera
+                  </DigiButton>
+                </div>
               )}
             </div>
           )}
