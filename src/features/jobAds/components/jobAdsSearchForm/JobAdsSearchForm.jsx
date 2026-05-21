@@ -16,6 +16,7 @@ import {
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import CompetencySearch from '../../../../shared/components/competencySearch/CompetencySearch'
+import Dropdown from '../../../../shared/components/dropdown/Dropdown'
 import EmploymentFactsPicker from '../../../../shared/components/employmentFactsPicker/EmploymentFactsPicker'
 import GeographyFilter from '../../../../shared/components/geographyFilter/GeographyFilter'
 import InfoTooltip from '../../../../shared/components/infoTooltip/InfoTooltip'
@@ -102,51 +103,73 @@ export default function JobAdsSearchForm() {
       </div>
 
       <div className="job-ads-search-form__filters">
-        <div className="job-ads-search-form__filter-cell">
-          <DigiButton
-            afVariation={ButtonVariation.SECONDARY}
-            afSize={ButtonSize.MEDIUM}
-            afFullWidth
-            onAfOnClick={() => setGeoOpen(true)}
-          >
-            <div className="job-ads-search-form__filter-trigger">
-              <DigiIconGlobeFilled />
-              <span>{geoLabel}</span>
-              <DigiIconChevronDown />
-              {hasGeoSelection && (
-                <span
-                  className="job-ads-search-form__trigger-dot"
-                  aria-hidden="true"
-                />
-              )}
-            </div>
-          </DigiButton>
-        </div>
+        <Dropdown
+                  isOpen={geoOpen}
+                  onClose={() => setGeoOpen(false)}
+                  trigger={
+                    <DigiButton
+                      afVariation={ButtonVariation.SECONDARY}
+                      afSize={ButtonSize.MEDIUM}
+                      afFullWidth
+                      onAfOnClick={() => setGeoOpen((open) => !open)}
+                    >
+                      <div className="job-ads-search-form__filter-trigger">
+                        <DigiIconGlobeFilled />
+                        <span>{geoLabel}</span>
+                        <DigiIconChevronDown />
+                        {hasGeoSelection && (
+                          <span
+                            className="job-ads-search-form__trigger-dot"
+                            aria-hidden="true"
+                          />
+                        )}
+                      </div>
+                    </DigiButton>
+                  }
+                >
+                  <GeographyFilter
+                    onClose={() => setGeoOpen(false)}
+                    onApply={({ lan, kommuner }) =>
+                      setGeography({ lan: lan ?? [], kommuner: kommuner ?? [] })
+                    }
+                  />
+                </Dropdown>
 
         <div className="job-ads-search-form__filter-cell">
           <TimePeriodFilter onChange={setTimePeriod} />
         </div>
 
-        <div className="job-ads-search-form__filter-cell">
-          <DigiButton
-            afVariation={ButtonVariation.SECONDARY}
-            afSize={ButtonSize.MEDIUM}
-            afFullWidth
-            onAfOnClick={() => setJobOpen(true)}
-          >
-            <div className="job-ads-search-form__filter-trigger">
-              <DigiIconUserAlt />
-              <span>{jobLabel}</span>
-              <DigiIconChevronDown />
-              {hasJobSelection && (
-                <span
-                  className="job-ads-search-form__trigger-dot"
-                  aria-hidden="true"
-                />
-              )}
-            </div>
-          </DigiButton>
-        </div>
+        <Dropdown
+                  isOpen={jobOpen}
+                  onClose={() => setJobOpen(false)}
+                  trigger={
+                    <DigiButton
+                      afVariation={ButtonVariation.SECONDARY}
+                      afSize={ButtonSize.MEDIUM}
+                      afFullWidth
+                      onAfOnClick={() => setJobOpen((open) => !open)}
+                    >
+                      <div className="job-ads-search-form__filter-trigger">
+                        <DigiIconUserAlt />
+                        <span>{jobLabel}</span>
+                        <DigiIconChevronDown />
+                        {hasJobSelection && (
+                          <span
+                            className="job-ads-search-form__trigger-dot"
+                            aria-hidden="true"
+                          />
+                        )}
+                      </div>
+                    </DigiButton>
+                  }
+                >
+                  <JobGroupFilter
+                    onClose={() => setJobOpen(false)}
+                    onApply={({ areas, groups }) =>
+                      setOccupations({ areas: areas ?? [], groups: groups ?? [] })
+                    }
+                  />
+                </Dropdown>
 
         <div className="job-ads-search-form__filter-cell">
           <EmploymentFactsPicker value={employment} onChange={setEmployment} />
@@ -226,23 +249,6 @@ export default function JobAdsSearchForm() {
           Sök
         </DigiButton>
       </div>
-
-      {geoOpen && (
-        <GeographyFilter
-          onClose={() => setGeoOpen(false)}
-          onApply={({ lan, kommuner }) =>
-            setGeography({ lan: lan ?? [], kommuner: kommuner ?? [] })
-          }
-        />
-      )}
-      {jobOpen && (
-        <JobGroupFilter
-          onClose={() => setJobOpen(false)}
-          onApply={({ areas, groups }) =>
-            setOccupations({ areas: areas ?? [], groups: groups ?? [] })
-          }
-        />
-      )}
     </form>
   )
 }
