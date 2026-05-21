@@ -129,12 +129,14 @@
   flex-shrink: 0;
 }
 
-.statistics-search-form__filter-trigger > span:not(.statistics-search-form__trigger-dot) {
+.statistics-search-form__filter-trigger
+  > span:not(.statistics-search-form__trigger-dot) {
   margin-left: 28px;
   white-space: nowrap;
 }
 
-.statistics-search-form__filter-trigger digi-icon-chevron-down {
+.statistics-search-form__filter-trigger digi-icon-chevron-down,
+.statistics-search-form__filter-trigger digi-icon-chevron-up {
   --digi--icon--width: 14px;
   --digi--icon--height: 14px;
   --digi--icon--color: #1616b2;

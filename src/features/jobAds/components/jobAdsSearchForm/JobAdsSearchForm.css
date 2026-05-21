@@ -98,6 +98,11 @@
   font-weight: 600;
 }
 
+.job-ads-search-form__trigger-wrapper {
+  position: relative;
+  width: 100%;
+}
+
 /* Ensure Digi buttons render their content centered and share the same height */
 .job-ads-search-form digi-button,
 .job-ads-search-form button.digi-button,
@@ -117,12 +122,14 @@
   flex-shrink: 0;
 }
 
-.job-ads-search-form__filter-trigger > span:not(.job-ads-search-form__trigger-dot) {
+.job-ads-search-form__filter-trigger
+  > span:not(.job-ads-search-form__trigger-dot) {
   margin-left: 28px;
   white-space: nowrap;
 }
 
-.job-ads-search-form__filter-trigger digi-icon-chevron-down {
+.job-ads-search-form__filter-trigger digi-icon-chevron-down,
+.job-ads-search-form__filter-trigger digi-icon-chevron-up {
   --digi--icon--width: 14px;
   --digi--icon--height: 14px;
   --digi--icon--color: #1616b2;

@@ -14,7 +14,7 @@ export function useStatisticsParams() {
     const next = new URLSearchParams()
     for (const [key, val] of Object.entries(newParams)) {
       if (Array.isArray(val)) {
-        val.forEach(v => next.append(key, v))
+        val.forEach((v) => next.append(key, v))
       } else if (val) {
         next.set(key, val)
       }

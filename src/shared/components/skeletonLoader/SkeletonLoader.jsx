@@ -1,4 +1,4 @@
-import './SkeletonLoader.css';
+import './SkeletonLoader.css'
 
 /*
  * Skeleton loader component
@@ -21,7 +21,6 @@ function SkeletonLoader() {
       aria-label="Laddar innehåll"
     >
       <div className="skeleton-card">
-
         {/* Placeholder title */}
         <div className="skeleton-title"></div>
 
@@ -31,10 +30,9 @@ function SkeletonLoader() {
         <div className="skeleton-line"></div>
 
         <div className="skeleton-line short"></div>
-
       </div>
     </div>
-  );
+  )
 }
 
-export default SkeletonLoader;
+export default SkeletonLoader

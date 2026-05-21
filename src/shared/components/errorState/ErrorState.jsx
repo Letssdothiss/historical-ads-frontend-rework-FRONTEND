@@ -1,8 +1,6 @@
-import './ErrorState.css';
+import './ErrorState.css'
 
-import {
-  DigiButton,
-} from '@designsystem-se/af-react';
+import { DigiButton } from '@designsystem-se/af-react'
 
 /*
  * Reusable error state component.
@@ -22,38 +20,24 @@ function ErrorState({
   onRetry,
 }) {
   return (
-    <div
-      className="error-state"
-      role="alert"
-      aria-live="polite"
-    >
+    <div className="error-state" role="alert" aria-live="polite">
       {/* Warning icon */}
-      <digi-icon-exclamation-triangle-warning
-        class="error-icon"
-      ></digi-icon-exclamation-triangle-warning>
+      <digi-icon-exclamation-triangle-warning class="error-icon"></digi-icon-exclamation-triangle-warning>
 
       {/* Error heading */}
-      <h2 className="error-title">
-        {title}
-      </h2>
+      <h2 className="error-title">{title}</h2>
 
       {/* Error message */}
-      <p className="error-message">
-        {message}
-      </p>
+      <p className="error-message">{message}</p>
 
       {/* Optional retry button */}
       {onRetry && (
-        <DigiButton
-          afVariation="primary"
-          afType="button"
-          onAfOnClick={onRetry}
-        >
+        <DigiButton afVariation="primary" afType="button" onAfOnClick={onRetry}>
           Försök igen
         </DigiButton>
       )}
     </div>
-  );
+  )
 }
 
-export default ErrorState;
+export default ErrorState
