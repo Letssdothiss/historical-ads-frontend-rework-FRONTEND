@@ -1,10 +1,10 @@
 import { describe, expect, it, vi, beforeEach } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import JobGroupFilter from '../../../../../shared/components/jobGroupFilter/JobGroupFilter'
-import { useJobData } from '../../../../../shared/hooks/useJobData'
+import JobGroupFilter from '../../../components/jobGroupFilter/JobGroupFilter'
+import { useJobData } from '../../../hooks/useJobData'
 
-vi.mock('../../../../../shared/hooks/useJobData')
+vi.mock('../../../hooks/useJobData')
 
 vi.mock('@designsystem-se/af-react', () => ({
   DigiButton: ({ children, onClick, onAfOnClick }) => (
