@@ -12,18 +12,27 @@ vi.mock('@designsystem-se/af-react', () => ({
       {children}
     </button>
   ),
-  DigiFormCheckbox: ({ afLabel, onAfOnChange }) => (
-    <label>
+  DigiFormCheckbox: ({ afLabel, id, onAfOnChange }) =>
+    id ? (
       <input
+        id={id}
         type="checkbox"
-        aria-label={afLabel}
         onChange={(e) =>
           onAfOnChange?.({ detail: { target: { checked: e.target.checked } } })
         }
       />
-      {afLabel}
-    </label>
-  ),
+    ) : (
+      <label>
+        <input
+          type="checkbox"
+          aria-label={afLabel}
+          onChange={(e) =>
+            onAfOnChange?.({ detail: { target: { checked: e.target.checked } } })
+          }
+        />
+        {afLabel}
+      </label>
+    ),
   DigiFormInput: ({ afValue, onAfOnInput }) => (
     <input
       aria-label="Sök yrkesområde eller yrkesgrupp"

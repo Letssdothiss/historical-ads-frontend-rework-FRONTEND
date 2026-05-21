@@ -35,19 +35,19 @@ vi.mock('@designsystem-se/af-react', () => ({
   DigiIconUserAlt: () => null,
 }))
 
-vi.mock('../../../../shared/components/competencySearch/CompetencySearch', () => ({
+vi.mock('../../../../../shared/components/competencySearch/CompetencySearch', () => ({
   default: () => null,
 }))
-vi.mock('../../../../shared/components/employmentFactsPicker/EmploymentFactsPicker', () => ({
+vi.mock('../../../../../shared/components/employmentFactsPicker/EmploymentFactsPicker', () => ({
   default: () => null,
 }))
-vi.mock('../../../../shared/components/geographyFilter/GeographyFilter', () => ({
+vi.mock('../../../../../shared/components/geographyFilter/GeographyFilter', () => ({
   default: () => null,
 }))
-vi.mock('../../../../shared/components/infoTooltip/InfoTooltip', () => ({
+vi.mock('../../../../../shared/components/infoTooltip/InfoTooltip', () => ({
   default: () => null,
 }))
-vi.mock('../../../../shared/components/timePeriodFilter/TimePeriodFilter', () => ({
+vi.mock('../../../../../shared/components/timePeriodFilter/TimePeriodFilter', () => ({
   default: () => null,
 }))
 vi.mock('../../../components/jobGroupFilter/JobGroupFilter', () => ({
@@ -98,7 +98,7 @@ describe('JobAdsSearchForm', () => {
 
     await user.click(screen.getByRole('radio', { name: 'Organisationsnummer' }))
     await user.type(
-      screen.getByLabelText('Organisationsnummer'),
+      screen.getByRole('textbox', { name: 'Organisationsnummer' }),
       '556677-8899',
     )
     await user.click(screen.getByRole('button', { name: 'Sök' }))

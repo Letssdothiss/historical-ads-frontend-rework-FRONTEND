@@ -89,4 +89,42 @@ describe('useJobAdsSearchParams', () => {
     expect(result.current.params.kommuner).toEqual(['Malmö'])
     expect(result.current.path).not.toContain('Gammal')
   })
+
+  it('setJobFilter replaces yrkesomrade and yrkesgrupp', () => {
+    const { result } = renderHook(
+      () => ({
+        params: useJobAdsSearchParams(),
+        path: usePathname(),
+      }),
+      { wrapper: createWrapper('/platsannonser?yrkesomrade=Gammal') },
+    )
+
+    act(() => {
+      result.current.params.setJobFilter({
+        areas: ['IT'],
+        groups: ['Utvecklare'],
+      })
+    })
+
+    expect(result.current.params.yrkesomraden).toEqual(['IT'])
+    expect(result.current.params.yrkesgrupper).toEqual(['Utvecklare'])
+    expect(result.current.path).not.toContain('Gammal')
+  })
+
+  it('setDriversLicense updates korkort in the URL', () => {
+    const { result } = renderHook(
+      () => ({
+        params: useJobAdsSearchParams(),
+        path: usePathname(),
+      }),
+      { wrapper: createWrapper('/platsannonser') },
+    )
+
+    act(() => {
+      result.current.params.setDriversLicense('not_required')
+    })
+
+    expect(result.current.params.korkort).toBe('not_required')
+    expect(result.current.path).toContain('korkort=not_required')
+  })
 })
