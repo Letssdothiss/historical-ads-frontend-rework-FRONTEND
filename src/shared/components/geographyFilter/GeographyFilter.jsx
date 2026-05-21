@@ -9,11 +9,18 @@ import { useMemo, useState } from 'react'
 import { useGeographyData } from '../../hooks/useGeographyData'
 import './GeographyFilter.css'
 
-export default function GeoFilter({ onClose, onApply, initialLan = [], initialKommuner = [] }) {
+export default function GeoFilter({
+  onClose,
+  onApply,
+  initialLan = [],
+  initialKommuner = [],
+}) {
   const { lanData, loading, error } = useGeographyData()
 
   const [selectedLan, setSelectedLan] = useState(new Set(initialLan))
-  const [selectedKommuner, setSelectedKommuner] = useState(new Set(initialKommuner))
+  const [selectedKommuner, setSelectedKommuner] = useState(
+    new Set(initialKommuner),
+  )
   const [activeLan, setActiveLan] = useState(null)
   const [search, setSearch] = useState('')
 

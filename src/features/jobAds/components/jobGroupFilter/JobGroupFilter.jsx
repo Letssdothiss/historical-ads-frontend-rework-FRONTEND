@@ -9,7 +9,12 @@ import { useMemo, useState } from 'react'
 import { useJobData } from '../../hooks/useJobData'
 import './JobGroupFilter.css'
 
-export default function JobGroupFilter({ onClose, onApply, initialAreas = [], initialGroups = [] }) {
+export default function JobGroupFilter({
+  onClose,
+  onApply,
+  initialAreas = [],
+  initialGroups = [],
+}) {
   const { jobData, loading, error } = useJobData()
 
   const [selectedAreas, setSelectedAreas] = useState(new Set(initialAreas))
@@ -71,7 +76,16 @@ export default function JobGroupFilter({ onClose, onApply, initialAreas = [], in
   }
 
   function handleApply() {
-    onApply?.({ areas: [...selectedAreas], groups: [...selectedGroups] })
+    const grouped = {}
+    for (const area of allAreaNames) {
+      const groups = jobData[area]?.filter((g) => selectedGroups.has(g)) ?? []
+      if (groups.length > 0) grouped[area] = groups
+    }
+    onApply?.({
+      areas: [...selectedAreas],
+      groups: [...selectedGroups],
+      grouped,
+    })
   }
 
   if (loading) {
