@@ -127,7 +127,6 @@ ul.geo-filter-list {
   align-self: stretch;
   box-sizing: border-box;
   height: 440px;
-  border-top: 1px solid #ddd;
   background: #fff;
   overflow-y: scroll;
   scrollbar-width: thin;
