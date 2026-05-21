@@ -16,6 +16,8 @@ import {
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import CompetencySearch from '../../../../shared/components/competencySearch/CompetencySearch'
+import Dropdown from '../../../../shared/components/dropdown/Dropdown'
+import GroupedTooltip from '../../../../shared/components/groupedTooltip/GroupedTooltip'
 import EmploymentFactsPicker from '../../../../shared/components/employmentFactsPicker/EmploymentFactsPicker'
 import GeographyFilter from '../../../../shared/components/geographyFilter/GeographyFilter'
 import InfoTooltip from '../../../../shared/components/infoTooltip/InfoTooltip'
@@ -32,8 +34,18 @@ export default function StatisticsSearchForm() {
   const [drivingLicense, setDrivingLicense] = useState('')
   const [geoOpen, setGeoOpen] = useState(false)
   const [jobOpen, setJobOpen] = useState(false)
-  const [geography, setGeography] = useState({ lan: [], kommuner: [] })
-  const [occupations, setOccupations] = useState({ areas: [], groups: [] })
+  const [geoHover, setGeoHover] = useState(false)
+  const [jobHover, setJobHover] = useState(false)
+  const [geography, setGeography] = useState({
+    lan: [],
+    kommuner: [],
+    grouped: {},
+  })
+  const [occupations, setOccupations] = useState({
+    areas: [],
+    groups: [],
+    grouped: {},
+  })
   const [timePeriod, setTimePeriod] = useState({ years: [], months: [] })
   const [employment, setEmployment] = useState({
     type: [],
@@ -104,51 +116,109 @@ export default function StatisticsSearchForm() {
       </div>
 
       <div className="statistics-search-form__filters">
-        <div className="statistics-search-form__filter-cell">
-          <DigiButton
-            afVariation={ButtonVariation.SECONDARY}
-            afSize={ButtonSize.MEDIUM}
-            afFullWidth
-            onAfOnClick={() => setGeoOpen(true)}
-          >
-            <div className="statistics-search-form__filter-trigger">
-              <DigiIconGlobeFilled />
-              <span>{geoLabel}</span>
-              <DigiIconChevronDown />
-              {hasGeoSelection && (
-                <span
-                  className="statistics-search-form__trigger-dot"
-                  aria-hidden="true"
+        <Dropdown
+          isOpen={geoOpen}
+          onClose={() => setGeoOpen(false)}
+          trigger={
+            <div
+              className="statistics-search-form__trigger-wrapper"
+              onMouseEnter={() => setGeoHover(true)}
+              onMouseLeave={() => setGeoHover(false)}
+            >
+              <DigiButton
+                afVariation={ButtonVariation.SECONDARY}
+                afSize={ButtonSize.MEDIUM}
+                afFullWidth
+                onAfOnClick={() => setGeoOpen((open) => !open)}
+              >
+                <div className="statistics-search-form__filter-trigger">
+                  <DigiIconGlobeFilled />
+                  <span>{geoLabel}</span>
+                  <DigiIconChevronDown />
+                  {hasGeoSelection && (
+                    <span
+                      className="statistics-search__trigger-dot"
+                      aria-hidden="true"
+                    />
+                  )}
+                </div>
+              </DigiButton>
+              {geoHover && hasGeoSelection && (
+                <GroupedTooltip
+                  title="Valda kommuner"
+                  grouped={geography.grouped}
                 />
               )}
             </div>
-          </DigiButton>
-        </div>
+          }
+        >
+          <GeographyFilter
+            onClose={() => setGeoOpen(false)}
+            initialLan={geography.lan}
+            initialKommuner={geography.kommuner}
+            onApply={({ lan, kommuner, grouped }) =>
+              setGeography({
+                lan: lan ?? [],
+                kommuner: kommuner ?? [],
+                grouped: grouped ?? {},
+              })
+            }
+          />
+        </Dropdown>
 
         <div className="statistics-search-form__filter-cell">
           <TimePeriodFilter onChange={setTimePeriod} />
         </div>
 
-        <div className="statistics-search-form__filter-cell">
-          <DigiButton
-            afVariation={ButtonVariation.SECONDARY}
-            afSize={ButtonSize.MEDIUM}
-            afFullWidth
-            onAfOnClick={() => setJobOpen(true)}
-          >
-            <div className="statistics-search-form__filter-trigger">
-              <DigiIconUserAlt />
-              <span>{jobLabel}</span>
-              <DigiIconChevronDown />
-              {hasJobSelection && (
-                <span
-                  className="statistics-search-form__trigger-dot"
-                  aria-hidden="true"
+        <Dropdown
+          isOpen={jobOpen}
+          onClose={() => setJobOpen(false)}
+          trigger={
+            <div
+              className="statistics-search-form__trigger-wrapper"
+              onMouseEnter={() => setJobHover(true)}
+              onMouseLeave={() => setJobHover(false)}
+            >
+              <DigiButton
+                afVariation={ButtonVariation.SECONDARY}
+                afSize={ButtonSize.MEDIUM}
+                afFullWidth
+                onAfOnClick={() => setJobOpen((open) => !open)}
+              >
+                <div className="statistics-search-form__filter-trigger">
+                  <DigiIconUserAlt />
+                  <span>{jobLabel}</span>
+                  <DigiIconChevronDown />
+                  {hasJobSelection && (
+                    <span
+                      className="statistics-search-form__trigger-dot"
+                      aria-hidden="true"
+                    />
+                  )}
+                </div>
+              </DigiButton>
+              {jobHover && hasJobSelection && (
+                <GroupedTooltip
+                  title="Valda yrkesgrupper"
+                  grouped={occupations.grouped}
                 />
               )}
             </div>
-          </DigiButton>
-        </div>
+          }
+        >
+          <JobGroupFilter
+            onClose={() => setJobOpen(false)}
+            initialAreas={occupations.areas}
+            initialGroups={occupations.groups}
+            onApply={({ areas, groups, grouped }) =>
+              setOccupations({
+                areas: areas ?? [],
+                groups: groups ?? [],
+                grouped: grouped ?? {},
+              })
+            }
+          />
+        </Dropdown>
 
         <div className="statistics-search-form__filter-cell">
           <EmploymentFactsPicker value={employment} onChange={setEmployment} />
@@ -171,23 +241,6 @@ export default function StatisticsSearchForm() {
           Sök
         </DigiButton>
       </div>
-
-      {geoOpen && (
-        <GeographyFilter
-          onClose={() => setGeoOpen(false)}
-          onApply={({ lan, kommuner }) =>
-            setGeography({ lan: lan ?? [], kommuner: kommuner ?? [] })
-          }
-        />
-      )}
-      {jobOpen && (
-        <JobGroupFilter
-          onClose={() => setJobOpen(false)}
-          onApply={({ areas, groups }) =>
-            setOccupations({ areas: areas ?? [], groups: groups ?? [] })
-          }
-        />
-      )}
     </form>
   )
 }
