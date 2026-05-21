@@ -8,7 +8,7 @@
   border: 1px solid #ddd;
   border-radius: 6px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
-  padding: 0.75rem 1rem;
+  padding: 0.75rem 0;
   display: flex;
   flex-direction: column;
   pointer-events: none;
@@ -20,6 +20,7 @@
   font-weight: 700;
   color: #333;
   text-align: left;
+  padding: 0 1rem;
 }
 
 .grouped-tooltip__section {
@@ -29,7 +30,12 @@
 
 .grouped-tooltip__divider {
   border-top: 1px solid #ddd;
-  margin: 0.25rem 0;
+  margin: 0.25rem 1rem;
+}
+
+.grouped-tooltip__divider--full {
+  margin-left: 0;
+  margin-right: 0;
 }
 
 .grouped-tooltip__group {
@@ -38,6 +44,7 @@
   font-weight: 600;
   color: #333;
   text-align: left;
+  padding: 0 1rem;
 }
 
 .grouped-tooltip__item {
@@ -46,6 +53,7 @@
   font-weight: 400;
   color: #555;
   text-align: left;
+  padding: 0 1rem;
 }
 
 .grouped-tooltip__spacer {

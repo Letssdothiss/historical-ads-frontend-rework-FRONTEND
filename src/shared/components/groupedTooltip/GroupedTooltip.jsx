@@ -7,7 +7,7 @@ export default function GroupedTooltip({ title, grouped }) {
   return (
     <div className="grouped-tooltip">
       <span className="grouped-tooltip__title">{title}</span>
-      <div className="grouped-tooltip__divider" />
+      <div className="grouped-tooltip__divider grouped-tooltip__divider--full" />
       {entries.map(([group, items], index) => (
         <div key={group} className="grouped-tooltip__section">
           <span className="grouped-tooltip__group">{group}</span>
