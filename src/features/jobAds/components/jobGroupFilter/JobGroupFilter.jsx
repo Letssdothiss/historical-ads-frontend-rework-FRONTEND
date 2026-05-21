@@ -64,7 +64,9 @@ export default function JobGroupFilter({ onClose, onApply }) {
   }
 
   function rensaYrkesgrupper() {
-    setSelectedGroups(new Set())
+    if (!activeArea) return
+    const groupsInArea = new Set(jobData[activeArea] ?? [])
+    setSelectedGroups(prev => new Set([...prev].filter(g => !groupsInArea.has(g))))
   }
 
   function handleApply() {
