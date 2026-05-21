@@ -249,7 +249,7 @@ export default function GeoFilter({
               ))}
             </ul>
           ) : (
-            <p className="geo-filter-hint">Välj ett län för att se kommuner</p>
+            <p className="geo-filter-hint"></p>
           )}
         </div>
       </div>
