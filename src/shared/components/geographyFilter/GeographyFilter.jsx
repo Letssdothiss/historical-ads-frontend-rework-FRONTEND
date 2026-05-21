@@ -4,7 +4,6 @@ import {
   DigiFormInput,
   DigiFormLabel,
   DigiIconChevronRight,
-  DigiIconX,
 } from '@designsystem-se/af-react'
 import { useMemo, useState } from 'react'
 import { useGeographyData } from '../../hooks/useGeographyData'
@@ -62,7 +61,9 @@ export default function GeoFilter({ onClose, onApply }) {
   }
 
   function rensaKommuner() {
-    setSelectedKommuner(new Set())
+    if (!activeLan) return
+    const kommunerILan = new Set(lanData[activeLan] ?? [])
+    setSelectedKommuner((prev) => new Set([...prev].filter((k) => !kommunerILan.has(k))))
   }
 
   function handleApply() {
@@ -114,21 +115,15 @@ export default function GeoFilter({ onClose, onApply }) {
             </button>
           </div>
           <div className="geo-filter-top-row-right">
-            <button
-              type="button"
-              className="geo-filter-text-button"
-              onClick={rensaKommuner}
-            >
-              Rensa alla kommuner
-            </button>
-            <button
-              type="button"
-              className="geo-filter-close-button"
-              onClick={() => onClose?.()}
-            >
-              <span>Stäng</span>
-              <DigiIconX />
-            </button>
+            {activeLan && (
+              <button
+                type="button"
+                className="geo-filter-text-button"
+                onClick={rensaKommuner}
+              >
+                {`Rensa kommuner inom ${activeLan}`}
+              </button>
+            )}
           </div>
         </div>
 
@@ -139,7 +134,7 @@ export default function GeoFilter({ onClose, onApply }) {
             <DigiFormLabel
               afLabel="Sök län eller kommun"
               afFor="geography-filter-search"
-            ></DigiFormLabel>
+            />
             <DigiFormInput
               id="geography-filter-search"
               afLabel="Sök län eller kommun"
@@ -164,13 +159,15 @@ export default function GeoFilter({ onClose, onApply }) {
           <div className="geo-filter-header-right">
             <div className="geo-filter-check-row">
               <DigiFormCheckbox
-                afLabel="Välj alla kommuner"
+                afLabel={
+                  activeLan
+                    ? `Välj alla kommuner inom ${activeLan}`
+                    : 'Välj alla kommuner'
+                }
                 afVariation="primary"
                 afChecked={!!allKommunerSelected}
                 afDisabled={!activeLan}
-                onAfOnChange={(e) =>
-                  toggleAllaKommuner(e.detail.target.checked)
-                }
+                onAfOnChange={(e) => toggleAllaKommuner(e.detail.target.checked)}
               />
             </div>
           </div>
@@ -190,14 +187,13 @@ export default function GeoFilter({ onClose, onApply }) {
                   selectedKommuner.has(k),
                 )
                 const isSelected = selectedLan.has(lan)
-                const isActive = activeLan === lan
 
                 return (
                   <li
                     key={lan}
                     className={[
                       'geo-filter-lan-item',
-                      isSelected || isActive ? 'geo-filter-lan-item--selected' : '',
+                      isSelected ? 'geo-filter-lan-item--selected' : '',
                     ]
                       .filter(Boolean)
                       .join(' ')}
@@ -258,7 +254,13 @@ export default function GeoFilter({ onClose, onApply }) {
         {/* Footer */}
         <div className="geo-filter-footer">
           <button
-            className="geo-filter-footer-btn"
+            className="geo-filter-footer-btn geo-filter-footer-btn--secondary"
+            onClick={() => onClose?.()}
+          >
+            Stäng
+          </button>
+          <button
+            className="geo-filter-footer-btn geo-filter-footer-btn--primary"
             onClick={() => {
               handleApply()
               onClose?.()
