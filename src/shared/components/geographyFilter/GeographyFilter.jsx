@@ -9,11 +9,18 @@ import { useMemo, useState } from 'react'
 import { useGeographyData } from '../../hooks/useGeographyData'
 import './GeographyFilter.css'
 
-export default function GeoFilter({ onClose, onApply }) {
+export default function GeoFilter({
+  onClose,
+  onApply,
+  initialLan = [],
+  initialKommuner = [],
+}) {
   const { lanData, loading, error } = useGeographyData()
 
-  const [selectedLan, setSelectedLan] = useState(new Set())
-  const [selectedKommuner, setSelectedKommuner] = useState(new Set())
+  const [selectedLan, setSelectedLan] = useState(new Set(initialLan))
+  const [selectedKommuner, setSelectedKommuner] = useState(
+    new Set(initialKommuner),
+  )
   const [activeLan, setActiveLan] = useState(null)
   const [search, setSearch] = useState('')
 
@@ -69,7 +76,17 @@ export default function GeoFilter({ onClose, onApply }) {
   }
 
   function handleApply() {
-    onApply?.({ lan: [...selectedLan], kommuner: [...selectedKommuner] })
+    const grouped = {}
+    for (const lan of allLanNames) {
+      const kommuner =
+        lanData[lan]?.filter((k) => selectedKommuner.has(k)) ?? []
+      if (kommuner.length > 0) grouped[lan] = kommuner
+    }
+    onApply?.({
+      lan: [...selectedLan],
+      kommuner: [...selectedKommuner],
+      grouped,
+    })
   }
 
   if (loading) {
