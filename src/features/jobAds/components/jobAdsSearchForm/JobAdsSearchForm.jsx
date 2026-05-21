@@ -32,8 +32,16 @@ export default function JobAdsSearchForm() {
   const [jobOpen, setJobOpen] = useState(false)
   const [geoHover, setGeoHover] = useState(false)
   const [jobHover, setJobHover] = useState(false)
-  const [geography, setGeography] = useState({ lan: [], kommuner: [], grouped: {} })
-  const [occupations, setOccupations] = useState({ areas: [], groups: [], grouped: {} })
+  const [geography, setGeography] = useState({
+    lan: [],
+    kommuner: [],
+    grouped: {},
+  })
+  const [occupations, setOccupations] = useState({
+    areas: [],
+    groups: [],
+    grouped: {},
+  })
   const [timePeriod, setTimePeriod] = useState({ years: [], months: [] })
   const [employment, setEmployment] = useState({
     type: [],
@@ -134,7 +142,10 @@ export default function JobAdsSearchForm() {
                 </div>
               </DigiButton>
               {geoHover && hasGeoSelection && (
-                <GroupedTooltip title="Valda kommuner" grouped={geography.grouped} />
+                <GroupedTooltip
+                  title="Valda kommuner"
+                  grouped={geography.grouped}
+                />
               )}
             </div>
           }
@@ -185,7 +196,10 @@ export default function JobAdsSearchForm() {
                 </div>
               </DigiButton>
               {jobHover && hasJobSelection && (
-                <GroupedTooltip title="Valda yrkesgrupper" grouped={occupations.grouped} />
+                <GroupedTooltip
+                  title="Valda yrkesgrupper"
+                  grouped={occupations.grouped}
+                />
               )}
             </div>
           }
