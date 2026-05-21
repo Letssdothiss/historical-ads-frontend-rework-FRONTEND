@@ -1,7 +1,11 @@
 // Converts flat row data to bar chart format: x-axis = regions, series = years.
 // This is the correct structure for DigiBarChart (Vertical/Stacked).
 export function toBarChartData(data, options = {}) {
-  const { title = 'Statistik', xLabel = 'Område', yLabel = 'Antal annonser' } = options
+  const {
+    title = 'Statistik',
+    xLabel = 'Område',
+    yLabel = 'Antal annonser',
+  } = options
   if (!data || !Array.isArray(data) || data.length === 0) return null
   if (!data[0] || typeof data[0] !== 'object') return null
 

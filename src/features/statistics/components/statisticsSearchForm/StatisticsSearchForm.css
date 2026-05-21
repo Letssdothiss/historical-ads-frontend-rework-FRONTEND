@@ -129,7 +129,8 @@
   flex-shrink: 0;
 }
 
-.statistics-search-form__filter-trigger > span:not(.statistics-search-form__trigger-dot) {
+.statistics-search-form__filter-trigger
+  > span:not(.statistics-search-form__trigger-dot) {
   margin-left: 28px;
   white-space: nowrap;
 }

@@ -26,7 +26,10 @@
   padding: 0;
   background: #ffffff;
   color: #1616b2;
-  transition: background 0.18s ease, color 0.18s ease, border-color 0.18s ease;
+  transition:
+    background 0.18s ease,
+    color 0.18s ease,
+    border-color 0.18s ease;
 }
 
 .employment-facts-picker__trigger digi-button::part(button):hover {
@@ -253,7 +256,8 @@
   flex-shrink: 0;
 }
 
-.employment-facts-picker__section-item--active .employment-facts-picker__section-dot {
+.employment-facts-picker__section-item--active
+  .employment-facts-picker__section-dot {
   background: #ffffff;
 }
 

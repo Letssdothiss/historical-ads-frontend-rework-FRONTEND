@@ -17,6 +17,5 @@
 
   color: var(--digi--color--text--secondary);
 
-  font-size:
-    var(--digi--typography--body--font-size--desktop);
+  font-size: var(--digi--typography--body--font-size--desktop);
 }

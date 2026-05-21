@@ -16,13 +16,13 @@ export function useStatisticsQuery(params) {
     setError(null)
 
     fetchStatistics(params)
-      .then(raw => {
+      .then((raw) => {
         const mapped = mapStatisticsResponse(raw)
         console.log('[useStatisticsQuery] Mappad data:', mapped)
         return mapped
       })
       .then(setData)
-      .catch(err => {
+      .catch((err) => {
         console.error('[useStatisticsQuery] Fel:', err)
         setError(err)
       })

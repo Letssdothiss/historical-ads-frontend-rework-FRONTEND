@@ -1,6 +1,6 @@
-import './MainLayout.css';
-import MainHeader from '../../shared/components/mainHeader/MainHeader';
-import SiteFooter from '../../shared/components/siteFooter/SiteFooter';
+import './MainLayout.css'
+import MainHeader from '../../shared/components/mainHeader/MainHeader'
+import SiteFooter from '../../shared/components/siteFooter/SiteFooter'
 
 function MainLayout({ children }) {
   return (
@@ -14,7 +14,7 @@ function MainLayout({ children }) {
         </div>
       </main>
     </div>
-  );
+  )
 }
 
-export default MainLayout;
+export default MainLayout

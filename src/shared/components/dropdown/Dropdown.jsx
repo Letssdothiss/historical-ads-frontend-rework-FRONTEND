@@ -16,11 +16,7 @@ export default function Dropdown({ trigger, children, isOpen, onClose }) {
   return (
     <div className="dropdown" ref={wrapperRef}>
       {trigger}
-      {isOpen && (
-        <div className="dropdown__panel">
-          {children}
-        </div>
-      )}
+      {isOpen && <div className="dropdown__panel">{children}</div>}
     </div>
   )
 }
