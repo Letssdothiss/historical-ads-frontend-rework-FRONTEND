@@ -22,7 +22,7 @@ import EmploymentFactsPicker from '../../../../shared/components/employmentFacts
 import GeographyFilter from '../../../../shared/components/geographyFilter/GeographyFilter'
 import InfoTooltip from '../../../../shared/components/infoTooltip/InfoTooltip'
 import TimePeriodFilter from '../../../../shared/components/timePeriodFilter/TimePeriodFilter'
-import JobGroupFilter from '../../../jobAds/components/jobGroupFilter/JobGroupFilter'
+import JobGroupFilter from '../../../../shared/components/jobGroupFilter/JobGroupFilter'
 import DrivingLicenseFilter from '../DrivingLicenseFilter/DrivingLicenseFilter'
 import TrendsFilter from '../trendsFilter/TrendsFilter'
 import './StatisticsSearchForm.css'
