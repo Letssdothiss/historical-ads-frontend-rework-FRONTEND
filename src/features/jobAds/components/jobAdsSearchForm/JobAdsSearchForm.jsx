@@ -17,7 +17,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import CompetencySearch from '../../../../shared/components/competencySearch/CompetencySearch'
 import Dropdown from '../../../../shared/components/dropdown/Dropdown'
-import OccupationTooltip from '../../../../shared/components/occupationTooltip/OccupationTooltip'
+import GroupedTooltip from '../../../../shared/components/groupedTooltip/GroupedTooltip'
 import EmploymentFactsPicker from '../../../../shared/components/employmentFactsPicker/EmploymentFactsPicker'
 import GeographyFilter from '../../../../shared/components/geographyFilter/GeographyFilter'
 import InfoTooltip from '../../../../shared/components/infoTooltip/InfoTooltip'
@@ -30,13 +30,10 @@ export default function JobAdsSearchForm() {
   const [q, setQ] = useState('')
   const [geoOpen, setGeoOpen] = useState(false)
   const [jobOpen, setJobOpen] = useState(false)
+  const [geoHover, setGeoHover] = useState(false)
   const [jobHover, setJobHover] = useState(false)
-  const [geography, setGeography] = useState({ lan: [], kommuner: [] })
-  const [occupations, setOccupations] = useState({
-    areas: [],
-    groups: [],
-    grouped: {},
-  })
+  const [geography, setGeography] = useState({ lan: [], kommuner: [], grouped: {} })
+  const [occupations, setOccupations] = useState({ areas: [], groups: [], grouped: {} })
   const [timePeriod, setTimePeriod] = useState({ years: [], months: [] })
   const [employment, setEmployment] = useState({
     type: [],
@@ -113,32 +110,45 @@ export default function JobAdsSearchForm() {
           isOpen={geoOpen}
           onClose={() => setGeoOpen(false)}
           trigger={
-            <DigiButton
-              afVariation={ButtonVariation.SECONDARY}
-              afSize={ButtonSize.MEDIUM}
-              afFullWidth
-              onAfOnClick={() => setGeoOpen((open) => !open)}
+            <div
+              className="job-ads-search-form__trigger-wrapper"
+              onMouseEnter={() => setGeoHover(true)}
+              onMouseLeave={() => setGeoHover(false)}
             >
-              <div className="job-ads-search-form__filter-trigger">
-                <DigiIconGlobeFilled />
-                <span>{geoLabel}</span>
-                <DigiIconChevronDown />
-                {hasGeoSelection && (
-                  <span
-                    className="job-ads-search-form__trigger-dot"
-                    aria-hidden="true"
-                  />
-                )}
-              </div>
-            </DigiButton>
+              <DigiButton
+                afVariation={ButtonVariation.SECONDARY}
+                afSize={ButtonSize.MEDIUM}
+                afFullWidth
+                onAfOnClick={() => setGeoOpen((open) => !open)}
+              >
+                <div className="job-ads-search-form__filter-trigger">
+                  <DigiIconGlobeFilled />
+                  <span>{geoLabel}</span>
+                  <DigiIconChevronDown />
+                  {hasGeoSelection && (
+                    <span
+                      className="job-ads-search-form__trigger-dot"
+                      aria-hidden="true"
+                    />
+                  )}
+                </div>
+              </DigiButton>
+              {geoHover && hasGeoSelection && (
+                <GroupedTooltip title="Valda kommuner" grouped={geography.grouped} />
+              )}
+            </div>
           }
         >
           <GeographyFilter
             onClose={() => setGeoOpen(false)}
             initialLan={geography.lan}
             initialKommuner={geography.kommuner}
-            onApply={({ lan, kommuner }) =>
-              setGeography({ lan: lan ?? [], kommuner: kommuner ?? [] })
+            onApply={({ lan, kommuner, grouped }) =>
+              setGeography({
+                lan: lan ?? [],
+                kommuner: kommuner ?? [],
+                grouped: grouped ?? {},
+              })
             }
           />
         </Dropdown>
@@ -175,7 +185,7 @@ export default function JobAdsSearchForm() {
                 </div>
               </DigiButton>
               {jobHover && hasJobSelection && (
-                <OccupationTooltip grouped={occupations.grouped} />
+                <GroupedTooltip title="Valda yrkesgrupper" grouped={occupations.grouped} />
               )}
             </div>
           }

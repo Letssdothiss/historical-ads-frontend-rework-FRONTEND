@@ -1,4 +1,4 @@
-.occupation-tooltip {
+.grouped-tooltip {
   position: absolute;
   top: 100%;
   left: 0;
@@ -14,7 +14,7 @@
   pointer-events: none;
 }
 
-.occupation-tooltip__title {
+.grouped-tooltip__title {
   font-family: 'Open Sans', sans-serif;
   font-size: 0.8rem;
   font-weight: 700;
@@ -22,17 +22,17 @@
   text-align: left;
 }
 
-.occupation-tooltip__section {
+.grouped-tooltip__section {
   display: flex;
   flex-direction: column;
 }
 
-.occupation-tooltip__divider {
+.grouped-tooltip__divider {
   border-top: 1px solid #ddd;
   margin: 0.25rem 0;
 }
 
-.occupation-tooltip__area {
+.grouped-tooltip__group {
   font-family: 'Open Sans', sans-serif;
   font-size: 0.8rem;
   font-weight: 600;
@@ -40,7 +40,7 @@
   text-align: left;
 }
 
-.occupation-tooltip__group {
+.grouped-tooltip__item {
   font-family: 'Open Sans', sans-serif;
   font-size: 0.8rem;
   font-weight: 400;
@@ -48,6 +48,6 @@
   text-align: left;
 }
 
-.occupation-tooltip__spacer {
-  height: 1rem;
+.grouped-tooltip__spacer {
+  height: 0.5rem;
 }

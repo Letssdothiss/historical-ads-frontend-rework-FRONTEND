@@ -76,7 +76,12 @@ export default function GeoFilter({
   }
 
   function handleApply() {
-    onApply?.({ lan: [...selectedLan], kommuner: [...selectedKommuner] })
+    const grouped = {}
+    for (const lan of allLanNames) {
+      const kommuner = lanData[lan]?.filter((k) => selectedKommuner.has(k)) ?? []
+      if (kommuner.length > 0) grouped[lan] = kommuner
+    }
+    onApply?.({ lan: [...selectedLan], kommuner: [...selectedKommuner], grouped })
   }
 
   if (loading) {
