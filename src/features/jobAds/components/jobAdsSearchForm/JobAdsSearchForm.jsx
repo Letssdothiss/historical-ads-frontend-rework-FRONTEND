@@ -10,6 +10,7 @@ import {
   DigiButton,
   DigiFormInput,
   DigiIconChevronDown,
+  DigiIconChevronUp,
   DigiIconGlobeFilled,
   DigiIconUserAlt,
 } from '@designsystem-se/af-react'
@@ -132,7 +133,7 @@ export default function JobAdsSearchForm() {
                 <div className="job-ads-search-form__filter-trigger">
                   <DigiIconGlobeFilled />
                   <span>{geoLabel}</span>
-                  <DigiIconChevronDown />
+                  {geoOpen ? <DigiIconChevronUp /> : <DigiIconChevronDown />}
                   {hasGeoSelection && (
                     <span
                       className="job-ads-search-form__trigger-dot"
@@ -186,7 +187,7 @@ export default function JobAdsSearchForm() {
                 <div className="job-ads-search-form__filter-trigger">
                   <DigiIconUserAlt />
                   <span>{jobLabel}</span>
-                  <DigiIconChevronDown />
+                  {jobOpen ? <DigiIconChevronUp /> : <DigiIconChevronDown />}
                   {hasJobSelection && (
                     <span
                       className="job-ads-search-form__trigger-dot"

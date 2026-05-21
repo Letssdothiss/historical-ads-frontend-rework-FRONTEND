@@ -10,6 +10,7 @@ import {
   DigiButton,
   DigiFormInput,
   DigiIconChevronDown,
+  DigiIconChevronUp,
   DigiIconGlobeFilled,
   DigiIconUserAlt,
 } from '@designsystem-se/af-react'
@@ -134,7 +135,7 @@ export default function StatisticsSearchForm() {
                 <div className="statistics-search-form__filter-trigger">
                   <DigiIconGlobeFilled />
                   <span>{geoLabel}</span>
-                  <DigiIconChevronDown />
+                  {geoOpen ? <DigiIconChevronUp /> : <DigiIconChevronDown />}
                   {hasGeoSelection && (
                     <span
                       className="statistics-search__trigger-dot"
@@ -188,7 +189,7 @@ export default function StatisticsSearchForm() {
                 <div className="statistics-search-form__filter-trigger">
                   <DigiIconUserAlt />
                   <span>{jobLabel}</span>
-                  <DigiIconChevronDown />
+                  {jobOpen ? <DigiIconChevronUp /> : <DigiIconChevronDown />}
                   {hasJobSelection && (
                     <span
                       className="statistics-search-form__trigger-dot"
