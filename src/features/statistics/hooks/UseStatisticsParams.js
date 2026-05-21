@@ -26,7 +26,7 @@ export function useStatisticsParams() {
     params.lan.length > 0 ||
     params.ar.length > 0 ||
     params.yrkesgrupp.length > 0 ||
-    params.kompetens
+    Boolean(params.kompetens)
 
   return { params, setParams, hasParams }
 }
