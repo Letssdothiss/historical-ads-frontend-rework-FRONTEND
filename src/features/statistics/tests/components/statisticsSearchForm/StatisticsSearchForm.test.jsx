@@ -55,7 +55,7 @@ vi.mock('../../../../../shared/components/infoTooltip/InfoTooltip', () => ({
 vi.mock('../../../../../shared/components/timePeriodFilter/TimePeriodFilter', () => ({
   default: () => null,
 }))
-vi.mock('../../../../../jobAds/components/jobGroupFilter/JobGroupFilter', () => ({
+vi.mock('../../../../../shared/components/jobGroupFilter/JobGroupFilter', () => ({
   default: () => null,
 }))
 vi.mock('../../../components/DrivingLicenseFilter/DrivingLicenseFilter', () => ({

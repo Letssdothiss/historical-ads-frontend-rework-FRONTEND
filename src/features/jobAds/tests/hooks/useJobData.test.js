@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { renderHook, waitFor } from '@testing-library/react'
-import { useJobData } from '../../hooks/useJobData'
+import { useJobData } from '../../../../shared/hooks/useJobData'
 
 describe('useJobData', () => {
   beforeEach(() => {
