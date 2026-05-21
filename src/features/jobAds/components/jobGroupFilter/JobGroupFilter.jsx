@@ -9,11 +9,11 @@ import { useMemo, useState } from 'react'
 import { useJobData } from '../../hooks/useJobData'
 import './JobGroupFilter.css'
 
-export default function JobGroupFilter({ onClose, onApply }) {
+export default function JobGroupFilter({ onClose, onApply, initialAreas = [], initialGroups = [] }) {
   const { jobData, loading, error } = useJobData()
 
-  const [selectedAreas, setSelectedAreas] = useState(new Set())
-  const [selectedGroups, setSelectedGroups] = useState(new Set())
+  const [selectedAreas, setSelectedAreas] = useState(new Set(initialAreas))
+  const [selectedGroups, setSelectedGroups] = useState(new Set(initialGroups))
   const [activeArea, setActiveArea] = useState(null)
   const [search, setSearch] = useState('')
 

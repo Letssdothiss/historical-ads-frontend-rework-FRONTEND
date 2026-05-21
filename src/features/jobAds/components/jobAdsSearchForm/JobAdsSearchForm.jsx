@@ -129,6 +129,8 @@ export default function JobAdsSearchForm() {
         >
           <GeographyFilter
             onClose={() => setGeoOpen(false)}
+            initialLan={geography.lan}
+            initialKommuner={geography.kommuner}
             onApply={({ lan, kommuner }) =>
               setGeography({ lan: lan ?? [], kommuner: kommuner ?? [] })
             }
@@ -165,6 +167,8 @@ export default function JobAdsSearchForm() {
         >
           <JobGroupFilter
             onClose={() => setJobOpen(false)}
+            initialAreas={occupations.areas}
+            initialGroups={occupations.groups}
             onApply={({ areas, groups }) =>
               setOccupations({ areas: areas ?? [], groups: groups ?? [] })
             }
