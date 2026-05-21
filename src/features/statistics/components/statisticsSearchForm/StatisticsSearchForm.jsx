@@ -138,7 +138,7 @@ export default function StatisticsSearchForm() {
                   {geoOpen ? <DigiIconChevronUp /> : <DigiIconChevronDown />}
                   {hasGeoSelection && (
                     <span
-                      className="statistics-search__trigger-dot"
+                      className="statistics-search-form__trigger-dot"
                       aria-hidden="true"
                     />
                   )}
