@@ -36,7 +36,8 @@ function buildSummary(params) {
   if (params.yrkesgrupper.length) parts.push(params.yrkesgrupper.join(', '))
   if (params.years.length) parts.push(params.years.sort().join(', '))
   if (params.employer) parts.push(`Arbetsgivare: ${params.employer}`)
-  if (params.skills.length) parts.push(`Kompetenser: ${params.skills.join(', ')}`)
+  if (params.skills.length)
+    parts.push(`Kompetenser: ${params.skills.join(', ')}`)
   return parts.length ? parts.join(' — ') : 'Alla annonser'
 }
 
@@ -110,8 +111,7 @@ export default function JobAdsResultsPage() {
                 : '0 annonser'}{' '}
             {uiParams.years.length ? (
               <span>
-                under perioden{' '}
-                <em>{uiParams.years.sort().join(', ')}</em>
+                under perioden <em>{uiParams.years.sort().join(', ')}</em>
               </span>
             ) : null}
           </p>

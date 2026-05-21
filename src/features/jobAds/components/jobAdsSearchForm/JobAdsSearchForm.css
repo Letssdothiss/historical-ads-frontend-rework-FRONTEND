@@ -117,7 +117,8 @@
   flex-shrink: 0;
 }
 
-.job-ads-search-form__filter-trigger > span:not(.job-ads-search-form__trigger-dot) {
+.job-ads-search-form__filter-trigger
+  > span:not(.job-ads-search-form__trigger-dot) {
   margin-left: 28px;
   white-space: nowrap;
 }

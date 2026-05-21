@@ -58,7 +58,11 @@ function buildSummary(params) {
   return parts.length > 0 ? parts.join(' — ') : 'Sökresultat'
 }
 
-function StatisticsChartPanel({ data = [], yearResults = [], searchParams = {} }) {
+function StatisticsChartPanel({
+  data = [],
+  yearResults = [],
+  searchParams = {},
+}) {
   const [visning, setVisning] = useState('tabell')
   const [enhet, setEnhet] = useState('antal')
   const [pivot, setPivot] = useState(null)
@@ -95,12 +99,18 @@ function StatisticsChartPanel({ data = [], yearResults = [], searchParams = {} }
   const showMonths = detailLevels.includes('manader')
 
   const monthDataAvailable = useMemo(
-    () => yearResults.some(({ raw }) => (raw?.stats?.month ?? raw?.month)?.length > 0),
+    () =>
+      yearResults.some(
+        ({ raw }) => (raw?.stats?.month ?? raw?.month)?.length > 0,
+      ),
     [yearResults],
   )
 
   const activeData = useMemo(
-    () => (showMonths && monthDataAvailable ? mapStatisticsByMonth(yearResults) : data),
+    () =>
+      showMonths && monthDataAvailable
+        ? mapStatisticsByMonth(yearResults)
+        : data,
     [showMonths, monthDataAvailable, yearResults, data],
   )
 
@@ -113,16 +123,20 @@ function StatisticsChartPanel({ data = [], yearResults = [], searchParams = {} }
 
   const pivotedData = useMemo(() => {
     if (!isPivoted || activeData.length === 0) return activeData
-    const cols = Object.keys(activeData[0]).filter(k => k !== 'lan')
-    return cols.map(col => {
+    const cols = Object.keys(activeData[0]).filter((k) => k !== 'lan')
+    return cols.map((col) => {
       const row = { lan: col }
-      activeData.forEach(r => { row[r.lan] = r[col] })
+      activeData.forEach((r) => {
+        row[r.lan] = r[col]
+      })
       return row
     })
   }, [isPivoted, activeData])
 
   const years =
-    pivotedData.length > 0 ? Object.keys(pivotedData[0]).filter((k) => k !== 'lan') : []
+    pivotedData.length > 0
+      ? Object.keys(pivotedData[0]).filter((k) => k !== 'lan')
+      : []
   const rowLabel = isPivoted ? 'År' : showMonths ? 'Månad' : 'Län'
   const searchSummary = buildSummary(searchParams)
   const displayData = enhet === 'andel' ? toAndel(pivotedData) : pivotedData
@@ -130,8 +144,7 @@ function StatisticsChartPanel({ data = [], yearResults = [], searchParams = {} }
     () =>
       pivotedData.reduce(
         (sum, row) =>
-          sum +
-          years.reduce((rowSum, y) => rowSum + (Number(row[y]) || 0), 0),
+          sum + years.reduce((rowSum, y) => rowSum + (Number(row[y]) || 0), 0),
         0,
       ),
     [pivotedData, years],
@@ -402,7 +415,8 @@ function StatisticsChartPanel({ data = [], yearResults = [], searchParams = {} }
       <div className="statistics-chart-panel__content">
         {showMonths && !monthDataAvailable && (
           <p className="statistics-chart-panel__empty">
-            Månadsvy är inte tillgänglig — backend stöder inte månadsaggregering ännu. Visar årsdata istället.
+            Månadsvy är inte tillgänglig — backend stöder inte månadsaggregering
+            ännu. Visar årsdata istället.
           </p>
         )}
 
@@ -422,7 +436,8 @@ function StatisticsChartPanel({ data = [], yearResults = [], searchParams = {} }
                       className="statistics-chart-panel__sort-btn"
                       onClick={() => handleSort('lan')}
                     >
-                      {rowLabel}{sortIcon('lan')}
+                      {rowLabel}
+                      {sortIcon('lan')}
                     </button>
                   </th>
                   {years.map((y) => (

@@ -68,7 +68,8 @@ export default function JobAdDetailPage() {
   const source = ad?.raw ?? {}
   const qualifications = source.must_have ?? source.qualifications ?? {}
   const description = ad?.description || source.description?.text || ''
-  const salaryType = source.salary_type?.label ?? source.salary_description ?? '–'
+  const salaryType =
+    source.salary_type?.label ?? source.salary_description ?? '–'
   const postalCode = source.workplace_address?.postcode ?? '–'
   const city = source.workplace_address?.city ?? '–'
   const municipality = ad?.municipality ?? '–'

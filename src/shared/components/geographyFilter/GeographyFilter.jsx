@@ -63,7 +63,9 @@ export default function GeoFilter({ onClose, onApply }) {
   function rensaKommuner() {
     if (!activeLan) return
     const kommunerILan = new Set(lanData[activeLan] ?? [])
-    setSelectedKommuner((prev) => new Set([...prev].filter((k) => !kommunerILan.has(k))))
+    setSelectedKommuner(
+      (prev) => new Set([...prev].filter((k) => !kommunerILan.has(k))),
+    )
   }
 
   function handleApply() {
@@ -167,11 +169,7 @@ export default function GeoFilter({ onClose, onApply }) {
       <div className="geo-filter-body">
         {/* Left: Läns list */}
         <div className="geo-filter-lan-col">
-          <ul
-            className="geo-filter-list"
-            role="listbox"
-            aria-label="Länslista"
-          >
+          <ul className="geo-filter-list" role="listbox" aria-label="Länslista">
             {filteredLan.map((lan) => {
               const hasSelectedKommuner = lanData[lan]?.some((k) =>
                 selectedKommuner.has(k),
@@ -234,9 +232,7 @@ export default function GeoFilter({ onClose, onApply }) {
               ))}
             </ul>
           ) : (
-            <p className="geo-filter-hint">
-              Välj ett län för att se kommuner
-            </p>
+            <p className="geo-filter-hint">Välj ett län för att se kommuner</p>
           )}
         </div>
       </div>
