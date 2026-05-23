@@ -335,6 +335,23 @@ function TimePeriodFilter({ onChange } = {}) {
               )}
             </div>
           </div>
+
+          <div className="time-period-footer">
+            <button
+              type="button"
+              className="time-period-footer-btn time-period-footer-btn--secondary"
+              onClick={() => setIsOpen(false)}
+            >
+              Stäng
+            </button>
+            <button
+              type="button"
+              className="time-period-footer-btn time-period-footer-btn--primary"
+              onClick={() => setIsOpen(false)}
+            >
+              Lägg till och stäng
+            </button>
+          </div>
         </div>
       )}
     </div>

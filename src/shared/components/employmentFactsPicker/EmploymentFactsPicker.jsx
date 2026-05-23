@@ -260,6 +260,23 @@ export default function EmploymentFactsPicker({ value = EMPTY, onChange }) {
               </div>
             </div>
           </div>
+
+          <div className="employment-facts-picker__footer">
+            <button
+              type="button"
+              className="employment-facts-picker__footer-btn employment-facts-picker__footer-btn--secondary"
+              onClick={() => setIsOpen(false)}
+            >
+              Stäng
+            </button>
+            <button
+              type="button"
+              className="employment-facts-picker__footer-btn employment-facts-picker__footer-btn--primary"
+              onClick={() => setIsOpen(false)}
+            >
+              Lägg till och stäng
+            </button>
+          </div>
         </div>
       )}
     </div>

@@ -358,3 +358,53 @@
   display: flex;
   align-items: center;
 }
+
+.time-period-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  height: 87px;
+  margin: 24px -24px -24px;
+  background: #f4f4f4;
+  border-top: 1px solid #ddd;
+  border-radius: 0 0 6px 6px;
+}
+
+.time-period-footer-btn {
+  display: flex;
+  height: 2.5rem;
+  padding: 0.5rem 1.5rem;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0.375rem;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background 0.15s,
+    color 0.15s;
+}
+
+.time-period-footer-btn--secondary {
+  border: 2px solid #1b1b6b;
+  background: transparent;
+  color: #1b1b6b;
+}
+
+.time-period-footer-btn--secondary:hover {
+  background: #1b1b6b;
+  color: #fff;
+}
+
+.time-period-footer-btn--primary {
+  border: 2px solid #1b1b6b;
+  background: #1b1b6b;
+  color: #fff;
+}
+
+.time-period-footer-btn--primary:hover {
+  background: #13134f;
+  border-color: #13134f;
+}
