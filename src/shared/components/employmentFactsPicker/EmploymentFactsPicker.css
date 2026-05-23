@@ -100,16 +100,17 @@
 .employment-facts-picker__dropdown {
   position: absolute;
   top: calc(100% + 6px);
-  left: 0;
+  right: 0;
   z-index: 40;
-  width: 720px;
-  max-width: 90vw;
+  width: calc(200% + 24px);
+  max-width: none;
   padding: 20px 24px 24px;
   box-sizing: border-box;
   background: #ffffff;
   border-radius: 6px;
   border: none;
   box-shadow: 0 8px 24px rgba(2, 8, 32, 0.18);
+  overflow: hidden;
 }
 
 .employment-facts-picker__top-row,
@@ -125,13 +126,18 @@
 
 .employment-facts-picker__content {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: 24px;
+  grid-template-columns: minmax(320px, 360px) minmax(0, 1fr);
+  gap: 0;
 }
 
 .employment-facts-picker__left-column,
 .employment-facts-picker__right-column {
   min-width: 0;
+}
+
+.employment-facts-picker__right-column {
+  padding-left: 24px;
+  border-left: 1px solid #d9d9d9;
 }
 
 .employment-facts-picker__title,
