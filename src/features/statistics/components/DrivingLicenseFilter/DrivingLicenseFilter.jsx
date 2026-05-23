@@ -32,7 +32,13 @@ function DrivingLicenseFilter({ onChange } = {}) {
 
   return (
     <div className="driving-license-filter" ref={wrapperRef}>
-      <div className="driving-license-trigger">
+      <div
+        className={
+          isOpen
+            ? 'driving-license-trigger driving-license-trigger--open'
+            : 'driving-license-trigger'
+        }
+      >
         <DigiButton
           afVariation="secondary"
           afSize="medium"
@@ -47,7 +53,7 @@ function DrivingLicenseFilter({ onChange } = {}) {
             <span
               className={
                 isOpen
-                  ? 'driving-license-chevron-wrapper open'
+                  ? 'driving-license-chevron-wrapper driving-license-chevron-wrapper--open'
                   : 'driving-license-chevron-wrapper'
               }
             >
@@ -108,6 +114,23 @@ function DrivingLicenseFilter({ onChange } = {}) {
                 onAfOnChange={() => setLicenseChoice('not-required')}
               />
             </DigiFormRadiogroup>
+          </div>
+
+          <div className="driving-license-footer">
+            <button
+              type="button"
+              className="driving-license-footer-btn driving-license-footer-btn--secondary"
+              onClick={() => setIsOpen(false)}
+            >
+              Stäng
+            </button>
+            <button
+              type="button"
+              className="driving-license-footer-btn driving-license-footer-btn--primary"
+              onClick={() => setIsOpen(false)}
+            >
+              Lägg till och stäng
+            </button>
           </div>
         </div>
       )}
