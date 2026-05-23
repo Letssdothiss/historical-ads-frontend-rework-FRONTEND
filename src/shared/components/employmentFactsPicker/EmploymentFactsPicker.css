@@ -243,21 +243,31 @@
 }
 
 .employment-facts-picker__section-label {
+  flex: 1;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  min-width: 0;
+  text-align: left;
+}
+
+.employment-facts-picker__section-indicator {
+  display: flex;
+  width: 0.6rem;
+  height: 0.6rem;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
 }
 
 .employment-facts-picker__section-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 0.6rem;
   background: #0f9d2a;
   flex-shrink: 0;
 }
 
-.employment-facts-picker__section-item--active
-  .employment-facts-picker__section-dot {
+.employment-facts-picker__section-dot--active {
   background: #ffffff;
 }
 
