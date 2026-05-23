@@ -70,8 +70,13 @@ function TimePeriodFilter({ onChange } = {}) {
   // Get all selected months across all years
   const allSelectedMonths = Object.values(selectedMonthsByYear).flat()
 
-  // Show indicator dot only if any months are selected
-  const hasSelection = allSelectedMonths.length > 0
+  const allMonthsSelected = years.every(
+    (year) => (selectedMonthsByYear[year] || []).length === months.length,
+  )
+
+  // Show indicator dot if any years or months are selected.
+  const hasSelection =
+    allYearsSelected || selectedYears.length > 0 || allSelectedMonths.length > 0
 
   const handleYearClick = (year) => {
     setAllYearsSelected(false)
@@ -89,6 +94,8 @@ function TimePeriodFilter({ onChange } = {}) {
 
       if (nextValue) {
         setActiveYear(null)
+        setSelectedYears(years)
+      } else {
         setSelectedYears([])
       }
 
@@ -97,20 +104,23 @@ function TimePeriodFilter({ onChange } = {}) {
   }
 
   const handleSelectAllMonths = () => {
-    if (activeYear) {
-      const currentMonths = selectedMonthsByYear[activeYear] || []
-      if (currentMonths.length === months.length) {
-        setSelectedMonthsByYear({
-          ...selectedMonthsByYear,
-          [activeYear]: [],
-        })
-      } else {
-        setSelectedMonthsByYear({
-          ...selectedMonthsByYear,
-          [activeYear]: months,
-        })
-      }
-    }
+    const targetYears = allYearsSelected
+      ? years
+      : activeYear
+        ? [activeYear]
+        : []
+    if (targetYears.length === 0) return
+
+    const shouldSelectAllMonths = targetYears.some(
+      (year) => (selectedMonthsByYear[year] || []).length !== months.length,
+    )
+
+    setSelectedMonthsByYear({
+      ...selectedMonthsByYear,
+      ...Object.fromEntries(
+        targetYears.map((year) => [year, shouldSelectAllMonths ? months : []]),
+      ),
+    })
   }
 
   const handleMonthClick = (month) => {
@@ -240,6 +250,7 @@ function TimePeriodFilter({ onChange } = {}) {
                 {years.map((year) => {
                   const isActive = activeYear === year
                   const yearHasMonths =
+                    allYearsSelected ||
                     (selectedMonthsByYear[year] || []).length > 0
                   return (
                     <button
@@ -252,19 +263,23 @@ function TimePeriodFilter({ onChange } = {}) {
                           : 'time-period-year-button'
                       }
                     >
-                      <span>{year}</span>
+                      <span className="time-period-year-label">
+                        <span>{year}</span>
+                      </span>
 
-                      {yearHasMonths ? (
-                        <div
-                          className={
-                            isActive
-                              ? 'time-period-year-dot time-period-year-dot--on-active'
-                              : 'time-period-year-dot'
-                          }
-                        ></div>
-                      ) : (
-                        <div className="time-period-year-dot-placeholder"></div>
-                      )}
+                      <span className="time-period-year-indicator">
+                        {yearHasMonths ? (
+                          <div
+                            className={
+                              isActive
+                                ? 'time-period-year-dot time-period-year-dot--on-active'
+                                : 'time-period-year-dot'
+                            }
+                          ></div>
+                        ) : (
+                          <div className="time-period-year-dot-placeholder"></div>
+                        )}
+                      </span>
 
                       <DigiIconChevronRight />
                     </button>
@@ -287,9 +302,11 @@ function TimePeriodFilter({ onChange } = {}) {
                   >
                     <DigiFormCheckbox
                       afChecked={
-                        activeYear &&
-                        (selectedMonthsByYear[activeYear] || []).length ===
-                          months.length
+                        allYearsSelected
+                          ? allMonthsSelected
+                          : activeYear &&
+                            (selectedMonthsByYear[activeYear] || []).length ===
+                              months.length
                       }
                       onAfOnChange={handleSelectAllMonths}
                     />

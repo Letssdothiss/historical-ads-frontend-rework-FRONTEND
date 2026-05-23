@@ -261,6 +261,12 @@
   box-sizing: border-box;
 }
 
+.time-period-year-label {
+  flex: 1;
+  min-width: 0;
+  text-align: left;
+}
+
 /* ACTIVE YEAR */
 .time-period-year-button.active {
   background: var(--Background-Interactive-selected-primary, #009322);
@@ -273,20 +279,21 @@
   --digi--icon--color: #ffffff;
 }
 
-/* YEAR LABEL */
-.time-period-year-button span {
-  margin-left: 28px;
+.time-period-year-indicator {
+  display: flex;
+  width: 0.6rem;
+  height: 0.6rem;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
 }
 
 /* YEAR DOT */
 .time-period-year-dot {
-  width: 16px;
-  height: 16px;
+  width: 0.6rem;
+  height: 0.6rem;
 
-  margin-left: auto;
-  margin-right: 24px;
-
-  border-radius: 50%;
+  border-radius: 0.6rem;
   background: #009322;
   flex-shrink: 0;
 }
@@ -298,24 +305,18 @@
 
 /* EMPTY SPACE WHEN YEAR DOT IS NOT VISIBLE */
 .time-period-year-dot-placeholder {
-  width: 16px;
-  height: 16px;
-
-  margin-left: auto;
-  margin-right: 24px;
+  width: 0.6rem;
+  height: 0.6rem;
 
   flex-shrink: 0;
 }
 
 /* ACTIVE DOT */
 .time-period-active-dot {
-  width: 16px;
-  height: 16px;
+  width: 0.6rem;
+  height: 0.6rem;
 
-  margin-left: auto;
-  margin-right: 24px;
-
-  border-radius: 50%;
+  border-radius: 0.6rem;
 
   background: #009322;
 
