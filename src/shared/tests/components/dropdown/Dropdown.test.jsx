@@ -6,10 +6,7 @@ import Dropdown from '../../../components/dropdown/Dropdown'
 describe('Dropdown', () => {
   it('shows panel when open and hides when closed', () => {
     const { rerender } = render(
-      <Dropdown
-        isOpen={false}
-        trigger={<button type="button">Öppna</button>}
-      >
+      <Dropdown isOpen={false} trigger={<button type="button">Öppna</button>}>
         <p>Panelinnehåll</p>
       </Dropdown>,
     )
@@ -17,10 +14,7 @@ describe('Dropdown', () => {
     expect(screen.queryByText('Panelinnehåll')).not.toBeInTheDocument()
 
     rerender(
-      <Dropdown
-        isOpen
-        trigger={<button type="button">Öppna</button>}
-      >
+      <Dropdown isOpen trigger={<button type="button">Öppna</button>}>
         <p>Panelinnehåll</p>
       </Dropdown>,
     )

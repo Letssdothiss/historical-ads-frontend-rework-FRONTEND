@@ -7,16 +7,12 @@ import { PAGE_SIZE } from '../../../shared/constants/ui'
 
 function toApiParams(uiParams = {}, { offset = 0, limit = PAGE_SIZE } = {}) {
   const api = { offset, limit }
-
   if (uiParams.q) api.q = uiParams.q
   if (uiParams.employer) api.employer = uiParams.employer
   if (uiParams.organization_number)
     api.organization_number = uiParams.organization_number
   if (uiParams.skills?.length) api.skills = uiParams.skills
-  if (uiParams.lan?.length) api.region = uiParams.lan
   if (uiParams.kommuner?.length) api.municipality = uiParams.kommuner
-  if (uiParams.yrkesomraden?.length)
-    api.occupation_field = uiParams.yrkesomraden
   if (uiParams.yrkesgrupper?.length)
     api.occupation_group = uiParams.yrkesgrupper
   if (uiParams.employment_type?.length)
@@ -36,7 +32,6 @@ function toApiParams(uiParams = {}, { offset = 0, limit = PAGE_SIZE } = {}) {
   }
   if (uiParams.korkort === 'required') api.driving_license_required = true
   if (uiParams.korkort === 'not_required') api.driving_license_required = false
-
   return api
 }
 // the hook returns the data in a format that is easy to use in the UI, and also includes loading and error states

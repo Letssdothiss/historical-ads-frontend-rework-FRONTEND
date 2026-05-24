@@ -14,7 +14,10 @@ describe('mapHitToAd', () => {
         headline: 'Mjukvaruutvecklare',
         employer: { name: 'Test AB' },
         occupation: { label: 'Utvecklare' },
-        workplace_address: { municipality: 'Stockholm', region: 'Stockholms län' },
+        workplace_address: {
+          municipality: 'Stockholm',
+          region: 'Stockholms län',
+        },
         publication_date: '2024-01-15',
         employment_type: { label: 'Tillsvidare' },
         number_of_vacancies: 2,

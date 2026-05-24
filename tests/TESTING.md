@@ -4,13 +4,13 @@ Vitest + Testing Library. **Unit tests** mirror source under `src/**/tests/`. **
 
 ## Integration (this folder)
 
-| Path | Purpose |
-|------|---------|
-| `setup.js` | Global setup (jest-dom + MSW server lifecycle) |
-| `mocks/handlers.js` | Default API handlers (`/search`, `/stats`) |
-| `mocks/server.js` | MSW `setupServer` |
-| `utils/renderWithRouter.jsx` | Render a page at a URL with `MemoryRouter` |
-| `utils/digiReactMock.jsx` | Digi stubs for jsdom |
+| Path                           | Purpose                                             |
+| ------------------------------ | --------------------------------------------------- |
+| `setup.js`                     | Global setup (jest-dom + MSW server lifecycle)      |
+| `mocks/handlers.js`            | Default API handlers (`/search`, `/stats`)          |
+| `mocks/server.js`              | MSW `setupServer`                                   |
+| `utils/renderWithRouter.jsx`   | Render a page at a URL with `MemoryRouter`          |
+| `utils/digiReactMock.jsx`      | Digi stubs for jsdom                                |
 | `pages/*.integration.test.jsx` | Page integration + smoke tests (results pages, 404) |
 
 **7 tests** in `tests/pages/`.
@@ -21,12 +21,12 @@ Unit tests for `src/features/jobAds/` — search, results UI, URL params, and AP
 
 **Path:** `src/features/jobAds/tests/` · **49 tests**
 
-| Folder | Covers |
-|--------|--------|
-| `api/` | `jobAdsApi`, `jobAdsMapper` (search response → UI ads) |
+| Folder        | Covers                                                                          |
+| ------------- | ------------------------------------------------------------------------------- |
+| `api/`        | `jobAdsApi`, `jobAdsMapper` (search response → UI ads)                          |
 | `components/` | `JobAdsSearchForm`, `JobAdsResultsList`, `JobAdsResultCard`, `JobAdsPagination` |
-| `hooks/` | `useJobAdsQuery` (UI params → API + fetch), `useJobAdsSearchParams` (URL sync) |
-| `utils/` | `jobAdsFormatters` |
+| `hooks/`      | `useJobAdsQuery` (UI params → API + fetch), `useJobAdsSearchParams` (URL sync)  |
+| `utils/`      | `jobAdsFormatters`                                                              |
 
 ```bash
 npm run test:run -- src/features/jobAds/tests
@@ -38,12 +38,12 @@ Unit tests for `src/features/statistics/` — search form, chart panel, stats AP
 
 **Path:** `src/features/statistics/tests/` · **51 tests**
 
-| Folder | Covers |
-|--------|--------|
-| `api/` | `StatisticsApi`, `StatisticsMapper` (`/stats`, year aggregates, export) |
+| Folder        | Covers                                                                                                                                       |
+| ------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| `api/`        | `StatisticsApi`, `StatisticsMapper` (`/stats`, year aggregates, export)                                                                      |
 | `components/` | `StatisticsSearchForm`, `StatisticsChartPanel`, `TrendsFilter`, `DrivingLicenseFilter`, chart wrappers (`BarChart`, `LineChart`, `PieChart`) |
-| `hooks/` | `UseStatisticsParams`, `UseStatisticsQuery` (not wired on results page yet) |
-| `utils/` | `StatisticsTransformers` |
+| `hooks/`      | `UseStatisticsParams`, `UseStatisticsQuery` (not wired on results page yet)                                                                  |
+| `utils/`      | `StatisticsTransformers`                                                                                                                     |
 
 ```bash
 npm run test:run -- src/features/statistics/tests
@@ -55,13 +55,13 @@ Unit tests for `src/shared/` — HTTP client, routes, hooks, filters, and shell 
 
 **Path:** `src/shared/tests/` · **61 tests**
 
-| Folder | Covers |
-|--------|--------|
-| `api/` | `HttpClient` (`get`, `getFile`, query building, errors) |
+| Folder        | Covers                                                                                                                                                                  |
+| ------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `api/`        | `HttpClient` (`get`, `getFile`, query building, errors)                                                                                                                 |
 | `components/` | Filters (`GeographyFilter`, `JobGroupFilter`, `TimePeriodFilter`, …), shell (`ContentWrapper`, `TabsSwitch`, `ScrollToTop`), feedback (`LoadingState`, `ErrorState`, …) |
-| `hooks/` | `useJobData`, `useGeographyData`, `useDebounce`, `usePagination` |
-| `utils/` | `Date`, `QueryString` |
-| `constants/` | `routes` (`getMainTabSection`, `buildAdDetailPath`) |
+| `hooks/`      | `useJobData`, `useGeographyData`, `useDebounce`, `usePagination`                                                                                                        |
+| `utils/`      | `Date`, `QueryString`                                                                                                                                                   |
+| `constants/`  | `routes` (`getMainTabSection`, `buildAdDetailPath`)                                                                                                                     |
 
 Not covered here (manual / smoke only): `mainHeader`, `siteFooter`, static `ui.js` lists.
 

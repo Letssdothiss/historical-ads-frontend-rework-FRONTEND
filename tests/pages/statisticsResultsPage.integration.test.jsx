@@ -17,9 +17,7 @@ vi.mock(
   '../../src/features/statistics/components/statisticsChartPanel/StatisticsChartPanel',
   () => ({
     default: ({ data }) => (
-      <div data-testid="stats-chart-panel">
-        {data?.length ?? 0} region rows
-      </div>
+      <div data-testid="stats-chart-panel">{data?.length ?? 0} region rows</div>
     ),
   }),
 )
@@ -43,7 +41,9 @@ describe('StatisticsResultsPage (integration)', () => {
       )
     })
 
-    expect(screen.getByRole('button', { name: 'Justera sökning' })).toBeInTheDocument()
+    expect(
+      screen.getByRole('button', { name: 'Justera sökning' }),
+    ).toBeInTheDocument()
   })
 
   it('shows error message when stats API fails', async () => {

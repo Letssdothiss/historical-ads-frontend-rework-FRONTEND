@@ -32,9 +32,7 @@ describe('TrendsFilter', () => {
     const user = userEvent.setup()
     const onChange = vi.fn()
 
-    render(
-      <TrendsFilter value="top5_skills" onChange={onChange} />,
-    )
+    render(<TrendsFilter value="top5_skills" onChange={onChange} />)
 
     await user.click(screen.getByRole('button', { name: /Trender/ }))
     await user.click(

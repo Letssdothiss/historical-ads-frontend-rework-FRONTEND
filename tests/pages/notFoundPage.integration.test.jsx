@@ -18,7 +18,9 @@ describe('NotFoundPage (smoke)', () => {
       </MemoryRouter>,
     )
 
-    expect(screen.getByRole('heading', { level: 1, name: '404' })).toBeInTheDocument()
+    expect(
+      screen.getByRole('heading', { level: 1, name: '404' }),
+    ).toBeInTheDocument()
     expect(
       screen.getByRole('heading', {
         level: 2,

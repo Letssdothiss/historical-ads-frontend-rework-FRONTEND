@@ -36,9 +36,7 @@ describe('mapStatisticsResponse', () => {
       },
     ])
 
-    expect(result).toEqual([
-      { lan: 'Stockholms län', 2024: 100, 2025: 150 },
-    ])
+    expect(result).toEqual([{ lan: 'Stockholms län', 2024: 100, 2025: 150 }])
   })
 
   it('supports direct region array on raw response', () => {

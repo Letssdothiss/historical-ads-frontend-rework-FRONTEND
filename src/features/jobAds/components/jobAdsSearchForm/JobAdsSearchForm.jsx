@@ -63,10 +63,14 @@ export default function JobAdsSearchForm() {
     event.preventDefault()
     const params = new URLSearchParams()
     if (q.trim()) params.set('q', q.trim())
-    geography.lan.forEach((l) => params.append('lan', l))
     geography.kommuner.forEach((k) => params.append('kommun', k))
-    occupations.areas.forEach((a) => params.append('yrkesomrade', a))
+    if (Object.keys(geography.grouped).length) {
+      params.set('kommun-labels', JSON.stringify(geography.grouped))
+    }
     occupations.groups.forEach((g) => params.append('yrkesgrupp', g))
+    if (Object.keys(occupations.grouped).length) {
+      params.set('yrkesgrupp-labels', JSON.stringify(occupations.grouped))
+    }
     timePeriod.years.forEach((y) => params.append('years', y))
     timePeriod.months.forEach((m) => params.append('months', m))
     employment.type.forEach((t) => params.append('employment_type', t))

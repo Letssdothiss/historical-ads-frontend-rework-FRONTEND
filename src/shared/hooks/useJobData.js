@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
 
 const GRAPHQL_URL = 'https://taxonomy.api.jobtechdev.se/v1/taxonomy/graphql'
-
 const QUERY = `
   {
     concepts(type: "occupation-field", limit: 100) {
@@ -26,19 +25,18 @@ export function useJobData() {
         const res = await fetch(
           `${GRAPHQL_URL}?query=${encodeURIComponent(QUERY)}`,
         )
-
-        if (!res.ok) throw new Error('Något gick fel vid hämtning av yrkesdata')
-
+        if (!res.ok) throw new Error('Something went wrong fetching job data')
         const json = await res.json()
         const concepts = json?.data?.concepts ?? []
-
         const result = {}
         concepts.forEach((field) => {
-          result[field.preferred_label] = (field.narrower ?? [])
-            .map((g) => g.preferred_label)
-            .sort()
+          result[field.preferred_label] = {
+            id: field.id,
+            groups: (field.narrower ?? [])
+              .map((g) => ({ id: g.id, label: g.preferred_label }))
+              .sort((a, b) => a.label.localeCompare(b.label)),
+          }
         })
-
         setJobData(result)
       } catch (err) {
         setError(err.message)
@@ -46,7 +44,6 @@ export function useJobData() {
         setLoading(false)
       }
     }
-
     fetchData()
   }, [])
 

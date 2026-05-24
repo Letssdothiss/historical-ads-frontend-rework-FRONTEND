@@ -67,7 +67,9 @@ describe('jobAdsApi', () => {
 
     await jobAdsApi.getFilter('kommun', { lan: 'Skåne län' })
 
-    expect(getMock).toHaveBeenCalledWith('/filters/kommun', { lan: 'Skåne län' })
+    expect(getMock).toHaveBeenCalledWith('/filters/kommun', {
+      lan: 'Skåne län',
+    })
   })
 
   it('shareUrl calls GET /share-url with params', async () => {
@@ -79,18 +81,30 @@ describe('jobAdsApi', () => {
   })
 
   it('export calls getFile with format in params', async () => {
-    getFileMock.mockResolvedValue({ blob: new Blob(), contentType: 'application/json' })
+    getFileMock.mockResolvedValue({
+      blob: new Blob(),
+      contentType: 'application/json',
+    })
 
     await jobAdsApi.export({ q: 'test' }, 'csv')
 
-    expect(getFileMock).toHaveBeenCalledWith('/export', { q: 'test', format: 'csv' })
+    expect(getFileMock).toHaveBeenCalledWith('/export', {
+      q: 'test',
+      format: 'csv',
+    })
   })
 
   it('export defaults to json format', async () => {
-    getFileMock.mockResolvedValue({ blob: new Blob(), contentType: 'application/json' })
+    getFileMock.mockResolvedValue({
+      blob: new Blob(),
+      contentType: 'application/json',
+    })
 
     await jobAdsApi.export({ q: 'test' })
 
-    expect(getFileMock).toHaveBeenCalledWith('/export', { q: 'test', format: 'json' })
+    expect(getFileMock).toHaveBeenCalledWith('/export', {
+      q: 'test',
+      format: 'json',
+    })
   })
 })

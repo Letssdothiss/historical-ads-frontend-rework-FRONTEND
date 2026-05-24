@@ -37,9 +37,7 @@ describe('useStatisticsQuery', () => {
     await waitFor(() => expect(result.current.loading).toBe(false))
 
     expect(fetchStatisticsMock).toHaveBeenCalledWith(params)
-    expect(result.current.data).toEqual([
-      { lan: 'Skåne län', 2024: 100 },
-    ])
+    expect(result.current.data).toEqual([{ lan: 'Skåne län', 2024: 100 }])
     expect(result.current.error).toBeNull()
   })
 

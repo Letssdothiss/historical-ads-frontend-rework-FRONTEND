@@ -13,9 +13,7 @@ vi.mock('@designsystem-se/af-react', () => ({
 
 describe('ErrorState', () => {
   it('renders alert with title and message', () => {
-    render(
-      <ErrorState title="Fel" message="Kunde inte ladda data." />,
-    )
+    render(<ErrorState title="Fel" message="Kunde inte ladda data." />)
 
     expect(screen.getByRole('alert')).toBeInTheDocument()
     expect(screen.getByRole('heading', { name: 'Fel' })).toBeInTheDocument()

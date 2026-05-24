@@ -38,13 +38,13 @@ describe('JobAdsResultsPage (integration)', () => {
       screen.getByRole('heading', { name: 'Integration testannons' }),
     ).toBeInTheDocument()
     expect(screen.getByText(/Sökresultat:.*react/)).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: 'Justera sökning' })).toBeInTheDocument()
+    expect(
+      screen.getByRole('button', { name: 'Justera sökning' }),
+    ).toBeInTheDocument()
   })
 
   it('shows empty state when the API returns no hits', async () => {
-    server.use(
-      http.get(`${API_BASE}/search`, () => emptySearchResponse()),
-    )
+    server.use(http.get(`${API_BASE}/search`, () => emptySearchResponse()))
 
     renderPageAtRoute(JobAdsResultsPage, {
       route: ROUTES.JOB_ADS_RESULTS,
@@ -53,7 +53,9 @@ describe('JobAdsResultsPage (integration)', () => {
 
     await waitFor(() => {
       expect(
-        screen.getByText('Inga annonser hittades. Prova att ändra sökkriterier.'),
+        screen.getByText(
+          'Inga annonser hittades. Prova att ändra sökkriterier.',
+        ),
       ).toBeInTheDocument()
     })
   })
@@ -72,6 +74,8 @@ describe('JobAdsResultsPage (integration)', () => {
       expect(screen.getByText('Nätverksfel')).toBeInTheDocument()
     })
 
-    expect(screen.getByRole('button', { name: 'Försök igen' })).toBeInTheDocument()
+    expect(
+      screen.getByRole('button', { name: 'Försök igen' }),
+    ).toBeInTheDocument()
   })
 })

@@ -37,8 +37,8 @@ export default function JobGroupFilter({
 
   const allGroupsSelected =
     activeArea &&
-    jobData[activeArea]?.length > 0 &&
-    jobData[activeArea].every((g) => selectedGroups.has(g))
+    jobData[activeArea]?.groups.length > 0 &&
+    jobData[activeArea].groups.every((g) => selectedGroups.has(g.id))
 
   function toggleAllaAreas(checked) {
     if (checked) {
@@ -51,14 +51,16 @@ export default function JobGroupFilter({
 
   function toggleGroup(g, checked) {
     const next = new Set(selectedGroups)
-    checked ? next.add(g) : next.delete(g)
+    checked ? next.add(g.id) : next.delete(g.id)
     setSelectedGroups(next)
   }
 
   function toggleAllaGroups(checked) {
     if (!activeArea) return
     const next = new Set(selectedGroups)
-    jobData[activeArea].forEach((g) => (checked ? next.add(g) : next.delete(g)))
+    jobData[activeArea].groups.forEach((g) =>
+      checked ? next.add(g.id) : next.delete(g.id),
+    )
     setSelectedGroups(next)
   }
 
@@ -69,23 +71,23 @@ export default function JobGroupFilter({
 
   function rensaYrkesgrupper() {
     if (!activeArea) return
-    const groupsInArea = new Set(jobData[activeArea] ?? [])
+    const groupsInArea = new Set(jobData[activeArea].groups.map((g) => g.id))
     setSelectedGroups(
-      (prev) => new Set([...prev].filter((g) => !groupsInArea.has(g))),
+      (prev) => new Set([...prev].filter((id) => !groupsInArea.has(id))),
     )
   }
 
   function handleApply() {
+    const groupIds = [...selectedGroups]
+
     const grouped = {}
     for (const area of allAreaNames) {
-      const groups = jobData[area]?.filter((g) => selectedGroups.has(g)) ?? []
-      if (groups.length > 0) grouped[area] = groups
+      const groups =
+        jobData[area]?.groups.filter((g) => selectedGroups.has(g.id)) ?? []
+      if (groups.length > 0) grouped[area] = groups.map((g) => g.label)
     }
-    onApply?.({
-      areas: [...selectedAreas],
-      groups: [...selectedGroups],
-      grouped,
-    })
+
+    onApply?.({ areas: [], groups: groupIds, grouped })
   }
 
   if (loading) {
@@ -137,7 +139,6 @@ export default function JobGroupFilter({
 
       {/* Header */}
       <div className="job-filter-header">
-        {/* Left header */}
         <div className="job-filter-header-left">
           <DigiFormLabel
             afLabel="Sök yrkesområde eller yrkesgrupp"
@@ -163,7 +164,6 @@ export default function JobGroupFilter({
           </div>
         </div>
 
-        {/* Right header */}
         <div className="job-filter-header-right">
           <div className="job-filter-check-row">
             <DigiFormCheckbox
@@ -183,7 +183,6 @@ export default function JobGroupFilter({
 
       {/* Body-row */}
       <div className="job-filter-body">
-        {/* Left: Yrkesområdes list */}
         <div className="job-filter-area-col">
           <ul
             className="job-filter-list"
@@ -191,8 +190,8 @@ export default function JobGroupFilter({
             aria-label="Yrkesområdeslista"
           >
             {filteredAreas.map((area) => {
-              const hasSelectedGroups = jobData[area]?.some((g) =>
-                selectedGroups.has(g),
+              const hasSelectedGroups = jobData[area]?.groups.some((g) =>
+                selectedGroups.has(g.id),
               )
               const isSelected = selectedAreas.has(area)
               const isActive = activeArea === area
@@ -234,23 +233,22 @@ export default function JobGroupFilter({
           </ul>
         </div>
 
-        {/* Right: Yrkesgrupps list */}
         <div className="job-filter-group-col">
           {activeArea || allAreasSelected ? (
             <ul className="job-filter-list" aria-label="Yrkesgrupper">
               {(allAreasSelected
-                ? allAreaNames.flatMap((a) => jobData[a])
-                : jobData[activeArea]
+                ? allAreaNames.flatMap((a) => jobData[a]?.groups ?? [])
+                : (jobData[activeArea]?.groups ?? [])
               ).map((g) => (
-                <li key={g} className="job-filter-group-item">
+                <li key={g.id} className="job-filter-group-item">
                   <DigiFormCheckbox
-                    id={`group-${g}`}
-                    afChecked={selectedGroups.has(g)}
+                    id={`group-${g.id}`}
+                    afChecked={selectedGroups.has(g.id)}
                     onAfOnChange={(e) =>
                       toggleGroup(g, e.detail.target.checked)
                     }
                   />
-                  <label htmlFor={`group-${g}`}>{g}</label>
+                  <label htmlFor={`group-${g.id}`}>{g.label}</label>
                 </li>
               ))}
             </ul>
@@ -263,13 +261,13 @@ export default function JobGroupFilter({
       {/* Footer */}
       <div className="job-filter-footer">
         <button
-          className="job-filter-footer-btn job-filter-footer-btn--secondary"
+          className="geo-filter-footer-btn geo-filter-footer-btn--secondary"
           onClick={() => onClose?.()}
         >
           Stäng
         </button>
         <button
-          className="job-filter-footer-btn job-filter-footer-btn--primary"
+          className="geo-filter-footer-btn geo-filter-footer-btn--primary"
           onClick={() => {
             handleApply()
             onClose?.()

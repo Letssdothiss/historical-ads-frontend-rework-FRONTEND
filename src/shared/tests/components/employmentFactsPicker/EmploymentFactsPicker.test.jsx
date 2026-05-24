@@ -22,9 +22,7 @@ describe('EmploymentFactsPicker', () => {
     render(<EmploymentFactsPicker onChange={onChange} />)
 
     await user.click(screen.getByRole('button', { name: /Fakta anställning/ }))
-    await user.click(
-      screen.getByLabelText('Tillsvidare eller visstid'),
-    )
+    await user.click(screen.getByLabelText('Tillsvidare eller visstid'))
 
     expect(onChange).toHaveBeenCalledWith({
       type: ['tillsvidare_eller_visstid'],

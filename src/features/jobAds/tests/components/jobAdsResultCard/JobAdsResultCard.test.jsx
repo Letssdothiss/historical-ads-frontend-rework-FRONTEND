@@ -25,7 +25,9 @@ describe('JobAdsResultCard', () => {
   it('renders ad fields and placeholder for missing values', () => {
     render(<JobAdsResultCard ad={sampleAd} />)
 
-    expect(screen.getByRole('heading', { name: 'Testtitel' })).toBeInTheDocument()
+    expect(
+      screen.getByRole('heading', { name: 'Testtitel' }),
+    ).toBeInTheDocument()
     expect(screen.getByText('job-1')).toBeInTheDocument()
     expect(screen.getByText('Testföretag')).toBeInTheDocument()
     expect(screen.getByText('Växjö')).toBeInTheDocument()
