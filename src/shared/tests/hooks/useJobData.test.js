@@ -54,7 +54,9 @@ describe('useJobData', () => {
 
     await waitFor(() => expect(result.current.loading).toBe(false))
 
-    expect(result.current.error).toBe('Något gick fel vid hämtning av yrkesdata')
+    expect(result.current.error).toBe(
+      'Något gick fel vid hämtning av yrkesdata',
+    )
     expect(result.current.jobData).toEqual({})
   })
 

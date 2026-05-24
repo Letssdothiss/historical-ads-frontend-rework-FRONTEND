@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
 
 const GRAPHQL_URL = 'https://taxonomy.api.jobtechdev.se/v1/taxonomy/graphql'
-
 const QUERY = `
   {
     concepts(type: "region", limit: 100) {
@@ -26,22 +25,21 @@ export function useGeographyData() {
         const res = await fetch(
           `${GRAPHQL_URL}?query=${encodeURIComponent(QUERY)}`,
         )
-
         if (!res.ok)
           throw new Error('Something went wrong while fetching geography')
-
         const json = await res.json()
         const concepts = json?.data?.concepts ?? []
-
         const result = {}
         concepts
           .filter((r) => r.preferred_label.endsWith('län'))
           .forEach((lan) => {
-            result[lan.preferred_label] = (lan.narrower ?? [])
-              .map((k) => k.preferred_label)
-              .sort()
+            result[lan.preferred_label] = {
+              id: lan.id,
+              kommuner: (lan.narrower ?? [])
+                .map((k) => ({ id: k.id, label: k.preferred_label }))
+                .sort((a, b) => a.label.localeCompare(b.label)),
+            }
           })
-
         setLanData(result)
       } catch (err) {
         setError(err.message)
@@ -49,7 +47,6 @@ export function useGeographyData() {
         setLoading(false)
       }
     }
-
     fetchData()
   }, [])
 

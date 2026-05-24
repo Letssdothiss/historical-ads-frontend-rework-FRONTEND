@@ -76,7 +76,10 @@ describe('StatisticsChartPanel', () => {
     render(<StatisticsChartPanel data={tableData} />)
 
     const rows = () =>
-      screen.getAllByRole('row').slice(1).map((row) => row.textContent)
+      screen
+        .getAllByRole('row')
+        .slice(1)
+        .map((row) => row.textContent)
 
     expect(rows()[0]).toContain('Stockholms län')
 
@@ -94,7 +97,9 @@ describe('StatisticsChartPanel', () => {
       <StatisticsChartPanel data={tableData} searchParams={{ q: 'test' }} />,
     )
 
-    await user.click(screen.getByRole('button', { name: /Exportera sökresultat/ }))
+    await user.click(
+      screen.getByRole('button', { name: /Exportera sökresultat/ }),
+    )
     await user.click(screen.getByRole('button', { name: /Diagram som PNG/ }))
     await user.click(screen.getByRole('button', { name: 'Exportera' }))
 
@@ -114,7 +119,9 @@ describe('StatisticsChartPanel', () => {
       />,
     )
 
-    await user.click(screen.getByRole('button', { name: /Exportera sökresultat/ }))
+    await user.click(
+      screen.getByRole('button', { name: /Exportera sökresultat/ }),
+    )
     await user.click(screen.getByRole('button', { name: /Json \(json\)/ }))
     await user.click(screen.getByRole('button', { name: 'Exportera' }))
 

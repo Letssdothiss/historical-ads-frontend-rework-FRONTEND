@@ -16,7 +16,10 @@ vi.mock('react-router-dom', async (importOriginal) => {
 
 vi.mock('@designsystem-se/af-react', () => ({
   DigiButton: ({ children, onAfOnClick, afType }) => (
-    <button type={afType === 'submit' ? 'submit' : 'button'} onClick={onAfOnClick}>
+    <button
+      type={afType === 'submit' ? 'submit' : 'button'}
+      onClick={onAfOnClick}
+    >
       {children}
     </button>
   ),
@@ -35,24 +38,39 @@ vi.mock('@designsystem-se/af-react', () => ({
   DigiIconUserAlt: () => null,
 }))
 
-vi.mock('../../../../../shared/components/competencySearch/CompetencySearch', () => ({
-  default: () => null,
-}))
-vi.mock('../../../../../shared/components/employmentFactsPicker/EmploymentFactsPicker', () => ({
-  default: () => null,
-}))
-vi.mock('../../../../../shared/components/geographyFilter/GeographyFilter', () => ({
-  default: () => null,
-}))
+vi.mock(
+  '../../../../../shared/components/competencySearch/CompetencySearch',
+  () => ({
+    default: () => null,
+  }),
+)
+vi.mock(
+  '../../../../../shared/components/employmentFactsPicker/EmploymentFactsPicker',
+  () => ({
+    default: () => null,
+  }),
+)
+vi.mock(
+  '../../../../../shared/components/geographyFilter/GeographyFilter',
+  () => ({
+    default: () => null,
+  }),
+)
 vi.mock('../../../../../shared/components/infoTooltip/InfoTooltip', () => ({
   default: () => null,
 }))
-vi.mock('../../../../../shared/components/timePeriodFilter/TimePeriodFilter', () => ({
-  default: () => null,
-}))
-vi.mock('../../../../../shared/components/jobGroupFilter/JobGroupFilter', () => ({
-  default: () => null,
-}))
+vi.mock(
+  '../../../../../shared/components/timePeriodFilter/TimePeriodFilter',
+  () => ({
+    default: () => null,
+  }),
+)
+vi.mock(
+  '../../../../../shared/components/jobGroupFilter/JobGroupFilter',
+  () => ({
+    default: () => null,
+  }),
+)
 
 function renderForm() {
   return render(

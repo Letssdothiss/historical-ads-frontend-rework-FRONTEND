@@ -92,9 +92,7 @@ describe('toChartData', () => {
   })
 
   it('uses positional x values for non-numeric year labels', () => {
-    const result = toChartData([
-      { lan: 'Skåne län', Totalt: 80, Övrigt: 20 },
-    ])
+    const result = toChartData([{ lan: 'Skåne län', Totalt: 80, Övrigt: 20 }])
 
     expect(result.data.xValues).toEqual([0, 1])
     expect(result.data.xValueNames).toEqual(['Totalt', 'Övrigt'])
@@ -112,13 +110,9 @@ describe('toChartData', () => {
 
 describe('toAndel', () => {
   it('converts counts to row percentages that sum to 100', () => {
-    const result = toAndel([
-      { lan: 'Stockholms län', 2024: 75, 2025: 25 },
-    ])
+    const result = toAndel([{ lan: 'Stockholms län', 2024: 75, 2025: 25 }])
 
-    expect(result).toEqual([
-      { lan: 'Stockholms län', 2024: 75, 2025: 25 },
-    ])
+    expect(result).toEqual([{ lan: 'Stockholms län', 2024: 75, 2025: 25 }])
   })
 
   it('returns zero shares when a row total is zero', () => {

@@ -15,9 +15,12 @@ describe('TabsSwitch', () => {
   it('renders main navigation links', () => {
     renderTabs()
 
-    expect(screen.getByRole('navigation', { name: 'Huvudnavigering' }))
-      .toBeInTheDocument()
-    expect(screen.getByRole('link', { name: 'Platsannonser' })).toBeInTheDocument()
+    expect(
+      screen.getByRole('navigation', { name: 'Huvudnavigering' }),
+    ).toBeInTheDocument()
+    expect(
+      screen.getByRole('link', { name: 'Platsannonser' }),
+    ).toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'Statistik' })).toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'Om datan' })).toBeInTheDocument()
   })

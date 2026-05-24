@@ -86,10 +86,10 @@
 .time-period-overlay {
   position: absolute;
   top: calc(100% + 2px);
-   right: 0;
+  right: 0;
   z-index: 10;
 
-   width: calc(200% + 24px);
+  width: calc(200% + 24px);
   min-height: 440px;
 
   padding: 24px;

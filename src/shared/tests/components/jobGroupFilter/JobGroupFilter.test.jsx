@@ -27,7 +27,9 @@ vi.mock('@designsystem-se/af-react', () => ({
           type="checkbox"
           aria-label={afLabel}
           onChange={(e) =>
-            onAfOnChange?.({ detail: { target: { checked: e.target.checked } } })
+            onAfOnChange?.({
+              detail: { target: { checked: e.target.checked } },
+            })
           }
         />
         {afLabel}
@@ -99,7 +101,9 @@ describe('JobGroupFilter', () => {
 
     await user.click(screen.getByRole('option', { name: /IT/ }))
     await user.click(screen.getByLabelText('Utvecklare'))
-    await user.click(screen.getByRole('button', { name: 'Lägg till och stäng' }))
+    await user.click(
+      screen.getByRole('button', { name: 'Lägg till och stäng' }),
+    )
 
     expect(onApply).toHaveBeenCalledWith({
       areas: ['IT'],

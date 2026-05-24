@@ -67,11 +67,11 @@ describe('JobAdsResultsList', () => {
     const user = userEvent.setup()
     const onViewAd = vi.fn()
 
-    render(
-      <JobAdsResultsList ads={sampleAds} onViewAd={onViewAd} />,
-    )
+    render(<JobAdsResultsList ads={sampleAds} onViewAd={onViewAd} />)
 
-    expect(screen.getByRole('list', { name: 'Sökresultat' })).toBeInTheDocument()
+    expect(
+      screen.getByRole('list', { name: 'Sökresultat' }),
+    ).toBeInTheDocument()
     await user.click(screen.getByRole('button', { name: 'Annons B' }))
     expect(onViewAd).toHaveBeenCalledWith(sampleAds[1], 1)
   })

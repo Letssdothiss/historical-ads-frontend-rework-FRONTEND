@@ -21,11 +21,7 @@ export default defineConfig(({ mode }) => {
         reporter: ['text', 'text-summary', 'html'],
         reportsDirectory: './coverage',
         include: ['src/**/*.{js,jsx}'],
-        exclude: [
-          'src/**/tests/**',
-          'src/**/*.test.{js,jsx}',
-          'src/main.jsx',
-        ],
+        exclude: ['src/**/tests/**', 'src/**/*.test.{js,jsx}', 'src/main.jsx'],
       },
     },
     // Stencil lazy-loadar *.entry.js med relativa dynamiska imports. Om Vite

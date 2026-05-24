@@ -39,7 +39,9 @@ describe('JobAdsPagination', () => {
       />,
     )
 
-    expect(screen.getByRole('button', { name: 'Gå till sida 3' })).toBeInTheDocument()
+    expect(
+      screen.getByRole('button', { name: 'Gå till sida 3' }),
+    ).toBeInTheDocument()
     expect(afMSetCurrentPage).toHaveBeenCalledWith(1)
   })
 
@@ -48,7 +50,11 @@ describe('JobAdsPagination', () => {
     const onPageChange = vi.fn()
 
     render(
-      <JobAdsPagination currentPage={1} totalPages={4} onPageChange={onPageChange} />,
+      <JobAdsPagination
+        currentPage={1}
+        totalPages={4}
+        onPageChange={onPageChange}
+      />,
     )
 
     await user.click(screen.getByRole('button', { name: 'Gå till sida 3' }))
