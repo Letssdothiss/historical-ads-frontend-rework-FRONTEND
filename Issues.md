@@ -39,9 +39,9 @@
 
 #### Generellt
 - Lägga till visning för var annonsen har sitt ursprung ifrån, ("source_type":)
-- När "Om datan"-fliken är aktiv, dvs grön, så syns fortfarande vitt längst till höger från ett parent element.
 - s.k "trigger-dot" för rullgardinsmeny "Geografiskt område" bör ha mer utrymme runt sig.
 - Rullgardinsmenyer har olika utseenden. Geografiskt område & Yrkesgrupper är lika, men överensstämmer inte med resten. En design bör väljas som de andra ska efterlikna.
+- ~~När "Om datan"-fliken är aktiv, dvs grön, så syns fortfarande vitt längst till höger från ett parent element.~~
 
 #### Platsannonser
 - Infoikonen (hover), visar info korrekt vid hover men kräver antingen klick utanför eller att muspekaren dras över själva textrutan för att försvinna.
