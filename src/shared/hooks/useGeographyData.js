@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 const GRAPHQL_URL = 'https://taxonomy.api.jobtechdev.se/v1/taxonomy/graphql'
 const QUERY = `
   {
-    concepts(type: "region", limit: 100) {
+    concepts(type: "region", preferred_label_contains: "län", limit: 50) {
       id
       preferred_label
       narrower {
