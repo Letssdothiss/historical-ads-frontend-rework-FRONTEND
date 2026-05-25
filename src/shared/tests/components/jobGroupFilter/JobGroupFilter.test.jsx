@@ -12,11 +12,12 @@ vi.mock('@designsystem-se/af-react', () => ({
       {children}
     </button>
   ),
-  DigiFormCheckbox: ({ afLabel, id, onAfOnChange }) =>
+  DigiFormCheckbox: ({ afLabel, id, afChecked, onAfOnChange }) =>
     id ? (
       <input
         id={id}
         type="checkbox"
+        checked={!!afChecked}
         onChange={(e) =>
           onAfOnChange?.({ detail: { target: { checked: e.target.checked } } })
         }
@@ -120,5 +121,18 @@ describe('JobGroupFilter', () => {
       grouped: { IT: ['Utvecklare'] },
     })
     expect(onClose).toHaveBeenCalledOnce()
+  })
+
+  it('selects all groups after "Välj alla yrkesområden" without picking one area', async () => {
+    const user = userEvent.setup()
+
+    render(<JobGroupFilter />)
+
+    await user.click(screen.getByLabelText('Välj alla yrkesområden'))
+    await user.click(screen.getByLabelText('Välj alla yrkesgrupper'))
+
+    expect(screen.getByLabelText('Utvecklare')).toBeChecked()
+    expect(screen.getByLabelText('Testare')).toBeChecked()
+    expect(screen.getByLabelText('Sjuksköterska')).toBeChecked()
   })
 })

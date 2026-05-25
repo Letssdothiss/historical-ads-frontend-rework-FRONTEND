@@ -33,7 +33,7 @@ export default function ContentWrapper({
           </div>
         </div>
 
-        <div className="tabsswitch-component-container">
+        <div className="shell-corner-actions">
           <button
             type="button"
             className={`shell-reset-link${hideRensaLink ? ' shell-reset-link--hidden' : ''}`}
@@ -43,7 +43,9 @@ export default function ContentWrapper({
           >
             Rensa
           </button>
-          <TabsSwitch />
+          <div className="tabsswitch-component-container">
+            <TabsSwitch />
+          </div>
         </div>
       </div>
 

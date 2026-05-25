@@ -15,7 +15,12 @@ import {
   DigiIconUserAlt,
 } from '@designsystem-se/af-react'
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
+import {
+  geographyFilterKey,
+  jobGroupFilterKey,
+  parseStatisticsSearchFormState,
+} from '../../../../shared/utils/searchFormParams'
 import CompetencySearch from '../../../../shared/components/competencySearch/CompetencySearch'
 import Dropdown from '../../../../shared/components/dropdown/Dropdown'
 import GroupedTooltip from '../../../../shared/components/groupedTooltip/GroupedTooltip'
@@ -29,31 +34,30 @@ import TrendsFilter from '../trendsFilter/TrendsFilter'
 import './StatisticsSearchForm.css'
 
 export default function StatisticsSearchForm() {
+  const [searchParams] = useSearchParams()
+  return (
+    <StatisticsSearchFormFields
+      key={searchParams.toString()}
+      searchParams={searchParams}
+    />
+  )
+}
+
+function StatisticsSearchFormFields({ searchParams }) {
   const navigate = useNavigate()
-  const [q, setQ] = useState('')
-  const [trend, setTrend] = useState('')
-  const [drivingLicense, setDrivingLicense] = useState('')
+  const initial = parseStatisticsSearchFormState(searchParams)
+  const [q, setQ] = useState(initial.q)
+  const [trend, setTrend] = useState(initial.trend)
+  const [drivingLicense, setDrivingLicense] = useState(initial.drivingLicense)
   const [geoOpen, setGeoOpen] = useState(false)
   const [jobOpen, setJobOpen] = useState(false)
   const [geoHover, setGeoHover] = useState(false)
   const [jobHover, setJobHover] = useState(false)
-  const [geography, setGeography] = useState({
-    lan: [],
-    kommuner: [],
-    grouped: {},
-  })
-  const [occupations, setOccupations] = useState({
-    areas: [],
-    groups: [],
-    grouped: {},
-  })
-  const [timePeriod, setTimePeriod] = useState({ years: [], months: [] })
-  const [employment, setEmployment] = useState({
-    type: [],
-    duration: [],
-    scope: [],
-  })
-  const [skills, setSkills] = useState('')
+  const [geography, setGeography] = useState(initial.geography)
+  const [occupations, setOccupations] = useState(initial.occupations)
+  const [timePeriod, setTimePeriod] = useState(initial.timePeriod)
+  const [employment, setEmployment] = useState(initial.employment)
+  const [skills, setSkills] = useState(initial.skills)
 
   const hasGeoSelection =
     geography.lan.length > 0 || geography.kommuner.length > 0
@@ -160,6 +164,7 @@ export default function StatisticsSearchForm() {
           }
         >
           <GeographyFilter
+            key={geographyFilterKey(geography)}
             onClose={() => setGeoOpen(false)}
             initialLan={geography.lan}
             initialKommuner={geography.kommuner}
@@ -174,7 +179,10 @@ export default function StatisticsSearchForm() {
         </Dropdown>
 
         <div className="statistics-search-form__filter-cell">
-          <TimePeriodFilter onChange={setTimePeriod} />
+          <TimePeriodFilter
+            initialPeriod={initial.timePeriod}
+            onChange={setTimePeriod}
+          />
         </div>
 
         <Dropdown
@@ -214,6 +222,7 @@ export default function StatisticsSearchForm() {
           }
         >
           <JobGroupFilter
+            key={jobGroupFilterKey(occupations)}
             onClose={() => setJobOpen(false)}
             initialAreas={occupations.areas}
             initialGroups={occupations.groups}
@@ -233,7 +242,10 @@ export default function StatisticsSearchForm() {
       </div>
 
       <div className="statistics-search-form__bottom-row">
-        <DrivingLicenseFilter onChange={setDrivingLicense} />
+        <DrivingLicenseFilter
+          value={drivingLicense}
+          onChange={setDrivingLicense}
+        />
         <CompetencySearch value={skills} onChange={setSkills} />
       </div>
 

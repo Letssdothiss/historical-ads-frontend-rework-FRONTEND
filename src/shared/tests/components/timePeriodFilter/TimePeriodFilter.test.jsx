@@ -43,4 +43,23 @@ describe('TimePeriodFilter', () => {
       ),
     )
   })
+
+  it('selects all years when "Välj alla årtal" is checked', async () => {
+    const user = userEvent.setup()
+    const onChange = vi.fn()
+
+    render(<TimePeriodFilter onChange={onChange} />)
+
+    await user.click(screen.getByRole('button', { name: /Tidsperiod/ }))
+    await user.click(
+      screen.getByRole('button', { name: /Välj alla årtal/i }),
+    )
+
+    await waitFor(() =>
+      expect(onChange).toHaveBeenLastCalledWith({
+        years: ['2026', '2025', '2024', '2023'],
+        months: [],
+      }),
+    )
+  })
 })

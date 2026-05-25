@@ -10,14 +10,22 @@ import {
   DigiIconX,
 } from '@designsystem-se/af-react'
 
-function DrivingLicenseFilter({ onChange } = {}) {
+function DrivingLicenseFilter({ onChange, value = '' } = {}) {
   const [isOpen, setIsOpen] = useState(false)
-  const [licenseChoice, setLicenseChoice] = useState('')
+  const [licenseChoice, setLicenseChoice] = useState(value)
+  const lastEmittedRef = useRef(value)
   const wrapperRef = useRef(null)
   const hasSelection = licenseChoice !== ''
 
   useEffect(() => {
-    onChange?.(licenseChoice)
+    setLicenseChoice(value)
+    lastEmittedRef.current = value
+  }, [value])
+
+  useEffect(() => {
+    if (!onChange || licenseChoice === lastEmittedRef.current) return
+    lastEmittedRef.current = licenseChoice
+    onChange(licenseChoice)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [licenseChoice])
 
