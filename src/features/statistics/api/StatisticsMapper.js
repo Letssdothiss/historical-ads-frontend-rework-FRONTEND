@@ -33,6 +33,23 @@ function parseMonthLabel(label) {
   return label
 }
 
+function extractRegions(raw) {
+  if (!raw) return []
+  if (Array.isArray(raw.region)) {
+    return raw.region
+  }
+  const stats = raw?.stats
+  if (!stats) return []
+  if (Array.isArray(stats)) {
+    const regionStat = stats.find((s) => s.type === 'region')
+    return (regionStat?.values ?? []).map(({ term, count }) => ({
+      label: term,
+      occurrences: count,
+    }))
+  }
+  return stats?.region ?? []
+}
+
 export function mapStatisticsByMonth(yearResults) {
   console.log('[StatisticsMapper] mapStatisticsByMonth indata:', yearResults)
   if (!Array.isArray(yearResults) || yearResults.length === 0) return []
@@ -80,7 +97,8 @@ export function mapStatisticsResponse(yearResults) {
     // 1. { stats: { region: [...] } } - wrapped format
     // 2. { region: [...] } - direct format
     // 3. { stats: { region: [...] }, ... } - stats object
-    const regions = raw?.stats?.region ?? raw?.region ?? []
+    // const regions = raw?.stats?.region ?? raw?.region ?? []
+    const regions = extractRegions(raw)
 
     console.log(
       `[StatisticsMapper] År="${year}" — ${regions.length} regioner:`,

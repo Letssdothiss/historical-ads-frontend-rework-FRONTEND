@@ -1,9 +1,11 @@
 .tabs-switch {
   display: inline-flex;
-  background: #ffffff;
+  width: fit-content;
+  align-self: flex-end;
+  background: transparent;
   border-radius: 6px;
   overflow: hidden;
-  border: 1px solid #ffffff;
+  border: none;
 }
 
 .tabs-switch__link {
@@ -17,6 +19,7 @@
   font-family: 'Open Sans', sans-serif;
   font-size: 14px;
   font-weight: 600;
+  white-space: nowrap;
   cursor: pointer;
 }
 

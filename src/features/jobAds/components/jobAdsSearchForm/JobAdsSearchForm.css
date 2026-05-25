@@ -128,7 +128,8 @@
   white-space: nowrap;
 }
 
-.job-ads-search-form__filter-trigger digi-icon-chevron-down {
+.job-ads-search-form__filter-trigger digi-icon-chevron-down,
+.job-ads-search-form__filter-trigger digi-icon-chevron-up {
   --digi--icon--width: 14px;
   --digi--icon--height: 14px;
   --digi--icon--color: #1616b2;

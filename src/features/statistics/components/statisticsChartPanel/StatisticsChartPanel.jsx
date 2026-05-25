@@ -54,6 +54,7 @@ function buildSummary(params) {
   if (!params) return 'Sökresultat'
   const parts = []
   if (params.kompetens) parts.push(params.kompetens)
+  if (params.yrkesgrupper?.length) parts.push(params.yrkesgrupper.join(', '))
   if (params.lan?.length) parts.push(params.lan.join(', '))
   if (params.ar?.length) parts.push(params.ar.join(', '))
   return parts.length > 0 ? parts.join(' — ') : 'Sökresultat'

@@ -10,6 +10,7 @@ import {
   DigiButton,
   DigiFormInput,
   DigiIconChevronDown,
+  DigiIconChevronUp,
   DigiIconGlobeFilled,
   DigiIconUserAlt,
 } from '@designsystem-se/af-react'
@@ -22,7 +23,7 @@ import EmploymentFactsPicker from '../../../../shared/components/employmentFacts
 import GeographyFilter from '../../../../shared/components/geographyFilter/GeographyFilter'
 import InfoTooltip from '../../../../shared/components/infoTooltip/InfoTooltip'
 import TimePeriodFilter from '../../../../shared/components/timePeriodFilter/TimePeriodFilter'
-import JobGroupFilter from '../jobGroupFilter/JobGroupFilter'
+import JobGroupFilter from '../../../../shared/components/jobGroupFilter/JobGroupFilter'
 import './JobAdsSearchForm.css'
 
 export default function JobAdsSearchForm() {
@@ -62,10 +63,14 @@ export default function JobAdsSearchForm() {
     event.preventDefault()
     const params = new URLSearchParams()
     if (q.trim()) params.set('q', q.trim())
-    geography.lan.forEach((l) => params.append('lan', l))
     geography.kommuner.forEach((k) => params.append('kommun', k))
-    occupations.areas.forEach((a) => params.append('yrkesomrade', a))
+    if (Object.keys(geography.grouped).length) {
+      params.set('kommun-labels', JSON.stringify(geography.grouped))
+    }
     occupations.groups.forEach((g) => params.append('yrkesgrupp', g))
+    if (Object.keys(occupations.grouped).length) {
+      params.set('yrkesgrupp-labels', JSON.stringify(occupations.grouped))
+    }
     timePeriod.years.forEach((y) => params.append('years', y))
     timePeriod.months.forEach((m) => params.append('months', m))
     employment.type.forEach((t) => params.append('employment_type', t))
@@ -132,7 +137,7 @@ export default function JobAdsSearchForm() {
                 <div className="job-ads-search-form__filter-trigger">
                   <DigiIconGlobeFilled />
                   <span>{geoLabel}</span>
-                  <DigiIconChevronDown />
+                  {geoOpen ? <DigiIconChevronUp /> : <DigiIconChevronDown />}
                   {hasGeoSelection && (
                     <span
                       className="job-ads-search-form__trigger-dot"
@@ -186,7 +191,7 @@ export default function JobAdsSearchForm() {
                 <div className="job-ads-search-form__filter-trigger">
                   <DigiIconUserAlt />
                   <span>{jobLabel}</span>
-                  <DigiIconChevronDown />
+                  {jobOpen ? <DigiIconChevronUp /> : <DigiIconChevronDown />}
                   {hasJobSelection && (
                     <span
                       className="job-ads-search-form__trigger-dot"

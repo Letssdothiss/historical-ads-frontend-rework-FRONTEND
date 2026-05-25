@@ -1,0 +1,312 @@
+/* Filter panel */
+.job-filter-panel {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto 1fr auto;
+  width: 750px;
+  background: #fff;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
+}
+
+.job-filter-panel--centered {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Top row: two columns */
+.job-filter-top-row {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: 2.75rem;
+}
+
+.job-filter-top-row-left {
+  display: flex;
+  align-items: center;
+  padding: 0.625rem 1rem;
+  border-right: 1px solid #ddd;
+  min-height: 2.75rem;
+  box-sizing: border-box;
+}
+
+.job-filter-top-row-right {
+  position: relative;
+  padding: 0.625rem 1rem;
+}
+
+.job-filter-top-row-right .job-filter-text-button {
+  position: absolute;
+  top: 0.625rem;
+  left: 1rem;
+  right: 1rem;
+  text-align: left;
+}
+
+.job-filter-text-button {
+  text-align: left;
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: #1144d1;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 600;
+  line-height: 1.5rem;
+  cursor: pointer;
+  padding: 0;
+}
+
+/* Header row: spans both columns */
+.job-filter-header {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-bottom: 1px solid #ddd;
+}
+
+.job-filter-header-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 0.75rem 1rem 0.5rem 1rem;
+  gap: 0.5rem;
+  border-right: 1px solid #ddd;
+}
+
+.job-filter-header-right {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 0.75rem 1rem 0.5rem 1rem;
+  gap: 0.5rem;
+}
+
+/* Body row: lists */
+.job-filter-body {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: 440px;
+}
+
+/* Left column */
+.job-filter-area-col {
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid #ddd;
+  background: #fff;
+  overflow: hidden;
+}
+
+.job-filter-group-col {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  overflow: hidden;
+}
+
+/* Clear groups row */
+.job-filter-rensa-groups-row {
+  display: flex;
+  align-self: stretch;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+/* Select all */
+.job-filter-check-row {
+  display: flex;
+  align-items: flex-start;
+  align-self: stretch;
+}
+
+/* Lists */
+ul.job-filter-list {
+  padding: 0;
+  margin: 0;
+}
+
+.job-filter-list {
+  align-self: stretch;
+  box-sizing: border-box;
+  height: 440px;
+  background: #fff;
+  overflow-y: scroll;
+  scrollbar-width: thin;
+  scrollbar-color: #cacaca #f4f4f4;
+}
+
+.job-filter-list::-webkit-scrollbar {
+  width: 24px;
+  border-left: 2px solid #ededed;
+  background: #f4f4f4;
+}
+
+.job-filter-list::-webkit-scrollbar-thumb {
+  width: 16px;
+  height: 108px;
+  border-radius: 16px;
+  background: #cacaca;
+  border: 4px solid #f4f4f4;
+}
+
+/* Left column: list item */
+.job-filter-area-item {
+  display: flex;
+  flex-direction: row;
+  padding: 0.5rem 1.5rem;
+  align-items: center;
+  gap: 0.625rem;
+  align-self: stretch;
+  cursor: pointer;
+  box-sizing: border-box;
+  width: 100%;
+  transition: background 0.1s;
+}
+
+/* Active or selected — green background */
+.job-filter-area-item--selected {
+  background: #009322;
+}
+
+.job-filter-area-item--selected .job-filter-area-label {
+  color: #fff;
+}
+
+.job-filter-area-item--selected digi-icon-chevron-right,
+.job-filter-area-item--selected svg {
+  color: #fff;
+  fill: #fff;
+}
+
+.job-filter-area-item:not(.job-filter-area-item--selected):hover {
+  background: #f4f4f4;
+}
+
+.job-filter-area-label {
+  flex: 1;
+  color: var(--Text-primary, #333);
+  font-family: 'Open Sans', sans-serif;
+  text-align: left;
+  font-size: 0.9rem;
+  font-weight: 400;
+  line-height: 1.5rem;
+}
+
+/* Indicator dot */
+.job-filter-area-indicator {
+  display: flex;
+  width: 0.6rem;
+  height: 0.6rem;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+/* Green dot — area not selected but has selected groups */
+.job-filter-area-indicator--selected {
+  width: 0.6rem;
+  height: 0.6rem;
+  flex-shrink: 0;
+  border-radius: 0.6rem;
+  background: #009322;
+}
+
+/* White dot — area is selected (green background) and has selected groups */
+.job-filter-area-indicator--selected-white {
+  width: 0.6rem;
+  height: 0.6rem;
+  flex-shrink: 0;
+  border-radius: 0.6rem;
+  background: #fff;
+}
+
+.job-filter-group-item {
+  display: flex;
+  padding-bottom: 0px;
+  align-items: baseline;
+  gap: 0.5rem;
+  align-self: stretch;
+  padding-left: 1.5rem;
+  color: var(--Typography-label-text, #333);
+  font-family: 'Open Sans', sans-serif;
+  font-size: 0.75rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.6875rem;
+}
+
+.job-filter-group-item label {
+  flex: 1;
+  min-width: 0;
+  text-align: left;
+  padding-top: 2px;
+  line-height: 1.2rem;
+}
+
+.job-filter-hint {
+  padding: 1rem 1.5rem;
+  color: #666;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 1rem;
+}
+
+.job-filter-error {
+  color: #c00;
+  font-family: 'Open Sans', sans-serif;
+}
+
+/* Footer */
+.job-filter-footer {
+  grid-column: 1 / -1;
+  display: flex;
+  height: 87px;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  background: #f4f4f4;
+  border-top: 1px solid #ddd;
+}
+
+.job-filter-footer-btn {
+  display: flex;
+  height: 2.5rem;
+  padding: 0.5rem 1.5rem;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0.375rem;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background 0.15s,
+    color 0.15s;
+}
+
+.job-filter-footer-btn--secondary {
+  border: 2px solid #1b1b6b;
+  background: transparent;
+  color: #1b1b6b;
+}
+
+.job-filter-footer-btn--secondary:hover {
+  background: #1b1b6b;
+  color: #fff;
+}
+
+.job-filter-footer-btn--primary {
+  border: 2px solid #1b1b6b;
+  background: #1b1b6b;
+  color: #fff;
+}
+
+.job-filter-footer-btn--primary:hover {
+  background: #13134f;
+  border-color: #13134f;
+}

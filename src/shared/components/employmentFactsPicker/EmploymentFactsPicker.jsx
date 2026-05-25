@@ -192,10 +192,18 @@ export default function EmploymentFactsPicker({ value = EMPTY, onChange }) {
                       onClick={() => setActiveSection(section.id)}
                     >
                       <span className="employment-facts-picker__section-label">
-                        {selectedCount > 0 && (
-                          <span className="employment-facts-picker__section-dot" />
-                        )}
                         <span>{section.label}</span>
+                      </span>
+                      <span className="employment-facts-picker__section-indicator">
+                        {selectedCount > 0 && (
+                          <span
+                            className={
+                              isActive
+                                ? 'employment-facts-picker__section-dot employment-facts-picker__section-dot--active'
+                                : 'employment-facts-picker__section-dot'
+                            }
+                          />
+                        )}
                       </span>
                       <span className="employment-facts-picker__section-chevron">
                         <DigiIconChevronRight />
@@ -251,6 +259,23 @@ export default function EmploymentFactsPicker({ value = EMPTY, onChange }) {
                 ))}
               </div>
             </div>
+          </div>
+
+          <div className="employment-facts-picker__footer">
+            <button
+              type="button"
+              className="employment-facts-picker__footer-btn employment-facts-picker__footer-btn--secondary"
+              onClick={() => setIsOpen(false)}
+            >
+              Stäng
+            </button>
+            <button
+              type="button"
+              className="employment-facts-picker__footer-btn employment-facts-picker__footer-btn--primary"
+              onClick={() => setIsOpen(false)}
+            >
+              Lägg till och stäng
+            </button>
           </div>
         </div>
       )}

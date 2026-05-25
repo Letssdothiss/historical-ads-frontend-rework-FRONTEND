@@ -37,8 +37,8 @@ export default function GeoFilter({
 
   const allKommunerSelected =
     activeLan &&
-    lanData[activeLan]?.length > 0 &&
-    lanData[activeLan].every((k) => selectedKommuner.has(k))
+    lanData[activeLan]?.kommuner.length > 0 &&
+    lanData[activeLan].kommuner.every((k) => selectedKommuner.has(k.id))
 
   function toggleAllaLan(checked) {
     if (checked) {
@@ -51,14 +51,16 @@ export default function GeoFilter({
 
   function toggleKommun(k, checked) {
     const next = new Set(selectedKommuner)
-    checked ? next.add(k) : next.delete(k)
+    checked ? next.add(k.id) : next.delete(k.id)
     setSelectedKommuner(next)
   }
 
   function toggleAllaKommuner(checked) {
     if (!activeLan) return
     const next = new Set(selectedKommuner)
-    lanData[activeLan].forEach((k) => (checked ? next.add(k) : next.delete(k)))
+    lanData[activeLan].kommuner.forEach((k) =>
+      checked ? next.add(k.id) : next.delete(k.id),
+    )
     setSelectedKommuner(next)
   }
 
@@ -69,24 +71,23 @@ export default function GeoFilter({
 
   function rensaKommuner() {
     if (!activeLan) return
-    const kommunerILan = new Set(lanData[activeLan] ?? [])
+    const kommunerILan = new Set(lanData[activeLan].kommuner.map((k) => k.id))
     setSelectedKommuner(
-      (prev) => new Set([...prev].filter((k) => !kommunerILan.has(k))),
+      (prev) => new Set([...prev].filter((id) => !kommunerILan.has(id))),
     )
   }
 
   function handleApply() {
+    const kommunIds = [...selectedKommuner]
+
     const grouped = {}
     for (const lan of allLanNames) {
       const kommuner =
-        lanData[lan]?.filter((k) => selectedKommuner.has(k)) ?? []
-      if (kommuner.length > 0) grouped[lan] = kommuner
+        lanData[lan]?.kommuner.filter((k) => selectedKommuner.has(k.id)) ?? []
+      if (kommuner.length > 0) grouped[lan] = kommuner.map((k) => k.label)
     }
-    onApply?.({
-      lan: [...selectedLan],
-      kommuner: [...selectedKommuner],
-      grouped,
-    })
+
+    onApply?.({ lan: [], kommuner: kommunIds, grouped })
   }
 
   if (loading) {
@@ -138,7 +139,6 @@ export default function GeoFilter({
 
       {/* Header-row */}
       <div className="geo-filter-header">
-        {/* Left header */}
         <div className="geo-filter-header-left">
           <DigiFormLabel
             afLabel="Sök län eller kommun"
@@ -164,7 +164,6 @@ export default function GeoFilter({
           </div>
         </div>
 
-        {/* Right header */}
         <div className="geo-filter-header-right">
           <div className="geo-filter-check-row">
             <DigiFormCheckbox
@@ -184,12 +183,11 @@ export default function GeoFilter({
 
       {/* Body-row */}
       <div className="geo-filter-body">
-        {/* Left: Läns list */}
         <div className="geo-filter-lan-col">
           <ul className="geo-filter-list" role="listbox" aria-label="Länslista">
             {filteredLan.map((lan) => {
-              const hasSelectedKommuner = lanData[lan]?.some((k) =>
-                selectedKommuner.has(k),
+              const hasSelectedKommuner = lanData[lan]?.kommuner.some((k) =>
+                selectedKommuner.has(k.id),
               )
               const isSelected = selectedLan.has(lan)
 
@@ -228,28 +226,27 @@ export default function GeoFilter({
           </ul>
         </div>
 
-        {/* Right: Kommun list */}
         <div className="geo-filter-kommun-col">
           {activeLan || allLanSelected ? (
             <ul className="geo-filter-list" aria-label="Kommuner">
               {(allLanSelected
-                ? allLanNames.flatMap((l) => lanData[l])
-                : lanData[activeLan]
+                ? allLanNames.flatMap((l) => lanData[l]?.kommuner ?? [])
+                : (lanData[activeLan]?.kommuner ?? [])
               ).map((k) => (
-                <li key={k} className="geo-filter-kommun-item">
+                <li key={k.id} className="geo-filter-kommun-item">
                   <DigiFormCheckbox
-                    id={`kommun-${k}`}
-                    afChecked={selectedKommuner.has(k)}
+                    id={`kommun-${k.id}`}
+                    afChecked={selectedKommuner.has(k.id)}
                     onAfOnChange={(e) =>
                       toggleKommun(k, e.detail.target.checked)
                     }
                   />
-                  <label htmlFor={`kommun-${k}`}>{k}</label>
+                  <label htmlFor={`kommun-${k.id}`}>{k.label}</label>
                 </li>
               ))}
             </ul>
           ) : (
-            <p className="geo-filter-hint">Välj ett län för att se kommuner</p>
+            <p className="geo-filter-hint"></p>
           )}
         </div>
       </div>

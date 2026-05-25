@@ -1,8 +1,8 @@
 import { useMemo, useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
-import { DigiIconChevronDown } from '@designsystem-se/af-react'
 import MainLayout from '../../app/layout/MainLayout'
 import ContentWrapper from '../../shared/components/contentWrapper/ContentWrapper'
+import ResultsAdjustSearch from '../../shared/components/resultsAdjustSearch/ResultsAdjustSearch'
 import JobAdsSearchForm from '../../features/jobAds/components/jobAdsSearchForm/JobAdsSearchForm'
 import JobAdsResultsList from '../../features/jobAds/components/jobAdsResultsList/JobAdsResultsList'
 import JobAdsPagination from '../../features/jobAds/components/jobAdsPagination/JobAdsPagination'
@@ -12,12 +12,16 @@ import { buildAdDetailPath } from '../../shared/constants/routes'
 import './JobAdsResultsPage.css'
 
 function readUiParamsFromUrl(searchParams) {
+  const yrkesgruppLabels = searchParams.get('yrkesgrupp-labels')
+  const kommunLabels = searchParams.get('kommun-labels')
   return {
     q: searchParams.get('q') ?? '',
     lan: searchParams.getAll('lan'),
     kommuner: searchParams.getAll('kommun'),
+    kommunGrouped: kommunLabels ? JSON.parse(kommunLabels) : {},
     yrkesomraden: searchParams.getAll('yrkesomrade'),
     yrkesgrupper: searchParams.getAll('yrkesgrupp'),
+    yrkesgruppGrouped: yrkesgruppLabels ? JSON.parse(yrkesgruppLabels) : {},
     years: searchParams.getAll('years'),
     months: searchParams.getAll('months'),
     employer: searchParams.get('employer') ?? '',
@@ -29,11 +33,22 @@ function readUiParamsFromUrl(searchParams) {
 
 function buildSummary(params) {
   const parts = []
-  if (params.q) parts.push(`”${params.q}”`)
-  if (params.lan.length) parts.push(params.lan.join(', '))
-  if (params.kommuner.length) parts.push(params.kommuner.join(', '))
-  if (params.yrkesomraden.length) parts.push(params.yrkesomraden.join(', '))
-  if (params.yrkesgrupper.length) parts.push(params.yrkesgrupper.join(', '))
+  if (params.q) parts.push(`"${params.q}"`)
+  if (params.kommunGrouped && Object.keys(params.kommunGrouped).length) {
+    const labels = Object.values(params.kommunGrouped).flat()
+    parts.push(labels.join(', '))
+  } else if (params.kommuner.length) {
+    parts.push(params.kommuner.join(', '))
+  }
+  if (
+    params.yrkesgruppGrouped &&
+    Object.keys(params.yrkesgruppGrouped).length
+  ) {
+    const labels = Object.values(params.yrkesgruppGrouped).flat()
+    parts.push(labels.join(', '))
+  } else if (params.yrkesgrupper.length) {
+    parts.push(params.yrkesgrupper.join(', '))
+  }
   if (params.years.length) parts.push(params.years.sort().join(', '))
   if (params.employer) parts.push(`Arbetsgivare: ${params.employer}`)
   if (params.skills.length)
@@ -77,28 +92,12 @@ export default function JobAdsResultsPage() {
   return (
     <MainLayout>
       <ContentWrapper hideRensaLink>
-        <button
-          type="button"
-          className="results-adjust-toggle"
-          onClick={() => setAdjustOpen((open) => !open)}
-          aria-expanded={adjustOpen}
+        <ResultsAdjustSearch
+          open={adjustOpen}
+          onToggle={() => setAdjustOpen((open) => !open)}
         >
-          <span>Justera sökning</span>
-          <span
-            className={
-              adjustOpen
-                ? 'results-adjust-toggle__chevron open'
-                : 'results-adjust-toggle__chevron'
-            }
-          >
-            <DigiIconChevronDown />
-          </span>
-        </button>
-        {adjustOpen && (
-          <div className="results-adjust-panel">
-            <JobAdsSearchForm />
-          </div>
-        )}
+          <JobAdsSearchForm />
+        </ResultsAdjustSearch>
       </ContentWrapper>
 
       <div className="results-body">

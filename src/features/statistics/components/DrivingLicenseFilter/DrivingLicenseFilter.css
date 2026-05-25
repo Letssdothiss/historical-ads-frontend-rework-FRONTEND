@@ -1,93 +1,76 @@
 /* FILTER WRAPPER */
+/* Adapted from employment-facts-picker styles to match exact layout */
+
 .driving-license-filter {
   position: relative;
-
-  display: flex;
-
-  flex-direction: column;
-  align-items: stretch;
-
-  gap: 2px;
-
   width: 100%;
-  z-index: 2;
-
-  transform: translateY(-18px);
 }
 
-/* TRIGGER */
 .driving-license-trigger {
-  width: 100%;
+  flex: 1;
 }
 
-/* BUTTON */
 .driving-license-trigger digi-button {
   width: 100%;
 }
 
 .driving-license-trigger digi-button::part(button) {
   width: 100%;
-
   min-height: 52px;
-
   border-radius: 6px;
+  border: 1px solid #1616b2;
+  box-shadow: none;
+  padding: 0;
+  background: #ffffff;
+  color: #1616b2;
+  transition:
+    background 0.18s ease,
+    color 0.18s ease,
+    border-color 0.18s ease;
 }
 
-/* TRIGGER CONTENT */
+.driving-license-trigger--open digi-button::part(button) {
+  background: #dbe9ff;
+  border-color: #1144d1;
+}
+
 .driving-license-trigger-content {
   display: flex;
-
   align-items: center;
-
   width: 100%;
+  padding: 0;
 }
 
-/* CAR ICON */
 .driving-license-trigger-content digi-icon-licence-car {
   --digi--icon--width: 24px;
   --digi--icon--height: 24px;
   --digi--icon--color: #1616b2;
-
   margin-left: 38px;
-
   flex-shrink: 0;
 }
 
-/* LABEL */
 .driving-license-trigger-label {
-  white-space: nowrap;
-
-  color: #1616b2;
-
-  font-family: 'Open Sans', sans-serif;
-
-  font-size: 16px;
-
-  font-style: normal;
-  font-weight: 600;
-
-  line-height: 24px;
-
   margin-left: 28px;
+  white-space: nowrap;
+  color: #1616b2;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 24px;
 }
 
-/* CHEVRON */
 .driving-license-chevron-wrapper {
+  margin-left: 14px;
   display: inline-flex;
-
   align-items: center;
   justify-content: center;
-
-  margin-left: 14px;
-
   transition: transform 0.2s ease;
 }
 
-.driving-license-chevron-wrapper.open {
-  transform: rotate(-180deg);
+.driving-license-chevron-wrapper--open {
+  transform: rotate(180deg);
 }
 
-/* CHEVRON ICON */
 .driving-license-chevron-wrapper digi-icon-chevron-down {
   --digi--icon--width: 16px;
   --digi--icon--height: 16px;
@@ -97,174 +80,166 @@
 .driving-license-trigger-dot {
   width: 16px;
   height: 16px;
-
   margin-left: auto;
-  margin-right: 18px;
-
+  margin-right: 24px;
   border-radius: 50%;
   background: #009322;
   flex-shrink: 0;
 }
 
-/* DROPDOWN */
 .driving-license-dropdown {
   position: absolute;
-  top: calc(100% + 2px);
+  top: calc(100% + 6px);
   left: 0;
-
-  width: 100%;
-  max-height: min(360px, calc(100vh - 220px));
-  overflow: auto;
-
-  padding: 24px 32px 32px;
-
+  z-index: 40;
+  width: 720px;
+  max-width: 90vw;
+  padding: 20px 24px 24px;
   box-sizing: border-box;
-
   background: #ffffff;
-
-  border: 1px solid #1616b2;
-
   border-radius: 6px;
-
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
-}
-
-@media (max-width: 800px) {
-  .driving-license-filter {
-    transform: none;
-  }
-}
-
-/* HEADER */
-.dropdown-header {
-  display: flex;
-
-  justify-content: space-between;
-  align-items: center;
-
-  margin-bottom: 32px;
-}
-
-/* Rensa button */
-button.dropdown-text-button {
-  margin-left: -16px;
-}
-
-/* HEADER BUTTONS */
-button.dropdown-text-button,
-button.dropdown-close-button {
-  display: flex;
-
-  align-items: center;
-  justify-content: center;
-
-  height: 31px;
-
-  padding: 6px 16px;
-
   border: none;
+  box-shadow: 0 8px 24px rgba(2, 8, 32, 0.18);
+}
 
-  background: none;
+.dropdown-header,
+.driving-license__right-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 
-  cursor: pointer;
+.dropdown-header {
+  margin-bottom: 18px;
+}
 
-  color: #1616b2;
-
-  text-align: center;
-
+button.dropdown-text-button {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: #1144d1;
   font-family: 'Open Sans', sans-serif;
-
   font-size: 14px;
-
-  font-style: normal;
-
   font-weight: 600;
-
   line-height: 24px;
+  cursor: pointer;
 }
 
-/* CLOSE BUTTON */
-button.dropdown-close-button {
+.dropdown-close-button {
+  display: inline-flex;
+  align-items: center;
   gap: 8px;
-
-  margin-right: 8px;
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: #1144d1;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 24px;
+  cursor: pointer;
 }
 
-/* CLOSE ICON */
 .dropdown-close-button digi-icon-x {
-  --digi--icon--width: 21px;
-  --digi--icon--height: 21px;
+  --digi--icon--width: 20px;
+  --digi--icon--height: 20px;
   --digi--icon--color: #1616b2;
-
-  margin-left: 20px;
-  margin-right: -16px;
-
-  flex-shrink: 0;
 }
 
-/* CONTENT */
 .dropdown-content {
   display: flex;
-
   flex-direction: column;
-
   width: 100%;
 }
 
-/* TITLE */
 .dropdown-title {
   margin: 0 0 8px;
-
-  width: 67px;
-  height: 27px;
-
-  text-align: left;
-
   color: #333333;
-
   font-family: 'Open Sans', sans-serif;
-
   font-size: 18px;
-
-  font-style: normal;
   font-weight: 600;
-
   line-height: 27px;
 }
 
-/* DIVIDER */
 .dropdown-divider {
   width: 100%;
-
   margin-bottom: 28px;
-
   border-bottom: 1px solid #d9d9d9;
+}
+
+.driving-license-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  height: 87px;
+  margin: 24px -24px -24px;
+  background: #f4f4f4;
+  border-top: 1px solid #ddd;
+  border-radius: 0 0 6px 6px;
+}
+
+.driving-license-footer-btn {
+  display: flex;
+  height: 2.5rem;
+  padding: 0.5rem 1.5rem;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0.375rem;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background 0.15s,
+    color 0.15s;
+}
+
+.driving-license-footer-btn--secondary {
+  border: 2px solid #1b1b6b;
+  background: transparent;
+  color: #1b1b6b;
+}
+
+.driving-license-footer-btn--secondary:hover {
+  background: #1b1b6b;
+  color: #fff;
+}
+
+.driving-license-footer-btn--primary {
+  border: 2px solid #1b1b6b;
+  background: #1b1b6b;
+  color: #fff;
+}
+
+.driving-license-footer-btn--primary:hover {
+  background: #13134f;
+  border-color: #13134f;
+}
+
+@media (max-width: 720px) {
+  .driving-license-dropdown {
+    width: 95vw;
+    padding: 20px;
+  }
 }
 
 /* RADIO GROUP */
 .driving-license-dropdown digi-form-radiogroup {
   display: flex;
-
   flex-direction: column;
-
   gap: 8px;
-
   width: 100%;
-
   padding-left: 28px;
 }
 
 /* RADIO BUTTON */
 .driving-license-dropdown digi-form-radiobutton {
   display: flex;
-
   width: 269px;
   height: 35px;
-
   padding-bottom: 8px;
-
   align-items: flex-start;
-
   gap: 8px;
 }
 
@@ -272,3 +247,4 @@ button.dropdown-close-button {
 .driving-license-dropdown digi-form-radiobutton::part(label) {
   text-align: left;
 }
+/* FOOTER */
