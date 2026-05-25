@@ -44,10 +44,10 @@
 - ~~När "Om datan"-fliken är aktiv, dvs grön, så syns fortfarande vitt längst till höger från ett parent element.~~
 
 #### Platsannonser
-- Infoikonen (hover), visar info korrekt vid hover men kräver antingen klick utanför eller att muspekaren dras över själva textrutan för att försvinna.
+- ~~Infoikonen (hover), visar info korrekt vid hover men kräver antingen klick utanför eller att muspekaren dras över själva textrutan för att försvinna.~~
 
 #### Statistik
-- Infoikonen (hover), visar info korrekt vid hover men kräver antingen klick utanför eller att muspekaren dras över själva textrutan för att försvinna.
+- ~~Infoikonen (hover), visar info korrekt vid hover men kräver antingen klick utanför eller att muspekaren dras över själva textrutan för att försvinna.~~
 
 ## Okänd orsak
 - Följande felmeddelande i browser inspector: <br>
