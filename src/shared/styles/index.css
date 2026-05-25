@@ -105,3 +105,38 @@ code {
   padding: 4px 8px;
   background: var(--code-bg);
 }
+
+/* Remove all focus borders and outlines from digi-form-input */
+digi-form-input,
+digi-form-input * {
+  outline: none !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+digi-form-input:focus,
+digi-form-input:focus-visible,
+digi-form-input:focus-within {
+  outline: none !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+digi-form-input::part(input),
+digi-form-input::part(wrapper),
+digi-form-input::part(container) {
+  outline: none !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+digi-form-input::part(input):focus,
+digi-form-input::part(input):focus-visible,
+digi-form-input::part(wrapper):focus,
+digi-form-input::part(wrapper):focus-visible,
+digi-form-input::part(container):focus,
+digi-form-input::part(container):focus-visible {
+  outline: none !important;
+  border: none !important;
+  box-shadow: none !important;
+}
