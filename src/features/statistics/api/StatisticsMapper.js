@@ -7,8 +7,18 @@
 // [{ lan: 'Stockholms län', '2024': 1380100, '2025': 1450000 }, ...]
 
 const MONTH_NAMES = [
-  'Januari','Februari','Mars','April','Maj','Juni',
-  'Juli','Augusti','September','Oktober','November','December',
+  'Januari',
+  'Februari',
+  'Mars',
+  'April',
+  'Maj',
+  'Juni',
+  'Juli',
+  'Augusti',
+  'September',
+  'Oktober',
+  'November',
+  'December',
 ]
 
 function parseMonthLabel(label) {

@@ -24,7 +24,7 @@ export function useJobData() {
     async function fetchData() {
       try {
         const res = await fetch(
-          `${GRAPHQL_URL}?query=${encodeURIComponent(QUERY)}`
+          `${GRAPHQL_URL}?query=${encodeURIComponent(QUERY)}`,
         )
 
         if (!res.ok) throw new Error('Något gick fel vid hämtning av yrkesdata')
@@ -33,9 +33,9 @@ export function useJobData() {
         const concepts = json?.data?.concepts ?? []
 
         const result = {}
-        concepts.forEach(field => {
+        concepts.forEach((field) => {
           result[field.preferred_label] = (field.narrower ?? [])
-            .map(g => g.preferred_label)
+            .map((g) => g.preferred_label)
             .sort()
         })
 

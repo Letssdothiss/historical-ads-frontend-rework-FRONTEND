@@ -1,8 +1,6 @@
-import './LoadingState.css';
+import './LoadingState.css'
 
-import {
-  DigiLoaderSpinner,
-} from '@designsystem-se/af-react';
+import { DigiLoaderSpinner } from '@designsystem-se/af-react'
 
 /*
  * Reusable loading component
@@ -12,24 +10,16 @@ import {
  * accessible loading text.
  */
 
-function LoadingState({
-  text = 'Laddar innehåll...',
-}) {
+function LoadingState({ text = 'Laddar innehåll...' }) {
   return (
-    <div
-      className="loading-state"
-      role="status"
-      aria-live="polite"
-    >
+    <div className="loading-state" role="status" aria-live="polite">
       {/* Spinner from AF Designsystem */}
       <DigiLoaderSpinner />
 
       {/* Loading message */}
-      <p className="loading-state-text">
-        {text}
-      </p>
+      <p className="loading-state-text">{text}</p>
     </div>
-  );
+  )
 }
 
-export default LoadingState;
+export default LoadingState

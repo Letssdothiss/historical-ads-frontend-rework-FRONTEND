@@ -1,33 +1,33 @@
 .job-ads-results-list {
-	display: grid;
-	gap: 1rem;
-	padding: 0;
-	margin: 0;
-	list-style: none;
+  display: grid;
+  gap: 1rem;
+  padding: 0;
+  margin: 0;
+  list-style: none;
 }
 
 .job-ads-results-list__item {
-	margin: 0;
+  margin: 0;
 }
 
 .job-ads-results-list__state {
-	display: grid;
-	place-items: center;
-	gap: 0.75rem;
-	min-height: 10rem;
-	padding: 1.5rem;
-	text-align: center;
-	border-radius: 1rem;
-	background: rgba(255, 255, 255, 0.72);
-	box-shadow: var(--shadow);
+  display: grid;
+  place-items: center;
+  gap: 0.75rem;
+  min-height: 10rem;
+  padding: 1.5rem;
+  text-align: center;
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.72);
+  box-shadow: var(--shadow);
 }
 
 .job-ads-results-list__state--error {
-	color: #8a1f3b;
+  color: #8a1f3b;
 }
 
 .job-ads-results-list__state p {
-	margin: 0;
-	max-width: 34rem;
-	font-weight: 500;
+  margin: 0;
+  max-width: 34rem;
+  font-weight: 500;
 }

@@ -8,9 +8,7 @@ function BarChart({ data, stacked = false }) {
 
   if (!chartData) {
     return (
-      <p>
-        Välj minst två geografiska områden för att kunna visa diagrammet.
-      </p>
+      <p>Välj minst två geografiska områden för att kunna visa diagrammet.</p>
     )
   }
 
@@ -18,7 +16,9 @@ function BarChart({ data, stacked = false }) {
     <div className="bar-chart">
       <DigiBarChart
         afChartData={chartData}
-        afVariation={stacked ? BarChartVariation.Stacked : BarChartVariation.Vertical}
+        afVariation={
+          stacked ? BarChartVariation.Stacked : BarChartVariation.Vertical
+        }
       />
     </div>
   )

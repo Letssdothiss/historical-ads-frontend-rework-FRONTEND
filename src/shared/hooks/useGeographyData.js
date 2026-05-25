@@ -24,20 +24,21 @@ export function useGeographyData() {
     async function fetchData() {
       try {
         const res = await fetch(
-          `${GRAPHQL_URL}?query=${encodeURIComponent(QUERY)}`
+          `${GRAPHQL_URL}?query=${encodeURIComponent(QUERY)}`,
         )
 
-        if (!res.ok) throw new Error('Something went wrong while fetching geography')
+        if (!res.ok)
+          throw new Error('Something went wrong while fetching geography')
 
         const json = await res.json()
         const concepts = json?.data?.concepts ?? []
 
         const result = {}
         concepts
-          .filter(r => r.preferred_label.endsWith('län'))
-          .forEach(lan => {
+          .filter((r) => r.preferred_label.endsWith('län'))
+          .forEach((lan) => {
             result[lan.preferred_label] = (lan.narrower ?? [])
-              .map(k => k.preferred_label)
+              .map((k) => k.preferred_label)
               .sort()
           })
 

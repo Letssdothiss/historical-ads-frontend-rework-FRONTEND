@@ -3,10 +3,10 @@ export function formatShortDate(dateString) {
   if (!dateString) return ''
   try {
     return new Intl.DateTimeFormat('sv-SE', {
-      day:'numeric',
-      month:'short',
+      day: 'numeric',
+      month: 'short',
     }).format(new Date(dateString))
-  } catch { 
+  } catch {
     return dateString
   }
 }
