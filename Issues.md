@@ -23,9 +23,9 @@
 ### Medium
 
 #### Generellt
-- TabsSwitch-komponenten anpassar sig inte i bredder mindre än 975px.
 - Rullgardinsmenyn för Tidsperiod blir blank vid mindre bredd än 800px.
 - Rullgardinsmenyn för Fakta Anställning hoppar runt i browsern vid bredder mindre än 800px.
+- ~~TabsSwitch-komponenten anpassar sig inte i bredder mindre än 975px.~~
 - ~~Rullgardingsmenyn för Geografiskt område "overflowar" utanför browser, synligt vid mindre bredd än 1520px.~~
 - ~~Rullgardingsmenyn för Yrkesgrupper "overflowar" utanför browser, synligt vid mindre bredd än 1520px.~~
 
