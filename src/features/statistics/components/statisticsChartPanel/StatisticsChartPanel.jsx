@@ -26,12 +26,10 @@ import './StatisticsChartPanel.css'
 const VISNING_OPTIONS = [
   { id: 'tabell', label: 'Tabell - Sorterad' },
   { id: 'kolumn', label: 'Diagram - Kolumn' },
-  { id: 'stapel', label: 'Diagram - Staplad kolumn' },
   { id: 'linje', label: 'Diagram - Linje' },
 ]
 
 const PIVOT_OPTIONS = [
-  { id: 'manuellt', label: 'Pivotera manuellt' },
   { id: 'medsols', label: 'Pivotera medsols' },
   { id: 'motsols', label: 'Pivotera motsols' },
 ]
