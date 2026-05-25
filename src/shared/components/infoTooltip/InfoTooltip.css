@@ -20,6 +20,17 @@
   border-radius: 50%;
 }
 
+/* Invisible strip between icon and bubble so hover is not lost in the gap */
+.info-tooltip__bridge {
+  position: absolute;
+  left: 16px;
+  top: -10px;
+  z-index: 49;
+  width: 16px;
+  height: calc(100% + 20px);
+  min-height: 36px;
+}
+
 .info-tooltip__bubble {
   position: absolute;
   left: 28px;

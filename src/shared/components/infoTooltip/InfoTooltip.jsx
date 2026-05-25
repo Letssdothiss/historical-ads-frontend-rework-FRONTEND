@@ -1,7 +1,11 @@
 import { useEffect, useId, useRef, useState } from 'react'
 import './InfoTooltip.css'
+
+const HOVER_CLOSE_DELAY_MS = 80
+
 /**
- * Component to show an info icon that reveals a tooltip with more information on click/hover/focus. The tooltip can contain any content passed as children.
+ * Info icon with tooltip on hover, focus, or click. Closes when pointer leaves
+ * the icon, hover bridge, and bubble (not only when leaving the bubble).
  */
 export default function InfoTooltip({
   label = 'Visa mer information',
@@ -10,6 +14,34 @@ export default function InfoTooltip({
   const [open, setOpen] = useState(false)
   const tooltipId = useId()
   const wrapperRef = useRef(null)
+  const closeTimerRef = useRef(null)
+
+  const cancelScheduledClose = () => {
+    if (closeTimerRef.current != null) {
+      clearTimeout(closeTimerRef.current)
+      closeTimerRef.current = null
+    }
+  }
+
+  const scheduleClose = () => {
+    cancelScheduledClose()
+    closeTimerRef.current = setTimeout(() => setOpen(false), HOVER_CLOSE_DELAY_MS)
+  }
+
+  const openTooltip = () => {
+    cancelScheduledClose()
+    setOpen(true)
+  }
+
+  const isStillInside = (target) =>
+    target instanceof Node && wrapperRef.current?.contains(target)
+
+  const handlePointerLeave = (event) => {
+    if (isStillInside(event.relatedTarget)) return
+    scheduleClose()
+  }
+
+  useEffect(() => () => cancelScheduledClose(), [])
 
   useEffect(() => {
     if (!open) return
@@ -26,7 +58,12 @@ export default function InfoTooltip({
   }, [open])
 
   return (
-    <span className="info-tooltip" ref={wrapperRef}>
+    <span
+      className="info-tooltip"
+      ref={wrapperRef}
+      onMouseEnter={openTooltip}
+      onMouseLeave={handlePointerLeave}
+    >
       <digi-icon-notification-info
         type="button"
         className="info-tooltip__trigger"
@@ -34,18 +71,30 @@ export default function InfoTooltip({
         aria-expanded={open}
         aria-controls={tooltipId}
         onClick={() => setOpen((value) => !value)}
-        onMouseEnter={() => setOpen(true)}
-        onFocus={() => setOpen(true)}
+        onMouseLeave={handlePointerLeave}
+        onFocus={openTooltip}
+        onBlur={(event) => {
+          if (!isStillInside(event.relatedTarget)) scheduleClose()
+        }}
       ></digi-icon-notification-info>
       {open && (
-        <span
-          id={tooltipId}
-          role="tooltip"
-          className="info-tooltip__bubble"
-          onMouseLeave={() => setOpen(false)}
-        >
-          {children}
-        </span>
+        <>
+          <span
+            className="info-tooltip__bridge"
+            aria-hidden="true"
+            onMouseEnter={openTooltip}
+            onMouseLeave={handlePointerLeave}
+          />
+          <span
+            id={tooltipId}
+            role="tooltip"
+            className="info-tooltip__bubble"
+            onMouseEnter={openTooltip}
+            onMouseLeave={handlePointerLeave}
+          >
+            {children}
+          </span>
+        </>
       )}
     </span>
   )
