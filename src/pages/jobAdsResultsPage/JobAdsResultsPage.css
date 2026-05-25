@@ -1,38 +1,3 @@
-.results-adjust-toggle {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  margin: 8px auto 18px;
-  padding: 6px 18px;
-  background: transparent;
-  border: 0;
-  color: #ffffff;
-  font-family: 'Open Sans', sans-serif;
-  font-size: 15px;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.results-adjust-toggle__chevron {
-  display: inline-flex;
-  transition: transform 0.2s ease;
-}
-
-.results-adjust-toggle__chevron.open {
-  transform: rotate(180deg);
-}
-
-.results-adjust-toggle__chevron digi-icon-chevron-down {
-  --digi--icon--width: 14px;
-  --digi--icon--height: 14px;
-  --digi--icon--color: #ffffff;
-}
-
-.results-adjust-panel {
-  padding: 0 0 16px;
-}
-
 .results-body {
   width: min(1080px, 92vw);
   margin: 24px auto 60px;

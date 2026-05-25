@@ -1,4 +1,3 @@
-import { DigiIconChevronDown } from '@designsystem-se/af-react'
 import { useEffect, useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import MainLayout from '../../app/layout/MainLayout'
@@ -7,6 +6,7 @@ import { mapStatisticsResponse } from '../../features/statistics/api/StatisticsM
 import StatisticsChartPanel from '../../features/statistics/components/statisticsChartPanel/StatisticsChartPanel'
 import StatisticsSearchForm from '../../features/statistics/components/statisticsSearchForm/StatisticsSearchForm'
 import ContentWrapper from '../../shared/components/contentWrapper/ContentWrapper'
+import ResultsAdjustSearch from '../../shared/components/resultsAdjustSearch/ResultsAdjustSearch'
 import './StatisticsResultsPage.css'
 
 function readUiParamsFromUrl(searchParams) {
@@ -56,28 +56,12 @@ export default function StatisticsResultsPage() {
   return (
     <MainLayout>
       <ContentWrapper hideRensaLink>
-        <button
-          type="button"
-          className="results-adjust-toggle"
-          onClick={() => setAdjustOpen((open) => !open)}
-          aria-expanded={adjustOpen}
+        <ResultsAdjustSearch
+          open={adjustOpen}
+          onToggle={() => setAdjustOpen((open) => !open)}
         >
-          <span>Justera sökning</span>
-          <span
-            className={
-              adjustOpen
-                ? 'results-adjust-toggle__chevron open'
-                : 'results-adjust-toggle__chevron'
-            }
-          >
-            <DigiIconChevronDown />
-          </span>
-        </button>
-        {adjustOpen && (
-          <div className="results-adjust-panel">
-            <StatisticsSearchForm />
-          </div>
-        )}
+          <StatisticsSearchForm />
+        </ResultsAdjustSearch>
       </ContentWrapper>
 
       <div className="statistics-results">

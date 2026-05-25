@@ -10,8 +10,8 @@
   ``(Exempel: /platsannonser/annons/5285b3b3531f1b74082cbd487109a551aca921c3)``
 - Formulär rensas om "Justera sökning" knappen används för att öppna och stänga formuläret.
 - Input i sökfält sparas inte när sökning görs, dvs. fält rensas vid sökning.
-- Knappen för att justera sökning bör minskas i klickbar storlek för när man vill förminska sökformuläret, för att undvika felklick.(Placera under sök istället?)
 - Rensa-knappen ovanför tabsSwitch-komponenten fungerar ej.
+- ~~Knappen för att justera sökning bör minskas i klickbar storlek för när man vill förminska sökformuläret, för att undvika felklick.(Placera under sök istället?)~~
 
 #### Platsannonser
 - ~~Yrkesgrupper verkar inte fungera, får "Inga annonser hittades. Prova att ändra sökkriterier." på alla sökningar.~~
