@@ -20,11 +20,14 @@ describe('fetchStatistics', () => {
     const raw = { stats: { region: [{ label: 'Skåne län', occurrences: 50 }] } }
     getMock.mockResolvedValue(raw)
 
-    const result = await fetchStatistics({ q: 'react', lan: ['Skåne län'] })
+    const result = await fetchStatistics({
+      q: 'react',
+      municipality: ['k-malmo'],
+    })
 
     expect(getMock).toHaveBeenCalledWith('/stats', {
       q: 'react',
-      region: ['Skåne län'],
+      municipality: ['k-malmo'],
     })
     expect(result).toEqual([{ year: 'Totalt', raw }])
   })
@@ -41,14 +44,14 @@ describe('fetchStatistics', () => {
     getMock.mockResolvedValue({})
 
     await fetchStatistics({
-      yrkesgrupp: ['Utvecklare'],
-      lan: ['Västra Götalands län'],
+      yrkesgrupp: ['grp-dev'],
+      municipality: ['k-goteborg'],
       driving_license_required: true,
     })
 
     expect(getMock).toHaveBeenCalledWith('/stats', {
-      occupation_group: ['Utvecklare'],
-      region: ['Västra Götalands län'],
+      occupation_group: ['grp-dev'],
+      municipality: ['k-goteborg'],
       driving_license_required: true,
     })
   })
@@ -122,13 +125,17 @@ describe('exportStatistics', () => {
 
   it('exports with mapped params and year date range', async () => {
     await exportStatistics(
-      { ar: ['2023', '2025'], kompetens: 'react', lan: ['Stockholm'] },
+      {
+        ar: ['2023', '2025'],
+        kompetens: 'react',
+        municipality: ['k-stockholm'],
+      },
       'csv',
     )
 
     expect(getFileMock).toHaveBeenCalledWith('/export', {
       q: 'react',
-      region: ['Stockholm'],
+      municipality: ['k-stockholm'],
       format: 'csv',
       published_after: '2023-01-01',
       published_before: '2025-12-31',

@@ -18,15 +18,17 @@ describe('useJobData', () => {
         data: {
           concepts: [
             {
+              id: 'field-it',
               preferred_label: 'IT',
               narrower: [
-                { preferred_label: 'Utvecklare' },
-                { preferred_label: 'Testare' },
+                { id: 'grp-dev', preferred_label: 'Utvecklare' },
+                { id: 'grp-test', preferred_label: 'Testare' },
               ],
             },
             {
+              id: 'field-halsa',
               preferred_label: 'Hälsa',
-              narrower: [{ preferred_label: 'Sjuksköterska' }],
+              narrower: [{ id: 'grp-sjuksk', preferred_label: 'Sjuksköterska' }],
             },
           ],
         },
@@ -39,8 +41,17 @@ describe('useJobData', () => {
 
     expect(result.current.error).toBeNull()
     expect(result.current.jobData).toEqual({
-      IT: ['Testare', 'Utvecklare'],
-      Hälsa: ['Sjuksköterska'],
+      IT: {
+        id: 'field-it',
+        groups: [
+          { id: 'grp-test', label: 'Testare' },
+          { id: 'grp-dev', label: 'Utvecklare' },
+        ],
+      },
+      Hälsa: {
+        id: 'field-halsa',
+        groups: [{ id: 'grp-sjuksk', label: 'Sjuksköterska' }],
+      },
     })
     expect(fetch).toHaveBeenCalledWith(
       expect.stringContaining('taxonomy.api.jobtechdev.se'),
@@ -54,9 +65,7 @@ describe('useJobData', () => {
 
     await waitFor(() => expect(result.current.loading).toBe(false))
 
-    expect(result.current.error).toBe(
-      'Något gick fel vid hämtning av yrkesdata',
-    )
+    expect(result.current.error).toBe('Something went wrong fetching job data')
     expect(result.current.jobData).toEqual({})
   })
 

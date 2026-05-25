@@ -34,6 +34,10 @@ function parseMonthLabel(label) {
 }
 
 function extractRegions(raw) {
+  if (!raw) return []
+  if (Array.isArray(raw.region)) {
+    return raw.region
+  }
   const stats = raw?.stats
   if (!stats) return []
   if (Array.isArray(stats)) {

@@ -18,19 +18,22 @@ describe('useGeographyData', () => {
         data: {
           concepts: [
             {
+              id: 'lan-stockholm',
               preferred_label: 'Stockholms län',
               narrower: [
-                { preferred_label: 'Stockholm' },
-                { preferred_label: 'Nacka' },
+                { id: 'k-stockholm', preferred_label: 'Stockholm' },
+                { id: 'k-nacka', preferred_label: 'Nacka' },
               ],
             },
             {
+              id: 'lan-skane',
               preferred_label: 'Skåne län',
-              narrower: [{ preferred_label: 'Malmö' }],
+              narrower: [{ id: 'k-malmo', preferred_label: 'Malmö' }],
             },
             {
+              id: 'country-se',
               preferred_label: 'Sverige',
-              narrower: [{ preferred_label: 'Ignored' }],
+              narrower: [{ id: 'k-ignored', preferred_label: 'Ignored' }],
             },
           ],
         },
@@ -43,8 +46,17 @@ describe('useGeographyData', () => {
 
     expect(result.current.error).toBeNull()
     expect(result.current.lanData).toEqual({
-      'Stockholms län': ['Nacka', 'Stockholm'],
-      'Skåne län': ['Malmö'],
+      'Stockholms län': {
+        id: 'lan-stockholm',
+        kommuner: [
+          { id: 'k-nacka', label: 'Nacka' },
+          { id: 'k-stockholm', label: 'Stockholm' },
+        ],
+      },
+      'Skåne län': {
+        id: 'lan-skane',
+        kommuner: [{ id: 'k-malmo', label: 'Malmö' }],
+      },
     })
     expect(fetch).toHaveBeenCalledWith(
       expect.stringContaining('taxonomy.api.jobtechdev.se'),
