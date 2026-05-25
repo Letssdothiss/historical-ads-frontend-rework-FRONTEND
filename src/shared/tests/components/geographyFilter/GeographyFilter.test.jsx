@@ -49,8 +49,17 @@ vi.mock('@designsystem-se/af-react', () => ({
 }))
 
 const lanData = {
-  'Stockholms län': ['Stockholm', 'Nacka'],
-  'Skåne län': ['Malmö'],
+  'Stockholms län': {
+    id: 'lan-stockholm',
+    kommuner: [
+      { id: 'k-stockholm', label: 'Stockholm' },
+      { id: 'k-nacka', label: 'Nacka' },
+    ],
+  },
+  'Skåne län': {
+    id: 'lan-skane',
+    kommuner: [{ id: 'k-malmo', label: 'Malmö' }],
+  },
 }
 
 describe('GeographyFilter', () => {
@@ -87,8 +96,8 @@ describe('GeographyFilter', () => {
     )
 
     expect(onApply).toHaveBeenCalledWith({
-      lan: ['Stockholms län'],
-      kommuner: ['Stockholm'],
+      lan: [],
+      kommuner: ['k-stockholm'],
       grouped: { 'Stockholms län': ['Stockholm'] },
     })
   })

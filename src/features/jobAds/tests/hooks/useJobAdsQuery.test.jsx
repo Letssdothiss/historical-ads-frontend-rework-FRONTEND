@@ -39,10 +39,8 @@ describe('useJobAdsQuery', () => {
   it('maps UI filters to API params', async () => {
     const uiParams = {
       q: 'java',
-      lan: ['Skåne län'],
-      kommuner: ['Malmö'],
-      yrkesomraden: ['IT'],
-      yrkesgrupper: ['Utvecklare'],
+      kommuner: ['k-malmo'],
+      yrkesgrupper: ['grp-dev'],
       korkort: 'required',
       skills: ['React'],
     }
@@ -54,10 +52,8 @@ describe('useJobAdsQuery', () => {
     expect(searchMock).toHaveBeenCalledWith(
       expect.objectContaining({
         q: 'java',
-        region: ['Skåne län'],
-        municipality: ['Malmö'],
-        occupation_field: ['IT'],
-        occupation_group: ['Utvecklare'],
+        municipality: ['k-malmo'],
+        occupation_group: ['grp-dev'],
         driving_license_required: true,
         skills: ['React'],
       }),

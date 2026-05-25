@@ -50,8 +50,17 @@ vi.mock('@designsystem-se/af-react', () => ({
 }))
 
 const jobData = {
-  IT: ['Utvecklare', 'Testare'],
-  Hälsa: ['Sjuksköterska'],
+  IT: {
+    id: 'field-it',
+    groups: [
+      { id: 'grp-dev', label: 'Utvecklare' },
+      { id: 'grp-test', label: 'Testare' },
+    ],
+  },
+  Hälsa: {
+    id: 'field-halsa',
+    groups: [{ id: 'grp-sjuksk', label: 'Sjuksköterska' }],
+  },
 }
 
 describe('JobGroupFilter', () => {
@@ -106,8 +115,8 @@ describe('JobGroupFilter', () => {
     )
 
     expect(onApply).toHaveBeenCalledWith({
-      areas: ['IT'],
-      groups: ['Utvecklare'],
+      areas: [],
+      groups: ['grp-dev'],
       grouped: { IT: ['Utvecklare'] },
     })
     expect(onClose).toHaveBeenCalledOnce()

@@ -1,4 +1,7 @@
 .shell-section {
+  --shell-form-width: 773px;
+  --shell-form-inline-padding: 28px;
+
   display: flex;
   flex-direction: column;
   align-items: stretch;
@@ -7,39 +10,51 @@
   background-color: #091d54;
   border-radius: 0 0 12px 12px;
   transform: translateZ(0);
+  overflow: hidden;
 }
 
 .shell-section .shell-top-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  margin-left: 155px;
+  margin-left: 0;
+  width: 100%;
+  max-width: 100%;
 }
 
 .shell-top-row {
   display: flex;
+  flex-direction: column;
+  align-items: center;
   position: relative;
-  align-items: flex-start;
-  padding: 0 28px;
-  width: 715px;
-  height: 196px;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  padding: 20px 20px 12px;
+  box-sizing: border-box;
+}
+
+.shell-header-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 .shell-header-content-container {
-  padding: 28px 0 18px;
-  text-align: left;
+  padding: 0 0 12px;
+  text-align: center;
   position: relative;
   z-index: 2;
-  margin-bottom: 35px;
+  margin-bottom: 0;
+  width: 100%;
+  max-width: 520px;
 }
 
 .shell-header-content-container h2 {
   color: #ffffff;
   font-family: 'Open Sans', sans-serif;
-  font-size: 2.1rem;
+  font-size: clamp(1.5rem, 5vw, 2.1rem);
   font-weight: 600;
   margin: 0 0 8px;
-  width: 470px;
+  width: auto;
+  max-width: 100%;
 }
 
 .shell-header-content-container p {
@@ -51,16 +66,17 @@
 }
 
 .tabsswitch-component-container {
-  position: absolute;
+  position: static;
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  align-items: stretch;
   gap: 8px;
-  padding-top: 24px;
-  margin-left: 375px;
-  height: 80px;
+  padding-top: 8px;
+  margin-left: auto;
+  margin-right: auto;
+  height: auto;
   width: fit-content;
-  max-width: 340px;
+  max-width: calc(100% - 40px);
 }
 
 .tabsswitch-component-container .shell-reset-link {
@@ -77,6 +93,10 @@
   font-weight: 600;
   text-decoration: underline;
   cursor: pointer;
+  display: inline-block;
+  padding: 10px 12px;
+  margin: -10px -12px 0 0;
+  line-height: 1.2;
 }
 
 .shell-reset-link:hover {
@@ -86,21 +106,93 @@
 .shell-reset-link--hidden {
   visibility: hidden;
   pointer-events: none;
+  padding: 0;
+  margin: 0;
+  min-height: 0;
+  min-width: 0;
 }
 
 .shell-form-container {
-  padding: 4px 0 28px;
+  padding: 4px 20px 28px;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  box-sizing: border-box;
 }
 
-@media (max-width: 720px) {
-  .shell-top-row {
-    justify-content: left;
-    margin-left: 0;
+/* Narrow viewports — tabs + Rensa as one centered block */
+@media (max-width: 975px) {
+  .tabsswitch-component-container .tabs-switch {
+    align-self: center;
   }
+
+  .shell-form-container :is(.job-ads-search-form, .statistics-search-form) {
+    width: 100%;
+    max-width: var(--shell-form-width);
+    box-sizing: border-box;
+  }
+}
+
+/* Desktop — header left, tabs bottom-right aligned with 773px search form */
+@media (min-width: 976px) {
+  .shell-section .shell-top-row {
+    margin-left: 0;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .shell-top-row {
+    display: block;
+    height: 196px;
+    padding: 0;
+  }
+
+  .shell-header-container {
+    display: block;
+    width: 100%;
+  }
+
+  .shell-header-content-container {
+    margin-left: 155px;
+    padding: 28px 28px 18px;
+    text-align: left;
+    margin-bottom: 0;
+    max-width: none;
+    width: auto;
+  }
+
+  .shell-header-content-container h2 {
+    font-size: 2.1rem;
+    width: 470px;
+    max-width: 100%;
+  }
+
   .tabsswitch-component-container {
-    align-items: flex-start;
+    position: absolute;
+    top: auto;
+    bottom: 0;
+    left: auto;
+    /* Right edge lines up with search fields (773px form minus 28px side padding) */
+    right: max(
+      28px,
+      calc(
+        (100% - var(--shell-form-width)) / 2 + var(--shell-form-inline-padding)
+      )
+    );
+    align-items: flex-end;
     padding-top: 0;
+    height: auto;
+    width: fit-content;
+    max-width: 340px;
+  }
+
+  .tabsswitch-component-container .shell-reset-link {
+    align-self: flex-end;
+    margin-right: 0;
+  }
+
+  .shell-form-container {
+    padding: 4px 0 28px;
   }
 }
