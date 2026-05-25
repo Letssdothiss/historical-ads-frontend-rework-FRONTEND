@@ -187,27 +187,7 @@
 }
 
 .statistics-chart-panel__export-confirm {
-  display: block;
-  width: calc(100% - 16px);
-  margin: 8px;
-  padding: 10px 14px;
-  background: #ffffff;
-  border: 1px solid #1616b2;
-  border-radius: 6px;
-  color: #1616b2;
-  font-family: 'Open Sans', sans-serif;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.statistics-chart-panel__export-confirm:hover {
-  background: #e6f0ff;
-}
-
-.statistics-chart-panel__export-confirm:disabled {
-  opacity: 0.6;
-  cursor: progress;
+  padding: 8px;
 }
 
 .statistics-chart-panel__summary-row {
