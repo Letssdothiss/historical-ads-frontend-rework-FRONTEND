@@ -14,9 +14,11 @@
 - ~~Knappen för att justera sökning bör minskas i klickbar storlek för när man vill förminska sökformuläret, för att undvika felklick.(Placera under sök istället?)~~
 
 #### Platsannonser
+- Geografiskt område visar enbart Uppsala län.
 - ~~Yrkesgrupper verkar inte fungera, får "Inga annonser hittades. Prova att ändra sökkriterier." på alla sökningar.~~
 
 #### Statistik
+- Geografiskt område visar enbart Uppsala län.
 
 ---
 
