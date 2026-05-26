@@ -25,7 +25,10 @@ export default function InfoTooltip({
 
   const scheduleClose = () => {
     cancelScheduledClose()
-    closeTimerRef.current = setTimeout(() => setOpen(false), HOVER_CLOSE_DELAY_MS)
+    closeTimerRef.current = setTimeout(
+      () => setOpen(false),
+      HOVER_CLOSE_DELAY_MS,
+    )
   }
 
   const openTooltip = () => {

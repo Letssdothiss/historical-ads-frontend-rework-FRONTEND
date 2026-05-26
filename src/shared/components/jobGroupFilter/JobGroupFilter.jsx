@@ -24,13 +24,37 @@ export default function JobGroupFilter({
 
   const allAreaNames = useMemo(() => Object.keys(jobData).sort(), [jobData])
 
-  const filteredAreas = useMemo(
-    () =>
-      allAreaNames.filter((a) =>
-        a.toLowerCase().includes(search.toLowerCase()),
-      ),
-    [allAreaNames, search],
-  )
+  const filteredAreas = useMemo(() => {
+    if (!search) return allAreaNames
+    const q = search.toLowerCase()
+    return allAreaNames.filter(
+      (a) =>
+        a.toLowerCase().includes(q) ||
+        jobData[a]?.groups.some((g) => g.label.toLowerCase().includes(q)),
+    )
+  }, [allAreaNames, search, jobData])
+
+  const displayArea = useMemo(() => {
+    if (activeArea) return activeArea
+    if (!search) return null
+    const q = search.toLowerCase()
+    const areasViaGroup = allAreaNames.filter(
+      (a) =>
+        !a.toLowerCase().includes(q) &&
+        jobData[a]?.groups.some((g) => g.label.toLowerCase().includes(q)),
+    )
+    if (areasViaGroup.length === 1) return areasViaGroup[0]
+    return null
+  }, [activeArea, search, allAreaNames, jobData])
+
+  const filteredGroups = useMemo(() => {
+    if (!displayArea) return []
+    const groups = jobData[displayArea]?.groups ?? []
+    if (!search) return groups
+    const q = search.toLowerCase()
+    if (displayArea.toLowerCase().includes(q)) return groups
+    return groups.filter((g) => g.label.toLowerCase().includes(q))
+  }, [displayArea, jobData, search])
 
   const allAreasSelected =
     allAreaNames.length > 0 && selectedAreas.size === allAreaNames.length
@@ -137,13 +161,19 @@ export default function JobGroupFilter({
           </button>
         </div>
         <div className="job-filter-top-row-right">
-          {activeArea && (
+          {(activeArea || allAreasSelected) && (
             <button
               type="button"
               className="job-filter-text-button"
-              onClick={rensaYrkesgrupper}
+              onClick={
+                allAreasSelected
+                  ? () => setSelectedGroups(new Set())
+                  : rensaYrkesgrupper
+              }
             >
-              {`Rensa yrkesgrupper inom ${activeArea}`}
+              {allAreasSelected
+                ? 'Rensa alla yrkesgrupper'
+                : `Rensa yrkesgrupper inom ${activeArea}`}
             </button>
           )}
         </div>
@@ -246,19 +276,23 @@ export default function JobGroupFilter({
         </div>
 
         <div className="job-filter-group-col">
-          {activeArea || allAreasSelected ? (
+          {displayArea || allAreasSelected ? (
             <ul className="job-filter-list" aria-label="Yrkesgrupper">
               {(allAreasSelected
-                ? allAreaNames.flatMap((a) => jobData[a]?.groups ?? [])
-                : (jobData[activeArea]?.groups ?? [])
+                ? allAreaNames.flatMap((a) => {
+                    const groups = jobData[a]?.groups ?? []
+                    if (!search) return groups
+                    const q = search.toLowerCase()
+                    if (a.toLowerCase().includes(q)) return groups
+                    return groups.filter((g) => g.label.toLowerCase().includes(q))
+                  })
+                : filteredGroups
               ).map((g) => (
                 <li key={g.id} className="job-filter-group-item">
                   <DigiFormCheckbox
                     id={`group-${g.id}`}
                     afChecked={selectedGroups.has(g.id)}
-                    onAfOnChange={(e) =>
-                      toggleGroup(g, e.detail.target.checked)
-                    }
+                    onAfOnChange={(e) => toggleGroup(g, e.detail.target.checked)}
                   />
                   <label htmlFor={`group-${g.id}`}>{g.label}</label>
                 </li>
