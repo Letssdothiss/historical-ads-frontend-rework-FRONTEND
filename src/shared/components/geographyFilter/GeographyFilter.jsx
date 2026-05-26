@@ -26,11 +26,38 @@ export default function GeoFilter({
 
   const allLanNames = useMemo(() => Object.keys(lanData).sort(), [lanData])
 
-  const filteredLan = useMemo(
-    () =>
-      allLanNames.filter((l) => l.toLowerCase().includes(search.toLowerCase())),
-    [allLanNames, search],
-  )
+  const filteredLan = useMemo(() => {
+    if (!search) return allLanNames
+    const q = search.toLowerCase()
+    return allLanNames.filter(
+      (l) =>
+        l.toLowerCase().includes(q) ||
+        lanData[l]?.kommuner.some((k) => k.label.toLowerCase().includes(q)),
+    )
+  }, [allLanNames, search, lanData])
+
+  const displayLan = useMemo(() => {
+    if (activeLan) return activeLan
+    if (!search) return null
+    const q = search.toLowerCase()
+
+    const lanViaKommun = allLanNames.filter(
+      (l) =>
+        !l.toLowerCase().includes(q) &&
+        lanData[l]?.kommuner.some((k) => k.label.toLowerCase().includes(q)),
+    )
+    if (lanViaKommun.length === 1) return lanViaKommun[0]
+    return null
+  }, [activeLan, search, allLanNames, lanData])
+
+  const filteredKommuner = useMemo(() => {
+    if (!displayLan) return []
+    const kommuner = lanData[displayLan]?.kommuner ?? []
+    if (!search) return kommuner
+    const q = search.toLowerCase()
+    if (displayLan.toLowerCase().includes(q)) return kommuner
+    return kommuner.filter((k) => k.label.toLowerCase().includes(q))
+  }, [displayLan, lanData, search])
 
   const allLanSelected =
     allLanNames.length > 0 && selectedLan.size === allLanNames.length
@@ -226,19 +253,23 @@ export default function GeoFilter({
         </div>
 
         <div className="geo-filter-kommun-col">
-          {activeLan || allLanSelected ? (
+          {displayLan || allLanSelected ? (
             <ul className="geo-filter-list" aria-label="Kommuner">
               {(allLanSelected
-                ? allLanNames.flatMap((l) => lanData[l]?.kommuner ?? [])
-                : (lanData[activeLan]?.kommuner ?? [])
+                ? allLanNames.flatMap((l) => {
+                    const kommuner = lanData[l]?.kommuner ?? []
+                    if (!search) return kommuner
+                    const q = search.toLowerCase()
+                    if (l.toLowerCase().includes(q)) return kommuner
+                    return kommuner.filter((k) => k.label.toLowerCase().includes(q))
+                  })
+                : filteredKommuner
               ).map((k) => (
                 <li key={k.id} className="geo-filter-kommun-item">
                   <DigiFormCheckbox
                     id={`kommun-${k.id}`}
                     afChecked={selectedKommuner.has(k.id)}
-                    onAfOnChange={(e) =>
-                      toggleKommun(k, e.detail.target.checked)
-                    }
+                    onAfOnChange={(e) => toggleKommun(k, e.detail.target.checked)}
                   />
                   <label htmlFor={`kommun-${k.id}`}>{k.label}</label>
                 </li>

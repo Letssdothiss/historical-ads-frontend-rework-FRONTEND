@@ -14,7 +14,8 @@ function toBaseApiParams(params = {}) {
   } else if (params.yrkesgrupp?.length) {
     apiParams.occupation_group = params.yrkesgrupp
   }
-  if (params.employment_type?.length) apiParams.employment_type = params.employment_type
+  if (params.employment_type?.length)
+    apiParams.employment_type = params.employment_type
   if (params.driving_license_required != null)
     apiParams.driving_license_required = params.driving_license_required
   return apiParams
