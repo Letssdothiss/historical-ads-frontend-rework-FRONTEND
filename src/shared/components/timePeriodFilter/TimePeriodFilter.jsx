@@ -12,7 +12,7 @@
  * - Uses Digi design system components
  */
 
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import './TimePeriodFilter.css'
 
 import {
@@ -119,9 +119,23 @@ function TimePeriodFilter({ onChange, initialPeriod } = {}) {
   // Get all selected months across all years
   const allSelectedMonths = Object.values(selectedMonthsByYear).flat()
 
-  const allMonthsSelected = years.every(
-    (year) => (selectedMonthsByYear[year] || []).length === months.length,
-  )
+  const monthTargetYears = useMemo(() => {
+    if (allYearsSelected) return years
+    if (activeYear) return [activeYear]
+    return selectedYears
+  }, [allYearsSelected, activeYear, selectedYears, years])
+
+  const allMonthsSelected =
+    monthTargetYears.length > 0 &&
+    monthTargetYears.every(
+      (year) => (selectedMonthsByYear[year] || []).length === months.length,
+    )
+
+  const isMonthChecked = (month) =>
+    monthTargetYears.length > 0 &&
+    monthTargetYears.every((year) =>
+      (selectedMonthsByYear[year] || []).includes(month),
+    )
 
   // Show indicator dot if any years or months are selected.
   const hasSelection =
@@ -150,35 +164,40 @@ function TimePeriodFilter({ onChange, initialPeriod } = {}) {
   }
 
   const handleSelectAllMonths = () => {
-    const targetYears = allYearsSelected
-      ? years
-      : activeYear
-        ? [activeYear]
-        : []
-    if (targetYears.length === 0) return
+    if (monthTargetYears.length === 0) return
 
-    const shouldSelectAllMonths = targetYears.some(
+    const shouldSelectAllMonths = monthTargetYears.some(
       (year) => (selectedMonthsByYear[year] || []).length !== months.length,
     )
 
     setSelectedMonthsByYear({
       ...selectedMonthsByYear,
       ...Object.fromEntries(
-        targetYears.map((year) => [year, shouldSelectAllMonths ? months : []]),
+        monthTargetYears.map((year) => [
+          year,
+          shouldSelectAllMonths ? months : [],
+        ]),
       ),
     })
   }
 
   const handleMonthClick = (month) => {
-    if (activeYear) {
-      const currentMonths = selectedMonthsByYear[activeYear] || []
-      setSelectedMonthsByYear({
-        ...selectedMonthsByYear,
-        [activeYear]: currentMonths.includes(month)
-          ? currentMonths.filter((selectedMonth) => selectedMonth !== month)
-          : [...currentMonths, month],
-      })
-    }
+    if (monthTargetYears.length === 0) return
+    const shouldCheck = !isMonthChecked(month)
+    setSelectedMonthsByYear({
+      ...selectedMonthsByYear,
+      ...Object.fromEntries(
+        monthTargetYears.map((year) => {
+          const current = selectedMonthsByYear[year] || []
+          return [
+            year,
+            shouldCheck
+              ? [...new Set([...current, month])]
+              : current.filter((selectedMonth) => selectedMonth !== month),
+          ]
+        }),
+      ),
+    })
   }
 
   const handleClearAll = () => {
@@ -350,13 +369,7 @@ function TimePeriodFilter({ onChange, initialPeriod } = {}) {
                     onClick={handleSelectAllMonths}
                   >
                     <DigiFormCheckbox
-                      afChecked={
-                        allYearsSelected
-                          ? allMonthsSelected
-                          : activeYear &&
-                            (selectedMonthsByYear[activeYear] || []).length ===
-                              months.length
-                      }
+                      afChecked={allMonthsSelected}
                       onAfOnChange={handleSelectAllMonths}
                     />
 
@@ -372,9 +385,7 @@ function TimePeriodFilter({ onChange, initialPeriod } = {}) {
                       <div key={month} className="time-period-month-row">
                         <DigiFormCheckbox
                           afLabel={month}
-                          afChecked={(
-                            selectedMonthsByYear[activeYear] || []
-                          ).includes(month)}
+                          afChecked={isMonthChecked(month)}
                           onAfOnChange={() => handleMonthClick(month)}
                         />
                       </div>

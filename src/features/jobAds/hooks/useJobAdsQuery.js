@@ -1,7 +1,8 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { jobAdsApi } from '../api/jobAdsApi'
 import { mapSearchResponse } from '../api/jobAdsMapper'
 import { PAGE_SIZE } from '../../../shared/constants/ui'
+import { parseMonthNumbers } from '../../../shared/utils/monthLabels'
 
 // this hook is used for both the search page and the employer's job ads page, so it needs to be flexible in how it maps UI params to API params
 
@@ -19,7 +20,7 @@ function toApiParams(uiParams = {}, { offset = 0, limit = PAGE_SIZE } = {}) {
     api.employment_type = uiParams.employment_type
   if (uiParams.years?.length || uiParams.months?.length) {
     const years = (uiParams.years || []).map(Number).filter(Boolean).sort()
-    const months = (uiParams.months || []).map(Number).filter(Boolean).sort()
+    const months = parseMonthNumbers(uiParams.months)
     if (years.length) {
       const minYear = years[0]
       const maxYear = years[years.length - 1]
@@ -34,17 +35,19 @@ function toApiParams(uiParams = {}, { offset = 0, limit = PAGE_SIZE } = {}) {
   if (uiParams.korkort === 'not_required') api.driving_license_required = false
   return api
 }
+
+const EMPTY_RESULT = { ads: [], total: 0, offset: 0 }
+
 // the hook returns the data in a format that is easy to use in the UI, and also includes loading and error states
 export function useJobAdsQuery(
   uiParams,
   { page = 1, pageSize = PAGE_SIZE, enabled = true } = {},
 ) {
-  const [data, setData] = useState({ ads: [], total: 0, offset: 0 })
+  const [data, setData] = useState(EMPTY_RESULT)
   const [isLoading, setIsLoading] = useState(false)
   const [isError, setIsError] = useState(false)
   const [error, setError] = useState(null)
   const [reloadKey, setReloadKey] = useState(0)
-  const aliveRef = useRef(true)
 
   const apiParams = useMemo(
     () =>
@@ -55,34 +58,38 @@ export function useJobAdsQuery(
     [uiParams, page, pageSize],
   )
 
-  useEffect(() => {
-    aliveRef.current = true
-    return () => {
-      aliveRef.current = false
-    }
-  }, [])
+  const requestKey = useMemo(
+    () => JSON.stringify({ apiParams, enabled, reloadKey }),
+    [apiParams, enabled, reloadKey],
+  )
 
   useEffect(() => {
-    if (!enabled) return
-    setIsLoading(true)
-    setIsError(false)
-    setError(null)
+    if (!enabled) return undefined
 
-    jobAdsApi
-      .search(apiParams)
-      .then((res) => {
-        if (!aliveRef.current) return
+    let cancelled = false
+
+    void (async () => {
+      setIsLoading(true)
+      setIsError(false)
+      setError(null)
+
+      try {
+        const res = await jobAdsApi.search(apiParams)
+        if (cancelled) return
         setData(mapSearchResponse(res))
-      })
-      .catch((err) => {
-        if (!aliveRef.current) return
+      } catch (err) {
+        if (cancelled) return
         setIsError(true)
         setError(err)
-      })
-      .finally(() => {
-        if (aliveRef.current) setIsLoading(false)
-      })
-  }, [apiParams, enabled, reloadKey])
+      } finally {
+        if (!cancelled) setIsLoading(false)
+      }
+    })()
+
+    return () => {
+      cancelled = true
+    }
+  }, [apiParams, enabled, requestKey])
 
   const refetch = () => setReloadKey((k) => k + 1)
 

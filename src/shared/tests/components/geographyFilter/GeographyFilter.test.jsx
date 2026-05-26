@@ -12,11 +12,12 @@ vi.mock('@designsystem-se/af-react', () => ({
       {children}
     </button>
   ),
-  DigiFormCheckbox: ({ afLabel, id, onAfOnChange }) =>
+  DigiFormCheckbox: ({ afLabel, id, afChecked, onAfOnChange }) =>
     id ? (
       <input
         id={id}
         type="checkbox"
+        checked={!!afChecked}
         onChange={(e) =>
           onAfOnChange?.({ detail: { target: { checked: e.target.checked } } })
         }
@@ -100,5 +101,18 @@ describe('GeographyFilter', () => {
       kommuner: ['k-stockholm'],
       grouped: { 'Stockholms län': ['Stockholm'] },
     })
+  })
+
+  it('selects all kommuner after "Välj alla län" without picking one county', async () => {
+    const user = userEvent.setup()
+
+    render(<GeographyFilter />)
+
+    await user.click(screen.getByLabelText('Välj alla län'))
+    await user.click(screen.getByLabelText('Välj alla kommuner'))
+
+    expect(screen.getByLabelText('Stockholm')).toBeChecked()
+    expect(screen.getByLabelText('Nacka')).toBeChecked()
+    expect(screen.getByLabelText('Malmö')).toBeChecked()
   })
 })

@@ -60,7 +60,7 @@ describe('useJobAdsQuery', () => {
     )
   })
 
-  it('builds published date range from years and months', async () => {
+  it('builds published date range from years and numeric months', async () => {
     const uiParams = { years: ['2020', '2022'], months: ['3', '6'] }
 
     renderHook(() => useJobAdsQuery(uiParams))
@@ -71,6 +71,21 @@ describe('useJobAdsQuery', () => {
       expect.objectContaining({
         published_after: '2020-03-01',
         published_before: '2022-06-30',
+      }),
+    )
+  })
+
+  it('builds published date range from Swedish month names', async () => {
+    const uiParams = { years: ['2024'], months: ['Januari', 'Mars'] }
+
+    renderHook(() => useJobAdsQuery(uiParams))
+
+    await waitFor(() => expect(searchMock).toHaveBeenCalled())
+
+    expect(searchMock).toHaveBeenCalledWith(
+      expect.objectContaining({
+        published_after: '2024-01-01',
+        published_before: '2024-03-31',
       }),
     )
   })
