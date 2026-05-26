@@ -28,7 +28,9 @@ describe('useJobData', () => {
             {
               id: 'field-halsa',
               preferred_label: 'Hälsa',
-              narrower: [{ id: 'grp-sjuksk', preferred_label: 'Sjuksköterska' }],
+              narrower: [
+                { id: 'grp-sjuksk', preferred_label: 'Sjuksköterska' },
+              ],
             },
           ],
         },
