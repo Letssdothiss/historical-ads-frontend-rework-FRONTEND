@@ -125,13 +125,15 @@ export default function JobGroupFilter({
           </button>
         </div>
         <div className="job-filter-top-row-right">
-          {activeArea && (
+          {(activeArea || allAreasSelected) && (
             <button
               type="button"
               className="job-filter-text-button"
-              onClick={rensaYrkesgrupper}
+              onClick={allAreasSelected ? () => setSelectedGroups(new Set()) : rensaYrkesgrupper}
             >
-              {`Rensa yrkesgrupper inom ${activeArea}`}
+              {allAreasSelected
+                ? 'Rensa alla yrkesgrupper'
+                : `Rensa yrkesgrupper inom ${activeArea}`}
             </button>
           )}
         </div>
@@ -164,21 +166,18 @@ export default function JobGroupFilter({
           </div>
         </div>
 
-        <div className="job-filter-header-right">
-          <div className="job-filter-check-row">
-            <DigiFormCheckbox
-              afLabel={
-                activeArea
-                  ? `Välj alla yrkesgrupper inom ${activeArea}`
-                  : 'Välj alla yrkesgrupper'
-              }
-              afVariation="primary"
-              afChecked={!!allGroupsSelected}
-              afDisabled={!activeArea}
-              onAfOnChange={(e) => toggleAllaGroups(e.detail.target.checked)}
-            />
+        {activeArea && (
+          <div className="job-filter-header-right">
+            <div className="job-filter-check-row">
+              <DigiFormCheckbox
+                afLabel={`Välj alla yrkesgrupper inom ${activeArea}`}
+                afVariation="primary"
+                afChecked={!!allGroupsSelected}
+                onAfOnChange={(e) => toggleAllaGroups(e.detail.target.checked)}
+              />
+            </div>
           </div>
-        </div>
+        )}
       </div>
 
       {/* Body-row */}

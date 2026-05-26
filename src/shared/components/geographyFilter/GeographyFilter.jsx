@@ -125,13 +125,15 @@ export default function GeoFilter({
           </button>
         </div>
         <div className="geo-filter-top-row-right">
-          {activeLan && (
+          {(activeLan || allLanSelected) && (
             <button
               type="button"
               className="geo-filter-text-button"
-              onClick={rensaKommuner}
+              onClick={allLanSelected ? () => setSelectedKommuner(new Set()) : rensaKommuner}
             >
-              {`Rensa kommuner inom ${activeLan}`}
+              {allLanSelected
+                ? 'Rensa alla kommuner'
+                : `Rensa kommuner inom ${activeLan}`}
             </button>
           )}
         </div>
@@ -164,21 +166,18 @@ export default function GeoFilter({
           </div>
         </div>
 
-        <div className="geo-filter-header-right">
-          <div className="geo-filter-check-row">
-            <DigiFormCheckbox
-              afLabel={
-                activeLan
-                  ? `Välj alla kommuner inom ${activeLan}`
-                  : 'Välj alla kommuner'
-              }
-              afVariation="primary"
-              afChecked={!!allKommunerSelected}
-              afDisabled={!activeLan}
-              onAfOnChange={(e) => toggleAllaKommuner(e.detail.target.checked)}
-            />
+        {activeLan && (
+          <div className="geo-filter-header-right">
+            <div className="geo-filter-check-row">
+              <DigiFormCheckbox
+                afLabel={`Välj alla kommuner inom ${activeLan}`}
+                afVariation="primary"
+                afChecked={!!allKommunerSelected}
+                onAfOnChange={(e) => toggleAllaKommuner(e.detail.target.checked)}
+              />
+            </div>
           </div>
-        </div>
+        )}
       </div>
 
       {/* Body-row */}
