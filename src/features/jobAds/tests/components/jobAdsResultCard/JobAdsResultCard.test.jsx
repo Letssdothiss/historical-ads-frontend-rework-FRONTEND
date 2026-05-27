@@ -31,10 +31,10 @@ describe('JobAdsResultCard', () => {
     expect(
       screen.getByRole('heading', { name: 'Testtitel' }),
     ).toBeInTheDocument()
-    expect(screen.getByText('Annons-ID: 30429400')).toBeInTheDocument()
+    expect(screen.getByText('30429400')).toBeInTheDocument()
     expect(screen.getByText('Testföretag')).toBeInTheDocument()
     expect(screen.getByText('Växjö')).toBeInTheDocument()
-    expect(screen.getByText('15 januari 2026')).toBeInTheDocument()
+    expect(screen.getByText('15 Januari 2026')).toBeInTheDocument()
   })
 
   it('calls onViewAd when Till annons is clicked', async () => {

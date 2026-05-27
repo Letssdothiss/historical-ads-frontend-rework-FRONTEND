@@ -20,7 +20,14 @@ function formatDate(value) {
     day: 'numeric',
     month: 'long',
     year: 'numeric',
-  }).format(date)
+  })
+    .formatToParts(date)
+    .map((part) =>
+      part.type === 'month'
+        ? part.value.charAt(0).toUpperCase() + part.value.slice(1)
+        : part.value,
+    )
+    .join('')
 }
 /**
  * Renders a job ad result card.
@@ -41,14 +48,13 @@ export default function JobAdsResultCard({ ad, onViewAd }) {
   return (
     <article className="job-ads-result-card">
       <div className="job-ads-result-card__body">
-        <div className="job-ads-result-card__title-row">
-          <h3 className="job-ads-result-card__title">
-            {formatText(ad?.title)}
-          </h3>
-        </div>
+        <h3 className="job-ads-result-card__title">{formatText(ad?.title)}</h3>
 
         {adId ? (
-          <p className="job-ads-result-card__id">Annons-ID: {adId}</p>
+          <p className="job-ads-result-card__id">
+            <span className="job-ads-result-card__id-label">Annons-ID</span>{' '}
+            {adId}
+          </p>
         ) : null}
 
         <p className="job-ads-result-card__meta">{formatText(ad?.employer)}</p>
