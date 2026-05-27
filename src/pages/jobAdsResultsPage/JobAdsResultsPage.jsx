@@ -91,7 +91,7 @@ export default function JobAdsResultsPage() {
 
   return (
     <MainLayout>
-      <ContentWrapper hideRensaLink>
+      <ContentWrapper>
         <ResultsAdjustSearch
           open={adjustOpen}
           onToggle={() => setAdjustOpen((open) => !open)}

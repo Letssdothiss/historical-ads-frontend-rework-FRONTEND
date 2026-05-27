@@ -55,7 +55,7 @@ export default function StatisticsResultsPage() {
 
   return (
     <MainLayout>
-      <ContentWrapper hideRensaLink>
+      <ContentWrapper>
         <ResultsAdjustSearch
           open={adjustOpen}
           onToggle={() => setAdjustOpen((open) => !open)}

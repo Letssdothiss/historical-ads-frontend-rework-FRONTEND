@@ -34,16 +34,17 @@
   width: 100%;
   display: flex;
   justify-content: center;
+  pointer-events: none;
 }
 
 .shell-header-content-container {
   padding: 0 0 12px;
   text-align: center;
   position: relative;
-  z-index: 2;
   margin-bottom: 0;
   width: 100%;
   max-width: 520px;
+  pointer-events: auto;
 }
 
 .shell-header-content-container h2 {
@@ -64,7 +65,7 @@
   line-height: 1.3;
 }
 
-.tabsswitch-component-container {
+.shell-corner-actions {
   position: static;
   display: flex;
   flex-direction: column;
@@ -73,13 +74,16 @@
   padding-top: 8px;
   margin-left: auto;
   margin-right: auto;
-  height: auto;
   width: fit-content;
   max-width: calc(100% - 40px);
+  z-index: 10;
 }
 
-.tabsswitch-component-container .shell-reset-link {
-  align-self: flex-end;
+.tabsswitch-component-container {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: fit-content;
 }
 
 .shell-reset-link {
@@ -92,10 +96,19 @@
   font-weight: 600;
   text-decoration: underline;
   cursor: pointer;
-  display: inline-block;
-  padding: 10px 12px;
-  margin: -10px -12px 0 0;
+  position: relative;
+  z-index: 11;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  align-self: flex-end;
+  box-sizing: border-box;
+  min-height: 44px;
+  min-width: 44px;
+  padding: 12px 16px;
+  margin: 0;
   line-height: 1.2;
+  pointer-events: auto;
 }
 
 .shell-reset-link:hover {
@@ -122,7 +135,11 @@
 
 /* Narrow viewports — tabs + Rensa as one centered block */
 @media (max-width: 975px) {
-  .tabsswitch-component-container .tabs-switch {
+  .shell-corner-actions .tabs-switch {
+    align-self: center;
+  }
+
+  .tabsswitch-component-container {
     align-self: center;
   }
 
@@ -167,7 +184,7 @@
     max-width: 100%;
   }
 
-  .tabsswitch-component-container {
+  .shell-corner-actions {
     position: absolute;
     top: auto;
     bottom: 0;
@@ -181,14 +198,11 @@
     );
     align-items: flex-end;
     padding-top: 0;
-    height: auto;
-    width: fit-content;
     max-width: 340px;
   }
 
-  .tabsswitch-component-container .shell-reset-link {
+  .shell-reset-link {
     align-self: flex-end;
-    margin-right: 0;
   }
 
   .shell-form-container {

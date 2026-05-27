@@ -62,10 +62,19 @@ export default function GeoFilter({
   const allLanSelected =
     allLanNames.length > 0 && selectedLan.size === allLanNames.length
 
+  const kommunTargetLan = useMemo(() => {
+    if (activeLan) return [activeLan]
+    if (allLanSelected) return allLanNames
+    return [...selectedLan]
+  }, [activeLan, allLanSelected, allLanNames, selectedLan])
+
   const allKommunerSelected =
-    activeLan &&
-    lanData[activeLan]?.kommuner.length > 0 &&
-    lanData[activeLan].kommuner.every((k) => selectedKommuner.has(k.id))
+    kommunTargetLan.length > 0 &&
+    kommunTargetLan.every(
+      (lan) =>
+        (lanData[lan]?.kommuner.length ?? 0) > 0 &&
+        lanData[lan].kommuner.every((k) => selectedKommuner.has(k.id)),
+    )
 
   function toggleAllaLan(checked) {
     if (checked) {
@@ -83,11 +92,14 @@ export default function GeoFilter({
   }
 
   function toggleAllaKommuner(checked) {
-    if (!activeLan) return
+    if (kommunTargetLan.length === 0) return
     const next = new Set(selectedKommuner)
-    lanData[activeLan].kommuner.forEach((k) =>
-      checked ? next.add(k.id) : next.delete(k.id),
-    )
+    for (const lan of kommunTargetLan) {
+      for (const k of lanData[lan]?.kommuner ?? []) {
+        if (checked) next.add(k.id)
+        else next.delete(k.id)
+      }
+    }
     setSelectedKommuner(next)
   }
 
@@ -193,18 +205,21 @@ export default function GeoFilter({
           </div>
         </div>
 
-        {activeLan && (
-          <div className="geo-filter-header-right">
-            <div className="geo-filter-check-row">
-              <DigiFormCheckbox
-                afLabel={`Välj alla kommuner inom ${activeLan}`}
-                afVariation="primary"
-                afChecked={!!allKommunerSelected}
-                onAfOnChange={(e) => toggleAllaKommuner(e.detail.target.checked)}
-              />
-            </div>
+        <div className="geo-filter-header-right">
+          <div className="geo-filter-check-row">
+            <DigiFormCheckbox
+              afLabel={
+                activeLan
+                  ? `Välj alla kommuner inom ${activeLan}`
+                  : 'Välj alla kommuner'
+              }
+              afVariation="primary"
+              afChecked={!!allKommunerSelected}
+              afDisabled={kommunTargetLan.length === 0}
+              onAfOnChange={(e) => toggleAllaKommuner(e.detail.target.checked)}
+            />
           </div>
-        )}
+        </div>
       </div>
 
       {/* Body-row */}

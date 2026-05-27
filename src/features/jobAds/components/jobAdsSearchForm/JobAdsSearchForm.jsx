@@ -15,7 +15,12 @@ import {
   DigiIconUserAlt,
 } from '@designsystem-se/af-react'
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
+import {
+  geographyFilterKey,
+  jobGroupFilterKey,
+  parseJobAdsSearchFormState,
+} from '../../../../shared/utils/searchFormParams'
 import CompetencySearch from '../../../../shared/components/competencySearch/CompetencySearch'
 import Dropdown from '../../../../shared/components/dropdown/Dropdown'
 import GroupedTooltip from '../../../../shared/components/groupedTooltip/GroupedTooltip'
@@ -27,32 +32,30 @@ import JobGroupFilter from '../../../../shared/components/jobGroupFilter/JobGrou
 import './JobAdsSearchForm.css'
 
 export default function JobAdsSearchForm() {
+  const [searchParams] = useSearchParams()
+  return (
+    <JobAdsSearchFormFields key={searchParams.toString()} searchParams={searchParams} />
+  )
+}
+
+function JobAdsSearchFormFields({ searchParams }) {
   const navigate = useNavigate()
-  const [q, setQ] = useState('')
+  const initial = parseJobAdsSearchFormState(searchParams)
+  const [q, setQ] = useState(initial.q)
   const [geoOpen, setGeoOpen] = useState(false)
   const [jobOpen, setJobOpen] = useState(false)
   const [geoHover, setGeoHover] = useState(false)
   const [jobHover, setJobHover] = useState(false)
-  const [geography, setGeography] = useState({
-    lan: [],
-    kommuner: [],
-    grouped: {},
-  })
-  const [occupations, setOccupations] = useState({
-    areas: [],
-    groups: [],
-    grouped: {},
-  })
-  const [timePeriod, setTimePeriod] = useState({ years: [], months: [] })
-  const [employment, setEmployment] = useState({
-    type: [],
-    duration: [],
-    scope: [],
-  })
-  const [employerType, setEmployerType] = useState('name')
-  const [employer, setEmployer] = useState('')
-  const [organizationNumber, setOrganizationNumber] = useState('')
-  const [skills, setSkills] = useState('')
+  const [geography, setGeography] = useState(initial.geography)
+  const [occupations, setOccupations] = useState(initial.occupations)
+  const [timePeriod, setTimePeriod] = useState(initial.timePeriod)
+  const [employment, setEmployment] = useState(initial.employment)
+  const [employerType, setEmployerType] = useState(initial.employerType)
+  const [employer, setEmployer] = useState(initial.employer)
+  const [organizationNumber, setOrganizationNumber] = useState(
+    initial.organizationNumber,
+  )
+  const [skills, setSkills] = useState(initial.skills)
 
   const hasGeoSelection =
     geography.lan.length > 0 || geography.kommuner.length > 0
@@ -156,6 +159,7 @@ export default function JobAdsSearchForm() {
           }
         >
           <GeographyFilter
+            key={geographyFilterKey(geography)}
             onClose={() => setGeoOpen(false)}
             initialLan={geography.lan}
             initialKommuner={geography.kommuner}
@@ -170,7 +174,10 @@ export default function JobAdsSearchForm() {
         </Dropdown>
 
         <div className="job-ads-search-form__filter-cell">
-          <TimePeriodFilter onChange={setTimePeriod} />
+          <TimePeriodFilter
+            initialPeriod={initial.timePeriod}
+            onChange={setTimePeriod}
+          />
         </div>
 
         <Dropdown
@@ -210,6 +217,7 @@ export default function JobAdsSearchForm() {
           }
         >
           <JobGroupFilter
+            key={jobGroupFilterKey(occupations)}
             onClose={() => setJobOpen(false)}
             initialAreas={occupations.areas}
             initialGroups={occupations.groups}

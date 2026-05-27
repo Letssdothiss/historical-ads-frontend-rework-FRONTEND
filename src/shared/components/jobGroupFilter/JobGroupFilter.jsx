@@ -59,10 +59,19 @@ export default function JobGroupFilter({
   const allAreasSelected =
     allAreaNames.length > 0 && selectedAreas.size === allAreaNames.length
 
+  const groupTargetAreas = useMemo(() => {
+    if (activeArea) return [activeArea]
+    if (allAreasSelected) return allAreaNames
+    return [...selectedAreas]
+  }, [activeArea, allAreasSelected, allAreaNames, selectedAreas])
+
   const allGroupsSelected =
-    activeArea &&
-    jobData[activeArea]?.groups.length > 0 &&
-    jobData[activeArea].groups.every((g) => selectedGroups.has(g.id))
+    groupTargetAreas.length > 0 &&
+    groupTargetAreas.every(
+      (area) =>
+        (jobData[area]?.groups.length ?? 0) > 0 &&
+        jobData[area].groups.every((g) => selectedGroups.has(g.id)),
+    )
 
   function toggleAllaAreas(checked) {
     if (checked) {
@@ -80,11 +89,14 @@ export default function JobGroupFilter({
   }
 
   function toggleAllaGroups(checked) {
-    if (!activeArea) return
+    if (groupTargetAreas.length === 0) return
     const next = new Set(selectedGroups)
-    jobData[activeArea].groups.forEach((g) =>
-      checked ? next.add(g.id) : next.delete(g.id),
-    )
+    for (const area of groupTargetAreas) {
+      for (const g of jobData[area]?.groups ?? []) {
+        if (checked) next.add(g.id)
+        else next.delete(g.id)
+      }
+    }
     setSelectedGroups(next)
   }
 
@@ -194,18 +206,21 @@ export default function JobGroupFilter({
           </div>
         </div>
 
-        {activeArea && (
-          <div className="job-filter-header-right">
-            <div className="job-filter-check-row">
-              <DigiFormCheckbox
-                afLabel={`Välj alla yrkesgrupper inom ${activeArea}`}
-                afVariation="primary"
-                afChecked={!!allGroupsSelected}
-                onAfOnChange={(e) => toggleAllaGroups(e.detail.target.checked)}
-              />
-            </div>
+        <div className="job-filter-header-right">
+          <div className="job-filter-check-row">
+            <DigiFormCheckbox
+              afLabel={
+                activeArea
+                  ? `Välj alla yrkesgrupper inom ${activeArea}`
+                  : 'Välj alla yrkesgrupper'
+              }
+              afVariation="primary"
+              afChecked={!!allGroupsSelected}
+              afDisabled={groupTargetAreas.length === 0}
+              onAfOnChange={(e) => toggleAllaGroups(e.detail.target.checked)}
+            />
           </div>
-        )}
+        </div>
       </div>
 
       {/* Body-row */}
