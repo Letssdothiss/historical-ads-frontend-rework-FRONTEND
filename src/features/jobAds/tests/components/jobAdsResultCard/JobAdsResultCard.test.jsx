@@ -1,6 +1,6 @@
-import { describe, expect, it, vi } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
+import { describe, expect, it, vi } from 'vitest'
 import JobAdsResultCard from '../../../components/jobAdsResultCard/JobAdsResultCard'
 
 vi.mock('@designsystem-se/af-react', () => ({
@@ -14,6 +14,7 @@ vi.mock('@designsystem-se/af-react', () => ({
 
 const sampleAd = {
   id: 'job-1',
+  originalId: '30429400',
   title: 'Testtitel',
   employer: 'Testföretag',
   occupation: 'Yrke',
@@ -28,7 +29,7 @@ describe('JobAdsResultCard', () => {
     expect(
       screen.getByRole('heading', { name: 'Testtitel' }),
     ).toBeInTheDocument()
-    expect(screen.getByText('job-1')).toBeInTheDocument()
+    expect(screen.getByText('Annons id: 30429400')).toBeInTheDocument()
     expect(screen.getByText('Testföretag')).toBeInTheDocument()
     expect(screen.getByText('Växjö')).toBeInTheDocument()
   })

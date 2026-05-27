@@ -50,6 +50,7 @@ describe('mapHitToAd', () => {
   it('maps flat hit shape without _source', () => {
     const ad = mapHitToAd({
       id: 'flat-1',
+      original_id: '30429400',
       title: 'Platschef',
       employer_name: 'Bygg AB',
       occupation_group: { label: 'Chefer' },
@@ -60,6 +61,7 @@ describe('mapHitToAd', () => {
 
     expect(ad).toMatchObject({
       id: 'flat-1',
+      originalId: '30429400',
       title: 'Platschef',
       employer: 'Bygg AB',
       occupation: 'Chefer',
@@ -77,6 +79,16 @@ describe('mapHitToAd', () => {
     })
 
     expect(ad.title).toBe('Sjuksköterska')
+  })
+
+  it('maps camelCase originalId from API responses', () => {
+    const ad = mapHitToAd({
+      id: 'flat-2',
+      originalId: '30429400',
+      title: 'Undersköterska',
+    })
+
+    expect(ad.originalId).toBe('30429400')
   })
 })
 
