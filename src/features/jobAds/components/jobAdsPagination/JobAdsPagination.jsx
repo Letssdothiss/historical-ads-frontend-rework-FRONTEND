@@ -22,6 +22,7 @@ export default function JobAdsPagination({
   totalResults,
   resultName = 'annonser',
   pageSize = DEFAULT_PAGE_SIZE,
+  maxPages = 6,
   onPageChange,
 }) {
   const paginationRef = useRef(null)
@@ -49,6 +50,7 @@ export default function JobAdsPagination({
         ref={paginationRef}
         afInitActivePage={normalizedCurrentPage}
         afTotalPages={totalPages}
+        afLimit={maxPages}
         {...(showResultBlock
           ? {
               afTotalResults: totalResults,

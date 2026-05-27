@@ -1,6 +1,119 @@
 .job-ads-pagination {
   display: flex;
   justify-content: center;
+  box-sizing: border-box;
   width: 100%;
+  max-width: 1080px;
+  min-height: 122px;
+  padding-top: 24px;
+  padding-bottom: 24px;
   margin-top: 1.5rem;
+  opacity: 1;
+}
+
+/* Show only a centered "…" for the last-page ellipsis item, hiding the page number */
+.job-ads-pagination .ellipsis-last .digi-navigation-pagination__page-text {
+  font-size: 0;
+}
+
+.job-ads-pagination .ellipsis-last .digi-navigation-pagination__page-text::before {
+  font-size: 14px;
+  vertical-align: middle;
+}
+
+/* Föregående / Nästa buttons — shared box, color and border */
+.job-ads-pagination
+  .digi-navigation-pagination__pagination
+  .digi-navigation-pagination__button--previous,
+.job-ads-pagination
+  .digi-navigation-pagination__pagination
+  .digi-navigation-pagination__button--next {
+  --digi--button--width: 136px;
+  --digi--button--padding--medium: 7px 20px;
+  --digi--button--min-height--small: 44px;
+  --digi--button--border-width--secondary--default: 1px;
+  --digi--button--color--background--secondary--default: var(
+    --Button-secondary-background,
+    #ffffff
+  );
+  --digi--button--color--border--secondary--default: var(
+    --Button-secondary-border,
+    #00005a
+  );
+  opacity: 1;
+}
+
+/* Outer corners rounded 6px: previous rounds left, next rounds right */
+.job-ads-pagination
+  .digi-navigation-pagination__pagination
+  .digi-navigation-pagination__button--previous {
+  --digi--button--border-radius--secondary--default: 6px 0 0 6px;
+  --digi--button--border-radius--secondary--hover: 6px 0 0 6px;
+  --digi--button--border-radius--secondary--focus: 6px 0 0 6px;
+  --digi--button--border-radius--secondary--active: 6px 0 0 6px;
+}
+
+.job-ads-pagination
+  .digi-navigation-pagination__pagination
+  .digi-navigation-pagination__button--next {
+  --digi--button--border-radius--secondary--default: 0 6px 6px 0;
+  --digi--button--border-radius--secondary--hover: 0 6px 6px 0;
+  --digi--button--border-radius--secondary--focus: 0 6px 6px 0;
+  --digi--button--border-radius--secondary--active: 0 6px 6px 0;
+}
+
+/* Page-number buttons — 44x44, white with navy border */
+.job-ads-pagination
+  .digi-navigation-pagination__pages
+  .digi-navigation-pagination__page-button {
+  --digi--button--width: 44px;
+  --digi--button--padding--medium: 12px 0;
+  --digi--button--min-height--small: 44px;
+  --digi--button--border-width--secondary--default: 1px;
+  --digi--button--color--background--secondary--default: var(
+    --Button-secondary-background,
+    #ffffff
+  );
+  --digi--button--color--border--secondary--default: var(
+    --Button-secondary-border,
+    #00005a
+  );
+  --digi--button--color--background--primary--default: var(
+    --Pagination-page-number-selected-background,
+    #00005a
+  );
+  --digi--button--color--background--primary--hover: var(
+    --Pagination-page-number-selected-background,
+    #00005a
+  );
+  --digi--button--color--background--primary--focus: var(
+    --Pagination-page-number-selected-background,
+    #00005a
+  );
+  --digi--button--color--background--primary--active: var(
+    --Pagination-page-number-selected-background,
+    #00005a
+  );
+  opacity: 1;
+}
+
+/* Lock every page-number button (incl. the "…") to the same 44x44 box */
+.job-ads-pagination
+  .digi-navigation-pagination__pages
+  .digi-navigation-pagination__page-button
+  .digi-button {
+  box-sizing: border-box;
+  width: 44px !important;
+  height: 44px !important;
+  min-width: 44px !important;
+  max-width: 44px !important;
+  min-height: 44px !important;
+  max-height: 44px !important;
+}
+
+/* Spacing between page-number buttons */
+.job-ads-pagination
+  .digi-navigation-pagination__pages
+  .digi-navigation-pagination__page-list {
+  gap: 10px;
 }

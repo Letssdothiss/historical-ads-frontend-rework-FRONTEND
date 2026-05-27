@@ -132,9 +132,8 @@ export default function JobAdsResultsPage() {
             totalPages={totalPages}
             totalResults={total}
             pageSize={PAGE_SIZE}
-            onPageChange={(detail) => {
-              const next = detail?.afNextPage ?? detail?.page ?? page
-              setPage(next)
+            onPageChange={(nextPage) => {
+              setPage(nextPage)
               window.scrollTo({ top: 0, behavior: 'smooth' })
             }}
           />
