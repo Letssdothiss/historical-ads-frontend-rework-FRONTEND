@@ -102,6 +102,7 @@ export default function JobAdsResultsPage() {
 
       <div className="results-body">
         <div className="results-summary">
+          <p className="results-summary__criteria">{summary}</p>
           <p className="results-count">
             {total
               ? `${total} annonser`
@@ -114,7 +115,6 @@ export default function JobAdsResultsPage() {
               </span>
             ) : null}
           </p>
-          <p className="results-summary__criteria">Sökresultat: {summary}</p>
         </div>
 
         <JobAdsResultsList
