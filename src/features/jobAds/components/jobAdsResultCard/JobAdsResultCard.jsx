@@ -26,6 +26,8 @@ export default function JobAdsResultCard({ ad, onViewAd }) {
     onViewAd?.(ad)
   }
 
+  const adId = ad?.originalId || ad?.id
+
   return (
     <DigiCard
       afBorder={CardBorder.PRIMARY}
@@ -37,10 +39,11 @@ export default function JobAdsResultCard({ ad, onViewAd }) {
             <h3 className="job-ads-result-card__title">
               {formatText(ad?.title)}
             </h3>
-            {ad?.id ? (
-              <span className="job-ads-result-card__id">{ad.id}</span>
-            ) : null}
           </div>
+
+          {adId ? (
+            <p className="job-ads-result-card__id">Annons id: {adId}</p>
+          ) : null}
 
           <p className="job-ads-result-card__meta">
             {formatText(ad?.employer)}
