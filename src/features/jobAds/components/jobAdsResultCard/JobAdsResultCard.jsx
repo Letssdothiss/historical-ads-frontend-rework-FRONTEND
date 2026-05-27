@@ -1,10 +1,5 @@
-import {
-  ButtonType,
-  ButtonVariation,
-  CardBorder,
-  CardBorderRadius,
-} from '@designsystem-se/af'
-import { DigiButton, DigiCard } from '@designsystem-se/af-react'
+import { ButtonType, ButtonVariation } from '@designsystem-se/af'
+import { DigiButton } from '@designsystem-se/af-react'
 import './JobAdsResultCard.css'
 /**
  * Formats text values, returning a default placeholder if the value is empty or only whitespace.
@@ -13,6 +8,19 @@ import './JobAdsResultCard.css'
  */
 function formatText(value) {
   return value?.trim?.() ? value : 'Okänt'
+}
+
+function formatDate(value) {
+  if (!value) return ''
+
+  const date = new Date(value)
+  if (Number.isNaN(date.getTime())) return value
+
+  return new Intl.DateTimeFormat('sv-SE', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  }).format(date)
 }
 /**
  * Renders a job ad result card.
@@ -27,48 +35,41 @@ export default function JobAdsResultCard({ ad, onViewAd }) {
   }
 
   const adId = ad?.originalId || ad?.id
+  const publishedDate =
+    ad?.raw?.publication_date || ad?.raw?.published_at || ad?.publishedAt
 
   return (
-    <DigiCard
-      afBorder={CardBorder.PRIMARY}
-      afBorderRadius={CardBorderRadius.PRIMARY}
-    >
-      <article className="job-ads-result-card">
-        <div className="job-ads-result-card__body">
-          <div className="job-ads-result-card__title-row">
-            <h3 className="job-ads-result-card__title">
-              {formatText(ad?.title)}
-            </h3>
-          </div>
-
-          {adId ? (
-            <p className="job-ads-result-card__id">Annons id: {adId}</p>
-          ) : null}
-
-          <p className="job-ads-result-card__meta">
-            {formatText(ad?.employer)}
-          </p>
-          <p className="job-ads-result-card__meta">
-            {formatText(ad?.occupation)}
-          </p>
-          <p className="job-ads-result-card__meta">
-            {formatText(ad?.municipality)}
-          </p>
-          <p className="job-ads-result-card__date">
-            {formatText(ad?.publishedAt)}
-          </p>
+    <article className="job-ads-result-card">
+      <div className="job-ads-result-card__body">
+        <div className="job-ads-result-card__title-row">
+          <h3 className="job-ads-result-card__title">
+            {formatText(ad?.title)}
+          </h3>
         </div>
 
-        <div className="job-ads-result-card__actions">
-          <DigiButton
-            afType={ButtonType.BUTTON}
-            afVariation={ButtonVariation.PRIMARY}
-            onAfOnClick={handleViewAd}
-          >
-            Till annons
-          </DigiButton>
-        </div>
-      </article>
-    </DigiCard>
+        {adId ? (
+          <p className="job-ads-result-card__id">Annons-ID: {adId}</p>
+        ) : null}
+
+        <p className="job-ads-result-card__meta">{formatText(ad?.employer)}</p>
+        <p className="job-ads-result-card__meta">
+          {formatText(ad?.occupation)}
+        </p>
+        <p className="job-ads-result-card__meta">
+          {formatText(ad?.municipality)}
+        </p>
+        <p className="job-ads-result-card__date">{formatDate(publishedDate)}</p>
+      </div>
+
+      <div className="job-ads-result-card__actions">
+        <DigiButton
+          afType={ButtonType.BUTTON}
+          afVariation={ButtonVariation.PRIMARY}
+          onAfOnClick={handleViewAd}
+        >
+          Till annons
+        </DigiButton>
+      </div>
+    </article>
   )
 }

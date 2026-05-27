@@ -1,9 +1,12 @@
 .job-ads-result-card {
   display: grid;
   gap: 1rem;
-  padding: 1.25rem;
-  background: var(--digi--color--background--primary);
-  color: var(--text-h);
+  padding: 1.5rem;
+  background: #f4f4f4;
+  color: #1f1f1f;
+  border: 1px solid #e2e2e2;
+  border-radius: 1rem;
+  box-shadow: 0 1px 2px rgba(18, 18, 18, 0.04);
 }
 
 .job-ads-result-card__body {
@@ -17,15 +20,15 @@
 
 .job-ads-result-card__title {
   margin: 0;
-  font-size: 1.15rem;
+  font-size: 1.25rem;
   line-height: 1.35;
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: -0.02em;
 }
 
 .job-ads-result-card__id {
   margin: 0;
-  color: #7f2cc7;
+  color: #3b3b3b;
   font-size: 0.9rem;
   font-weight: 600;
 }
@@ -33,13 +36,14 @@
 .job-ads-result-card__meta,
 .job-ads-result-card__date {
   margin: 0;
-  color: var(--text);
+  color: #4a4a4a;
   font-size: 0.95rem;
   line-height: 1.45;
 }
 
 .job-ads-result-card__date {
-  font-weight: 600;
+  font-weight: 400;
+  color: #3b3b3b;
 }
 
 .job-ads-result-card__actions {

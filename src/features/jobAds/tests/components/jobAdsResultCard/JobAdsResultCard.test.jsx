@@ -19,7 +19,9 @@ const sampleAd = {
   employer: 'Testföretag',
   occupation: 'Yrke',
   municipality: 'Växjö',
-  publishedAt: '15 jan.',
+  raw: {
+    publication_date: '2026-01-15',
+  },
 }
 
 describe('JobAdsResultCard', () => {
@@ -29,9 +31,10 @@ describe('JobAdsResultCard', () => {
     expect(
       screen.getByRole('heading', { name: 'Testtitel' }),
     ).toBeInTheDocument()
-    expect(screen.getByText('Annons id: 30429400')).toBeInTheDocument()
+    expect(screen.getByText('Annons-ID: 30429400')).toBeInTheDocument()
     expect(screen.getByText('Testföretag')).toBeInTheDocument()
     expect(screen.getByText('Växjö')).toBeInTheDocument()
+    expect(screen.getByText('15 januari 2026')).toBeInTheDocument()
   })
 
   it('calls onViewAd when Till annons is clicked', async () => {
