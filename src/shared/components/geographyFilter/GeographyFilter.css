@@ -55,7 +55,8 @@
   background: transparent;
   color: #1144d1;
   font-family: 'Open Sans', sans-serif;
-  font-size: 0.7rem;
+  /* 0.778 rem is roughly equal to 14px */
+  font-size: 0.778rem;
   font-weight: 600;
   line-height: 1.5rem;
   cursor: pointer;
