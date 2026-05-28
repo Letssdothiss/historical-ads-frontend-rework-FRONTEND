@@ -1,5 +1,15 @@
 import { get, getFile } from '../../../shared/api/HttpClient'
 
+// The upstream `driving-license-required` filter is a boolean. The UI carries
+// the selection as 'required' / 'not-required' strings, so map those (and any
+// already-boolean value) to true/false; anything else means "no filter".
+function toDrivingLicenseRequired(value) {
+  if (value === true || value === 'required') return true
+  if (value === false || value === 'not-required' || value === 'not_required')
+    return false
+  return null
+}
+
 function toBaseApiParams(params = {}) {
   const apiParams = {}
   if (params.kompetens) {
@@ -16,8 +26,8 @@ function toBaseApiParams(params = {}) {
   }
   if (params.employment_type?.length)
     apiParams.employment_type = params.employment_type
-  if (params.driving_license_required != null)
-    apiParams.driving_license_required = params.driving_license_required
+  const drivingLicense = toDrivingLicenseRequired(params.driving_license_required)
+  if (drivingLicense != null) apiParams.driving_license_required = drivingLicense
   return apiParams
 }
 
