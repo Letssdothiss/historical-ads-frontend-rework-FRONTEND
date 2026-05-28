@@ -1,3 +1,7 @@
+span {
+  font-size: 16px;
+}
+
 .job-ads-search-form {
   position: relative;
   display: flex;
@@ -34,7 +38,7 @@
   gap: 8px;
   color: #ffffff;
   font-family: 'Open Sans', sans-serif;
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 600;
   text-align: left;
 }
@@ -190,6 +194,10 @@
 
 .job-ads-search-form__actions digi-button {
   width: 100%;
+}
+
+#job-ads-search-button {
+  font-size: 16px;
 }
 
 #job-ads-search-button::part(button) {
