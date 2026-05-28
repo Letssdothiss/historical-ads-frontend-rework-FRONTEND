@@ -74,7 +74,9 @@
   margin: 0 0 6px;
   font-size: 1.9rem;
   font-weight: 600;
-  color: #222;
+  letter-spacing: 0;
+  opacity: 1;
+  color: var(--Typography-heading-primary, #333333);
 }
 
 .job-ad-detail__employer {
