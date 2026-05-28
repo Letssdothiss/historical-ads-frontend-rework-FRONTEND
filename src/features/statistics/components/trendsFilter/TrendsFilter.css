@@ -6,9 +6,7 @@
 
   flex-direction: column;
   align-items: stretch;
-
   gap: 2px;
-
   width: 100%;
   z-index: 2;
 }
@@ -28,7 +26,11 @@
 
   min-height: 52px;
 
+  padding: 0 20px;
+
   border-radius: 6px;
+
+  background: var(--Background-Interactive-default-input-elements, #ffffff);
 }
 
 /* TRIGGER CONTENT */
@@ -36,6 +38,8 @@
   display: flex;
 
   align-items: center;
+
+  gap: 10px;
 
   width: 100%;
 }
@@ -46,14 +50,11 @@
   --digi--icon--height: 24px;
   --digi--icon--color: #1616b2;
 
-  margin-left: 38px;
-
   flex-shrink: 0;
 }
 
 /* LABEL */
 .trends-trigger-label {
-  margin-left: 28px;
   white-space: nowrap;
 
   color: #1616b2;
@@ -75,8 +76,6 @@
   align-items: center;
   justify-content: center;
 
-  margin-left: 14px;
-
   transition: transform 0.2s ease;
 }
 
@@ -96,7 +95,6 @@
   height: 16px;
 
   margin-left: auto;
-  margin-right: 24px;
 
   border-radius: 50%;
   background: #009322;
@@ -113,7 +111,7 @@
   max-height: min(360px, calc(100vh - 220px));
   overflow: auto;
 
-  padding: 24px 32px;
+  padding: 24px 12px;
 
   box-sizing: border-box;
 
@@ -131,6 +129,8 @@
   display: block;
 
   width: 100%;
+
+  white-space: nowrap;
 
   padding: 16px 0;
 
