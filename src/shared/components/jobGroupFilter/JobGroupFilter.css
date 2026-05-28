@@ -78,6 +78,11 @@
   border-right: 1px solid #ddd;
 }
 
+.job-filter-header-left digi-form-input,
+.job-filter-header-left digi-form-input * {
+  border: revert !important;
+}
+
 .job-filter-header-right {
   display: flex;
   flex-direction: column;
