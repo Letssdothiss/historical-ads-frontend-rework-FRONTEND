@@ -79,6 +79,11 @@
   border-right: 1px solid #ddd;
 }
 
+.geo-filter-header-left digi-form-input,
+.geo-filter-header-left digi-form-input * {
+  border: revert !important;
+}
+
 .geo-filter-header-right {
   display: flex;
   flex-direction: column;
