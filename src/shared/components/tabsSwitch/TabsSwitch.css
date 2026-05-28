@@ -1,24 +1,32 @@
 .tabs-switch {
   display: inline-flex;
   width: fit-content;
+  height: 44px;
   align-self: flex-end;
-  background: transparent;
+  background: #ffffff;
   border-radius: 6px;
   overflow: hidden;
-  border: none;
+}
+
+.tabs-switch--flat-bottom {
+  border-radius: 6px 6px 0 0;
 }
 
 .tabs-switch__link {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 8px 18px;
+  height: 44px;
+  padding: 0 12px;
   background: #ffffff;
   color: #1a1a1a;
   text-decoration: none;
   font-family: 'Open Sans', sans-serif;
-  font-size: 14px;
-  font-weight: 600;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: 0;
+  text-align: center;
   white-space: nowrap;
   cursor: pointer;
 }
@@ -29,6 +37,6 @@
 
 .tabs-switch__link--active,
 .tabs-switch__link--active:hover {
-  background: var(--job-ads-color);
+  background: var(--color-pear-500, #b7ee4a);
   color: #1a1a1a;
 }

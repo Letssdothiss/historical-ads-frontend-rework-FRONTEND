@@ -92,58 +92,37 @@
   top: calc(100% + 6px);
   left: 0;
   z-index: 40;
-  width: 720px;
-  max-width: 90vw;
+  width: 375px;
+  max-width: 100%;
+  min-height: 277px;
   padding: 20px 24px 24px;
   box-sizing: border-box;
   background: #ffffff;
-  border-radius: 6px;
+  border-radius: 0 0 6px 6px;
   border: none;
   box-shadow: 0 8px 24px rgba(2, 8, 32, 0.18);
-}
-
-.dropdown-header,
-.driving-license__right-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.dropdown-header {
-  margin-bottom: 18px;
 }
 
 button.dropdown-text-button {
   appearance: none;
   border: 0;
-  background: transparent;
-  color: #1144d1;
-  font-family: 'Open Sans', sans-serif;
-  font-size: 14px;
-  font-weight: 600;
-  line-height: 24px;
-  cursor: pointer;
-}
-
-.dropdown-close-button {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
-  appearance: none;
-  border: 0;
+  width: 104px;
+  max-width: 100%;
+  height: 24px;
+  padding: 16px 16px;
+  border-radius: 6px;
   background: transparent;
-  color: #1144d1;
+  color: var(--Text-Interactive-primary, #1616b2);
   font-family: 'Open Sans', sans-serif;
   font-size: 14px;
   font-weight: 600;
   line-height: 24px;
+  text-align: center;
   cursor: pointer;
-}
-
-.dropdown-close-button digi-icon-x {
-  --digi--icon--width: 20px;
-  --digi--icon--height: 20px;
-  --digi--icon--color: #1616b2;
 }
 
 .dropdown-content {
@@ -152,13 +131,29 @@ button.dropdown-text-button {
   width: 100%;
 }
 
+.dropdown-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.dropdown-title-row .dropdown-title {
+  margin: 0;
+}
+
 .dropdown-title {
+  width: 67px;
+  max-width: 100%;
+  min-height: 27px;
   margin: 0 0 8px;
-  color: #333333;
+  color: var(--Typography-label-text, #333333);
   font-family: 'Open Sans', sans-serif;
-  font-size: 18px;
   font-weight: 600;
-  line-height: 27px;
+  font-size: var(--digi--typography--label--font-size--desktop);
+  line-height: var(--digi--typography--label--line-height--desktop);
+  letter-spacing: 0;
 }
 
 .dropdown-divider {
@@ -219,32 +214,51 @@ button.dropdown-text-button {
 
 @media (max-width: 720px) {
   .driving-license-dropdown {
-    width: 95vw;
     padding: 20px;
   }
 }
 
-/* RADIO GROUP */
-.driving-license-dropdown digi-form-radiogroup {
+/* CHECKBOX GROUP */
+.driving-license-options {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  width: 100%;
-  padding-left: 28px;
+  gap: 10px;
+  width: 375px;
+  max-width: 100%;
+  min-height: 128px;
+  padding: 24px;
+  box-sizing: border-box;
 }
 
-/* RADIO BUTTON */
-.driving-license-dropdown digi-form-radiobutton {
+/* CHECKBOX ROW */
+.driving-license-options digi-form-checkbox {
   display: flex;
-  width: 269px;
-  height: 35px;
-  padding-bottom: 8px;
-  align-items: flex-start;
-  gap: 8px;
+  align-items: center;
+  width: 100%;
+  min-height: 45px;
+  padding: 0 20px;
+  border-radius: 6px;
+  background: var(--Background-Interactive-default-input-elements, #ffffff);
 }
 
-/* LABEL INSIDE DIGI */
-.driving-license-dropdown digi-form-radiobutton::part(label) {
+/* CHECKBOX MARKER (unchecked default) */
+.driving-license-options .digi-form-checkbox__box {
+  width: 20px;
+  height: 20px;
+  border-radius: var(--digi--form-checkbox--border-radius);
+  border-width: var(--digi--form-checkbox--border-width);
+  background: var(--Checkbox-default-background, #ffffff);
+}
+
+/* CHECKED BOX COLOR */
+.driving-license-options
+  .digi-form-checkbox__input:checked
+  + .digi-form-checkbox__box {
+  background: var(--icon-primary, #1616b2);
+  border-color: var(--icon-primary, #1616b2);
+}
+
+.driving-license-options .digi-form-checkbox__label {
   text-align: left;
 }
 /* FOOTER */

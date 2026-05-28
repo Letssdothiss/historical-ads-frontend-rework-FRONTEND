@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { fetchStatistics } from '../api/StatisticsApi'
 import { mapStatisticsResponse } from '../api/StatisticsMapper'
 
@@ -6,8 +6,6 @@ export function useStatisticsQuery(params) {
   const [data, setData] = useState(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
-
-  const paramsKey = JSON.stringify(params)
 
   useEffect(() => {
     if (!params) return
@@ -27,7 +25,7 @@ export function useStatisticsQuery(params) {
         setError(err)
       })
       .finally(() => setLoading(false))
-  }, [paramsKey])
+  }, [params])
 
   return { data, loading, error }
 }

@@ -8,9 +8,16 @@ export function mapHitToAd(hit) {
 
   // The historical API can return different shapes – handle both flat and nested
   const source = hit._source || hit
+  const originalId =
+    source.original_id ||
+    source.originalId ||
+    hit.original_id ||
+    hit.originalId ||
+    ''
 
   return {
     id: hit._id || source.id || source.ad_id || '',
+    originalId,
     title:
       source.headline ||
       source.title ||

@@ -5,19 +5,37 @@
 }
 
 .results-summary {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 1080px;
+  min-height: 90px;
+  padding: 8px 4px;
   margin-bottom: 18px;
+  opacity: 1;
 }
 
 .results-count {
+  max-width: 654px;
+  min-height: 33px;
   margin: 0 0 4px;
-  color: #1a1a1a;
   font-family: 'Open Sans', sans-serif;
-  font-size: 14px;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 33px;
+  letter-spacing: 0;
+  color: var(--Text-primary, #333333);
+  opacity: 1;
 }
 
 .results-summary__criteria {
+  max-width: 990px;
+  min-height: 33px;
   margin: 0;
-  color: #555555;
   font-family: 'Open Sans', sans-serif;
-  font-size: 13px;
+  font-weight: 600;
+  font-size: 22px;
+  line-height: 33px;
+  letter-spacing: 0;
+  color: var(--Typography-heading-primary, #333333);
+  opacity: 1;
 }
