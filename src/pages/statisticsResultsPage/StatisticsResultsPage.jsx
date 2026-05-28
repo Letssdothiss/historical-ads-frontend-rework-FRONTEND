@@ -41,6 +41,7 @@ export default function StatisticsResultsPage() {
 
   useEffect(() => {
     let alive = true
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsLoading(true)
     setError(null)
     fetchStatistics(params)

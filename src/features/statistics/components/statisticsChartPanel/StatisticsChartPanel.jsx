@@ -135,6 +135,8 @@ function StatisticsChartPanel({
   const isPivoted = pivot === 'medsols' || pivot === 'manuellt'
 
   useEffect(() => {
+    // Keep table sorting predictable when pivot mode changes.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setSortCol(null)
     setSortDir('desc')
   }, [isPivoted])
