@@ -37,6 +37,15 @@
   cursor: pointer;
 }
 
+.job-ad-detail__nav-link--next {
+  width: 169px;
+  height: 24px;
+  opacity: 1;
+  line-height: 24px;
+  letter-spacing: 0;
+  color: var(--Link-default, #1616b2);
+}
+
 .job-ad-detail__nav-link:hover {
   text-decoration: underline;
 }
