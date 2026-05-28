@@ -8,20 +8,20 @@
 
 - Felmeddelande bör uppdateras när annons inte kan hämtas.
   `(Exempel: /platsannonser/annons/5285b3b3531f1b74082cbd487109a551aca921c3)`
-- Rensa-knappen ovanför tabsSwitch-komponenten fungerar ej.
-- Rensa allt under geografiskt område funkar ej
+- ~~Rensa-knappen ovanför tabsSwitch-komponenten fungerar ej.~~
+- ~~Rensa allt under geografiskt område funkar ej~~
 - ~~Formulär rensas om "Justera sökning" knappen används för att öppna och stänga formuläret.~~
 - ~~Input i sökfält sparas inte när sökning görs, dvs. fält rensas vid sökning.~~
 - ~~Knappen för att justera sökning bör minskas i klickbar storlek för när man vill förminska sökformuläret, för att undvika felklick.(Placera under sök istället?)~~
 
 #### Platsannonser
-- under platsannonser, fel id visas. Ska vara "original_id": "Åtta siffror här".
+- ~~Under platsannonser, fel id visas. Ska vara "original_id": "Åtta siffror här".~~
 - ~~Geografiskt område visar enbart Uppsala län.~~
 - ~~Yrkesgrupper verkar inte fungera, får "Inga annonser hittades. Prova att ändra sökkriterier." på alla sökningar.~~
 
 #### Statistik
-- Efter gjord sökning och öppning av formulär igen så lägger sig rullgardinsmenyerna bakom "Välj presentationsform" & "Exportera sökresultat".
 - Alla olika sökningar returnerar 3,9 mil (om inte tidsperiod är med).
+- ~~Efter gjord sökning och öppning av formulär igen så lägger sig rullgardinsmenyerna bakom "Välj presentationsform" & "Exportera sökresultat".~~
 - ~~Geografiskt område visar enbart Uppsala län.~~
 
 ---
