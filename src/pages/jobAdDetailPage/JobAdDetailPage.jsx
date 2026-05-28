@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useReducer } from 'react'
 import { ButtonVariation } from '@designsystem-se/af'
 import { DigiButton } from '@designsystem-se/af-react'
-import { useEffect, useMemo, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import MainLayout from '../../app/layout/MainLayout'
 import { jobAdsApi } from '../../features/jobAds/api/jobAdsApi'
