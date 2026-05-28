@@ -140,7 +140,16 @@ function StatisticsChartPanel({
         : [],
     [pivotedData],
   )
-  const rowLabel = isPivoted ? 'År' : showMonths ? 'Månad' : 'Län'
+  const trendRowLabel = searchParams.trend
+    ? searchParams.trend === 'top5_skills'
+      ? 'Kompetens'
+      : 'Yrkesgrupp'
+    : null
+  const rowLabel = isPivoted
+    ? 'År'
+    : showMonths
+      ? 'Månad'
+      : (trendRowLabel ?? 'Län')
   const searchSummary = buildSummary(searchParams)
   const displayData = enhet === 'andel' ? toAndel(pivotedData) : pivotedData
   const totalAnnonser = useMemo(
