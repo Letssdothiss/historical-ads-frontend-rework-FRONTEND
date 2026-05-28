@@ -232,7 +232,7 @@ export default function JobAdDetailPage() {
                 <p>
                   <strong>Komplettering:</strong>{' '}
                   {metadata.completeness_score != null
-                    ? `${Math.round(metadata.completeness_score * 100)} %`
+                    ? `${Math.round(metadata.completeness_score)} %`
                     : '–'}
                 </p>
                 {metadata.missing_fields?.length > 0 && (

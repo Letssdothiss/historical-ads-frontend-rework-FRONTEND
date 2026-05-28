@@ -22,24 +22,28 @@ function toBaseApiParams(params = {}) {
 }
 
 export async function fetchStatistics(params) {
-  const years = params?.ar?.length > 0 ? params.ar : null
+  const requestedYears = params?.ar?.length > 0 ? params.ar : null
+  const trend = params?.trend || null
   const baseParams = toBaseApiParams(params)
+  if (trend) baseParams.trend = trend
   console.log('[StatisticsApi] baseParams:', baseParams)
-  if (years) {
-    const apiParams = {
-      ...baseParams,
-      aggregate: 'year_region',
-      years: years.join(','),
-    }
+
+  // Trends always use the year-aggregated path so we get per-year columns;
+  // the backend may widen the year span (growth/decline), so we read the
+  // resulting years from the response rather than the requested ones.
+  if (requestedYears || trend) {
+    const apiParams = { ...baseParams, aggregate: 'year_region' }
+    if (requestedYears) apiParams.years = requestedYears.join(',')
     const raw = await get('/stats', apiParams)
     const statsByYear = raw?.stats_by_year
-    if (statsByYear) {
+    if (statsByYear && Object.keys(statsByYear).length > 0) {
+      const years = Object.keys(statsByYear).sort()
       return years.map((year) => ({
         year: String(year),
         raw: {
           stats: {
-            region: statsByYear[String(year)]?.region ?? [],
-            month: statsByYear[String(year)]?.month ?? [],
+            region: statsByYear[year]?.region ?? [],
+            month: statsByYear[year]?.month ?? [],
           },
         },
       }))

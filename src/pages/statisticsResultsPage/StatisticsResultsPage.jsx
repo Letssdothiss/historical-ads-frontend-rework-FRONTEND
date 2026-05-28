@@ -35,8 +35,13 @@ export default function StatisticsResultsPage() {
   const [error, setError] = useState(null)
   const [adjustOpen, setAdjustOpen] = useState(false)
 
+  const trendUnsupported =
+    Boolean(params.trend) &&
+    yearResults.some((entry) => entry?.raw?.trend_supported === false)
+
   useEffect(() => {
     let alive = true
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsLoading(true)
     setError(null)
     fetchStatistics(params)
@@ -76,7 +81,13 @@ export default function StatisticsResultsPage() {
             </button>
           </div>
         )}
-        {!isLoading && !error && (
+        {!isLoading && !error && trendUnsupported && (
+          <p className="statistics-results__hint">
+            Den valda trenden stöds inte av datakällan. Välj en annan trend.
+          </p>
+        )}
+
+        {!isLoading && !error && !trendUnsupported && (
           <StatisticsChartPanel
             data={data}
             yearResults={yearResults}
@@ -84,6 +95,7 @@ export default function StatisticsResultsPage() {
               kompetens: params.q,
               lan: params.lan,
               ar: params.ar,
+              trend: params.trend,
             }}
           />
         )}

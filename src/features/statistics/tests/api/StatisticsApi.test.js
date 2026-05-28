@@ -91,6 +91,30 @@ describe('fetchStatistics', () => {
     expect(result[1].year).toBe('2025')
   })
 
+  it('forwards trend and forces the aggregate path, reading years from the response', async () => {
+    const raw = {
+      trend: 'top5_growing',
+      trend_supported: true,
+      stats_by_year: {
+        2023: { region: [{ label: 'Utvecklare', occurrences: 10 }], month: [] },
+        2024: { region: [{ label: 'Utvecklare', occurrences: 40 }], month: [] },
+      },
+    }
+    getMock.mockResolvedValue(raw)
+
+    const result = await fetchStatistics({
+      trend: 'top5_growing',
+      municipality: ['k-kalmar'],
+    })
+
+    expect(getMock).toHaveBeenCalledWith('/stats', {
+      municipality: ['k-kalmar'],
+      trend: 'top5_growing',
+      aggregate: 'year_region',
+    })
+    expect(result.map((r) => r.year)).toEqual(['2023', '2024'])
+  })
+
   it('falls back to Totalt when stats_by_year is missing', async () => {
     const raw = { stats: { region: [] } }
     getMock.mockResolvedValue(raw)

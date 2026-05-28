@@ -37,6 +37,15 @@
   cursor: pointer;
 }
 
+.job-ad-detail__nav-link--next {
+  width: 169px;
+  height: 24px;
+  opacity: 1;
+  line-height: 24px;
+  letter-spacing: 0;
+  color: var(--Link-default, #1616b2);
+}
+
 .job-ad-detail__nav-link:hover {
   text-decoration: underline;
 }
@@ -65,7 +74,9 @@
   margin: 0 0 6px;
   font-size: 1.9rem;
   font-weight: 600;
-  color: #222;
+  letter-spacing: 0;
+  opacity: 1;
+  color: var(--Typography-heading-primary, #333333);
 }
 
 .job-ad-detail__employer {

@@ -17,7 +17,10 @@ import {
 } from '@designsystem-se/af-react'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { exportStatistics } from '../../api/StatisticsApi'
-import { mapStatisticsByMonth, mapStatisticsByMunicipality } from '../../api/StatisticsMapper'
+import {
+  mapStatisticsByMonth,
+  mapStatisticsByMunicipality,
+} from '../../api/StatisticsMapper'
 import { toAndel } from '../../utils/StatisticsTransformers'
 import BarChart from '../charts/barChart/BarChart'
 import LineChart from '../charts/lineChart/LineChart'
@@ -97,24 +100,43 @@ function StatisticsChartPanel({
   }, [presentationOpen, exportOpen])
 
   const monthDataAvailable = useMemo(
-    () => yearResults.some(({ raw }) => (raw?.stats?.month ?? raw?.month)?.length > 0),
+    () =>
+      yearResults.some(
+        ({ raw }) => (raw?.stats?.month ?? raw?.month)?.length > 0,
+      ),
     [yearResults],
   )
 
   const municipalityDataAvailable = useMemo(
-    () => yearResults.some(({ raw }) => (raw?.stats?.municipality ?? raw?.municipality)?.length > 0),
+    () =>
+      yearResults.some(
+        ({ raw }) =>
+          (raw?.stats?.municipality ?? raw?.municipality)?.length > 0,
+      ),
     [yearResults],
   )
 
   const activeData = useMemo(() => {
-    if (detailLevel === 'manader') return monthDataAvailable ? mapStatisticsByMonth(yearResults) : data
-    if (detailLevel === 'kommuner') return municipalityDataAvailable ? mapStatisticsByMunicipality(yearResults) : data
+    if (detailLevel === 'manader')
+      return monthDataAvailable ? mapStatisticsByMonth(yearResults) : data
+    if (detailLevel === 'kommuner')
+      return municipalityDataAvailable
+        ? mapStatisticsByMunicipality(yearResults)
+        : data
     return data
-  }, [detailLevel, monthDataAvailable, municipalityDataAvailable, yearResults, data])
+  }, [
+    detailLevel,
+    monthDataAvailable,
+    municipalityDataAvailable,
+    yearResults,
+    data,
+  ])
 
   const isPivoted = pivot === 'medsols' || pivot === 'manuellt'
 
   useEffect(() => {
+    // Keep table sorting predictable when pivot mode changes.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setSortCol(null)
     setSortDir('desc')
   }, [isPivoted])
@@ -138,7 +160,19 @@ function StatisticsChartPanel({
         : [],
     [pivotedData],
   )
-  const rowLabel = isPivoted ? 'År' : detailLevel === 'manader' ? 'Månad' : detailLevel === 'kommuner' ? 'Kommun' : 'Län'
+  const trendRowLabel = searchParams.trend
+    ? searchParams.trend === 'top5_skills'
+      ? 'Kompetens'
+      : 'Yrkesgrupp'
+    : null
+  const rowLabel = isPivoted
+    ? 'År'
+    : (trendRowLabel ??
+      (detailLevel === 'manader'
+        ? 'Månad'
+        : detailLevel === 'kommuner'
+          ? 'Kommun'
+          : 'Län'))
   const searchSummary = buildSummary(searchParams)
   const displayData = enhet === 'andel' ? toAndel(pivotedData) : pivotedData
   const totalAnnonser = useMemo(

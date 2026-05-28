@@ -10,6 +10,7 @@ export function useStatisticsQuery(params) {
   useEffect(() => {
     if (!params) return
     console.log('[useStatisticsQuery] Hämtar statistik med params:', params)
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setLoading(true)
     setError(null)
 
