@@ -6,8 +6,8 @@
 
 #### Generellt
 
-- ~~Felmeddelande bör uppdateras när annons inte kan hämtas.
-  `(Exempel: /platsannonser/annons/5285b3b3531f1b74082cbd487109a551aca921c3)`~~
+- ~~Felmeddelande bör uppdateras när annons inte kan hämtas.~~
+  ~~`(Exempel: /platsannonser/annons/5285b3b3531f1b74082cbd487109a551aca921c3)`~~
 - ~~Rensa-knappen ovanför tabsSwitch-komponenten fungerar ej.~~
 - ~~Rensa allt under geografiskt område funkar ej~~
 - ~~Formulär rensas om "Justera sökning" knappen används för att öppna och stänga formuläret.~~
@@ -30,8 +30,6 @@
 
 #### Generellt
 
-- Rullgardinsmenyer "Geografiskt område" & "Yrkesgrupper" går för långt åt höger när overlay är ute, bredd ska minskas så de är i linje med yttre högra kanten på knapparna.
-- All text för knappar, menyer, rubriker osv måste vara minst 16px.
 - Rensa-knappar är för stora eller skulle dom också vara 16px, tyckte Carolina sa att tillgängligheten vinner?
 - linjera överkant av tabsswitch med underkant av sträng "platsbanken" i headertexten.
 - Hover-info-knappar bör göras större, klickytan ska vara 44x44, ikon 34x34.
@@ -39,6 +37,8 @@
 - Rullgardinsmenyn för Tidsperiod blir blank vid mindre bredd än 800px.
 - Rullgardinsmenyn för Fakta Anställning hoppar runt i browsern vid bredder mindre än 800px.
 - olika rundning på ruta om sökruta är utfälld eller inte (Lite oklart vad som menas här?).
+- ~~Rullgardinsmenyer "Geografiskt område" & "Yrkesgrupper" går för långt åt höger när overlay är ute, bredd ska minskas så de är i linje med yttre högra kanten på knapparna.~~
+- ~~All text för knappar, menyer, rubriker osv måste vara minst 16px.~~
 - ~~TabsSwitch-komponenten anpassar sig inte i bredder mindre än 975px.~~
 - ~~Rullgardingsmenyn för Geografiskt område "overflowar" utanför browser, synligt vid mindre bredd än 1520px.~~
 - ~~Rullgardingsmenyn för Yrkesgrupper "overflowar" utanför browser, synligt vid mindre bredd än 1520px.~~
@@ -66,8 +66,8 @@
 
 #### Statistik
 
-- Dropdown meny för trender, öka bredd så att vardera knapp blir bred nog att ha all text på en rad.
 - Minska bredd på körkortsknapp, onödigt mycket whitespace.
+- ~~Dropdown meny för trender, öka bredd så att vardera knapp blir bred nog att ha all text på en rad.~~
 - ~~Infoikonen (hover), visar info korrekt vid hover men kräver antingen klick utanför eller att muspekaren dras över själva textrutan för att försvinna.~~
 
 ## Okänd orsak
