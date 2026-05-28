@@ -7,6 +7,7 @@ import ContentWrapper from '../../shared/components/contentWrapper/ContentWrappe
 import { jobAdsApi } from '../../features/jobAds/api/jobAdsApi'
 import { mapHitToAd } from '../../features/jobAds/api/jobAdsMapper'
 import { buildAdDetailPath, ROUTES } from '../../shared/constants/routes'
+import ErrorState from '../../shared/components/errorState/ErrorState'
 import './JobAdDetailPage.css'
 
 function readResultContext() {
@@ -109,7 +110,11 @@ export default function JobAdDetailPage() {
         {isLoading && <p className="job-ad-detail__hint">Hämtar annons...</p>}
         {error && (
           <div className="job-ad-detail__error">
-            <p>Kunde inte hämta annonsen: {error.message}</p>
+            <ErrorState
+              title="Något gick fel"
+              message="Annonsen kunde inte hämtas. Försök igen eller gå tillbaka till sökresultaten." // {error.message} kan ändras till om felhantering eller detaljer önskas
+              onRetry={() => navigate(0)}
+            />
             <DigiButton
               afVariation={ButtonVariation.SECONDARY}
               onAfOnClick={() => navigate(-1)}
