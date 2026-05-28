@@ -6,8 +6,8 @@
 
 #### Generellt
 
-- Felmeddelande bör uppdateras när annons inte kan hämtas.
-  `(Exempel: /platsannonser/annons/5285b3b3531f1b74082cbd487109a551aca921c3)`
+- ~~Felmeddelande bör uppdateras när annons inte kan hämtas.
+  `(Exempel: /platsannonser/annons/5285b3b3531f1b74082cbd487109a551aca921c3)`~~
 - ~~Formulär rensas om "Justera sökning" knappen används för att öppna och stänga formuläret.~~
 - ~~Input i sökfält sparas inte när sökning görs, dvs. fält rensas vid sökning.~~
 - Rensa-knappen ovanför tabsSwitch-komponenten fungerar ej.
