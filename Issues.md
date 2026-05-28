@@ -6,6 +6,8 @@
 
 #### Generellt
 
+- ~~Felmeddelande bör uppdateras när annons inte kan hämtas.
+  `(Exempel: /platsannonser/annons/5285b3b3531f1b74082cbd487109a551aca921c3)`~~
 - Felmeddelande bör uppdateras när annons inte kan hämtas.
   `(Exempel: /platsannonser/annons/5285b3b3531f1b74082cbd487109a551aca921c3)`
 - ~~Rensa-knappen ovanför tabsSwitch-komponenten fungerar ej.~~

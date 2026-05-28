@@ -1,3 +1,4 @@
+import { useEffect, useMemo, useReducer } from 'react'
 import { ButtonVariation } from '@designsystem-se/af'
 import { DigiButton } from '@designsystem-se/af-react'
 import { useEffect, useMemo, useState } from 'react'
@@ -7,6 +8,7 @@ import { jobAdsApi } from '../../features/jobAds/api/jobAdsApi'
 import { mapHitToAd } from '../../features/jobAds/api/jobAdsMapper'
 import ContentWrapper from '../../shared/components/contentWrapper/ContentWrapper'
 import { buildAdDetailPath, ROUTES } from '../../shared/constants/routes'
+import ErrorState from '../../shared/components/errorState/ErrorState'
 import './JobAdDetailPage.css'
 
 function readResultContext() {
@@ -21,31 +23,35 @@ function readResultContext() {
   }
 }
 
+function adReducer(state, action) {
+  switch (action.type) {
+    case 'fetch': return { isLoading: true, error: null, ad: null, metadata: null }
+    case 'success': return { isLoading: false, error: null, ad: action.ad, metadata: action.metadata }
+    case 'error': return { ...state, isLoading: false, error: action.error }
+    default: return state
+  }
+}
+
 export default function JobAdDetailPage() {
   const { adId } = useParams()
   const navigate = useNavigate()
-  const [ad, setAd] = useState(null)
-  const [metadata, setMetadata] = useState(null)
-  const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState(null)
+  const [{ isLoading, error, ad, metadata }, dispatch] = useReducer(
+    adReducer,
+    { isLoading: true, error: null, ad: null, metadata: null },
+  )
 
   useEffect(() => {
     let alive = true
-    setIsLoading(true)
-    setError(null)
+    dispatch({ type: 'fetch' })
     jobAdsApi
       .getAd(adId, true)
       .then((res) => {
         if (!alive) return
         const adData = res?.ad ?? res
-        setAd(mapHitToAd(adData))
-        setMetadata(res?.metadata ?? null)
+        dispatch({ type: 'success', ad: mapHitToAd(adData), metadata: res?.metadata ?? null })
       })
-      .catch((err) => alive && setError(err))
-      .finally(() => alive && setIsLoading(false))
-    return () => {
-      alive = false
-    }
+      .catch((err) => alive && dispatch({ type: 'error', error: err }))
+    return () => { alive = false }
   }, [adId])
 
   const resultContext = useMemo(() => readResultContext(), [])
@@ -109,7 +115,11 @@ export default function JobAdDetailPage() {
         {isLoading && <p className="job-ad-detail__hint">Hämtar annons...</p>}
         {error && (
           <div className="job-ad-detail__error">
-            <p>Kunde inte hämta annonsen: {error.message}</p>
+            <ErrorState
+              title="Något gick fel"
+              message="Annonsen kunde inte hämtas. Försök igen eller gå tillbaka till sökresultaten." // {error.message} kan ändras till om felhantering eller detaljer önskas
+              onRetry={() => navigate(0)}
+            />
             <DigiButton
               afVariation={ButtonVariation.SECONDARY}
               onAfOnClick={() => navigate(-1)}

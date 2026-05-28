@@ -50,6 +50,26 @@ function extractRegions(raw) {
   return stats?.region ?? []
 }
 
+export function mapStatisticsByMunicipality(yearResults) {
+  if (!Array.isArray(yearResults) || yearResults.length === 0) return []
+
+  const municipalityMap = new Map()
+
+  for (const { year, raw } of yearResults) {
+    if (raw?.error) continue
+    const municipalities = raw?.stats?.municipality ?? raw?.municipality ?? []
+
+    for (const { label, occurrences } of municipalities) {
+      if (!municipalityMap.has(label)) {
+        municipalityMap.set(label, { lan: label })
+      }
+      municipalityMap.get(label)[year] = occurrences
+    }
+  }
+
+  return Array.from(municipalityMap.values())
+}
+
 export function mapStatisticsByMonth(yearResults) {
   console.log('[StatisticsMapper] mapStatisticsByMonth indata:', yearResults)
   if (!Array.isArray(yearResults) || yearResults.length === 0) return []

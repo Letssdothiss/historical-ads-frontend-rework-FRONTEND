@@ -17,7 +17,7 @@ import {
 } from '@designsystem-se/af-react'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { exportStatistics } from '../../api/StatisticsApi'
-import { mapStatisticsByMonth } from '../../api/StatisticsMapper'
+import { mapStatisticsByMonth, mapStatisticsByMunicipality } from '../../api/StatisticsMapper'
 import { toAndel } from '../../utils/StatisticsTransformers'
 import BarChart from '../charts/barChart/BarChart'
 import LineChart from '../charts/lineChart/LineChart'
@@ -66,7 +66,7 @@ function StatisticsChartPanel({
   const [visning, setVisning] = useState('tabell')
   const [enhet, setEnhet] = useState('antal')
   const [pivot, setPivot] = useState(null)
-  const [detailLevels, setDetailLevels] = useState(['ar'])
+  const [detailLevel, setDetailLevel] = useState('ar')
   const [presentationOpen, setPresentationOpen] = useState(false)
   const [activePresentationSection, setActivePresentationSection] =
     useState('visning')
@@ -96,23 +96,21 @@ function StatisticsChartPanel({
     return () => document.removeEventListener('mousedown', onDocClick)
   }, [presentationOpen, exportOpen])
 
-  const showMonths = detailLevels.includes('manader')
-
   const monthDataAvailable = useMemo(
-    () =>
-      yearResults.some(
-        ({ raw }) => (raw?.stats?.month ?? raw?.month)?.length > 0,
-      ),
+    () => yearResults.some(({ raw }) => (raw?.stats?.month ?? raw?.month)?.length > 0),
     [yearResults],
   )
 
-  const activeData = useMemo(
-    () =>
-      showMonths && monthDataAvailable
-        ? mapStatisticsByMonth(yearResults)
-        : data,
-    [showMonths, monthDataAvailable, yearResults, data],
+  const municipalityDataAvailable = useMemo(
+    () => yearResults.some(({ raw }) => (raw?.stats?.municipality ?? raw?.municipality)?.length > 0),
+    [yearResults],
   )
+
+  const activeData = useMemo(() => {
+    if (detailLevel === 'manader') return monthDataAvailable ? mapStatisticsByMonth(yearResults) : data
+    if (detailLevel === 'kommuner') return municipalityDataAvailable ? mapStatisticsByMunicipality(yearResults) : data
+    return data
+  }, [detailLevel, monthDataAvailable, municipalityDataAvailable, yearResults, data])
 
   const isPivoted = pivot === 'medsols' || pivot === 'manuellt'
 
@@ -140,7 +138,7 @@ function StatisticsChartPanel({
         : [],
     [pivotedData],
   )
-  const rowLabel = isPivoted ? 'År' : showMonths ? 'Månad' : 'Län'
+  const rowLabel = isPivoted ? 'År' : detailLevel === 'manader' ? 'Månad' : detailLevel === 'kommuner' ? 'Kommun' : 'Län'
   const searchSummary = buildSummary(searchParams)
   const displayData = enhet === 'andel' ? toAndel(pivotedData) : pivotedData
   const totalAnnonser = useMemo(
@@ -187,9 +185,7 @@ function StatisticsChartPanel({
   }
 
   const toggleDetailLevel = (id) => {
-    setDetailLevels((prev) =>
-      prev.includes(id) ? prev.filter((entry) => entry !== id) : [...prev, id],
-    )
+    setDetailLevel(id)
   }
 
   const handleExport = async (format) => {
@@ -319,7 +315,7 @@ function StatisticsChartPanel({
                     <DigiFormCheckbox
                       key={opt.id}
                       afLabel={opt.label}
-                      afChecked={detailLevels.includes(opt.id)}
+                      afChecked={detailLevel === opt.id}
                       onAfOnChange={() => toggleDetailLevel(opt.id)}
                       className="statistics-chart-panel__menu-check"
                     />
@@ -410,14 +406,14 @@ function StatisticsChartPanel({
       </div>
 
       <div className="statistics-chart-panel__content">
-        {showMonths && !monthDataAvailable && (
+        {detailLevel === 'manader' && !monthDataAvailable && (
           <p className="statistics-chart-panel__empty">
             Månadsvy är inte tillgänglig — backend stöder inte månadsaggregering
             ännu. Visar årsdata istället.
           </p>
         )}
 
-        {activeData.length === 0 && !showMonths && (
+        {activeData.length === 0 && detailLevel === 'ar' && (
           <p className="statistics-chart-panel__empty">
             Inga resultat för den valda sökningen.
           </p>
