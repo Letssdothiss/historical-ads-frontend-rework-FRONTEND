@@ -1,64 +1,86 @@
 .job-ads-result-card {
-  display: grid;
-  gap: 1rem;
-  padding: 1.5rem;
-  background: #f4f4f4;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1.5rem;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 1080px;
+  min-height: 246px;
+  padding: 24px;
+  background: var(--Background-secondary, #f4f4f4);
   color: #1f1f1f;
-  border: 1px solid #e2e2e2;
-  border-radius: 1rem;
-  box-shadow: 0 1px 2px rgba(18, 18, 18, 0.04);
+  border: none;
+  border-radius: 5px;
+  outline: none;
+  box-shadow: none;
+  opacity: 1;
 }
 
 .job-ads-result-card__body {
   display: grid;
-  gap: 0.35rem;
-}
-
-.job-ads-result-card__title-row {
-  display: block;
+  gap: 0.5rem;
 }
 
 .job-ads-result-card__title {
-  margin: 0;
-  font-size: 1.25rem;
-  line-height: 1.35;
-  font-weight: 700;
-  letter-spacing: -0.02em;
+  margin: 0 0 0.25rem;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 33px;
+  letter-spacing: 0;
 }
 
 .job-ads-result-card__id {
   margin: 0;
-  color: #3b3b3b;
-  font-size: 0.9rem;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 33px;
+  letter-spacing: 0;
+  color: #1f1f1f;
+}
+
+.job-ads-result-card__id-label {
   font-weight: 600;
 }
 
-.job-ads-result-card__meta,
-.job-ads-result-card__date {
+.job-ads-result-card__meta {
   margin: 0;
-  color: #4a4a4a;
-  font-size: 0.95rem;
-  line-height: 1.45;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 33px;
+  letter-spacing: 0;
+  color: #1f1f1f;
 }
 
 .job-ads-result-card__date {
-  font-weight: 400;
-  color: #3b3b3b;
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.45;
+  color: #1f1f1f;
 }
 
 .job-ads-result-card__actions {
-  display: flex;
-  justify-content: flex-end;
-  padding-top: 0.25rem;
+  flex-shrink: 0;
+}
+
+.job-ads-result-card__actions digi-button {
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0;
+  text-align: center;
+  opacity: 1;
 }
 
 @media (max-width: 640px) {
   .job-ads-result-card {
+    flex-direction: column;
+    align-items: stretch;
     padding: 1rem;
-  }
-
-  .job-ads-result-card__actions {
-    justify-content: stretch;
   }
 
   .job-ads-result-card__actions > * {

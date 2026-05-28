@@ -10,9 +10,13 @@ const TABS = [
 
 export default function TabsSwitch() {
   const location = useLocation()
+  const isAboutActive = location.pathname.startsWith(ROUTES.ABOUT)
 
   return (
-    <nav className="tabs-switch" aria-label="Huvudnavigering">
+    <nav
+      className={`tabs-switch${isAboutActive ? ' tabs-switch--flat-bottom' : ''}`}
+      aria-label="Huvudnavigering"
+    >
       {TABS.map((tab) => {
         const isActive = location.pathname.startsWith(tab.prefix)
         return (

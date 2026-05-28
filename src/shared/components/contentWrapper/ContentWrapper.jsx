@@ -7,6 +7,7 @@ export default function ContentWrapper({
   children,
   onReset,
   hideRensaLink = false,
+  contentClassName = '',
 }) {
   const navigate = useNavigate()
   const location = useLocation()
@@ -49,7 +50,11 @@ export default function ContentWrapper({
         </div>
       </div>
 
-      <div className="shell-form-container">{children}</div>
+      <div
+        className={`shell-form-container${contentClassName ? ` ${contentClassName}` : ''}`}
+      >
+        {children}
+      </div>
     </section>
   )
 }

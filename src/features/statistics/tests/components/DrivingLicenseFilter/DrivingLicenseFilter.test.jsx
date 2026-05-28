@@ -9,10 +9,14 @@ vi.mock('@designsystem-se/af-react', () => ({
       {children}
     </button>
   ),
-  DigiFormRadiogroup: ({ children }) => <div role="radiogroup">{children}</div>,
-  DigiFormRadiobutton: ({ afLabel, onAfOnChange }) => (
+  DigiFormCheckbox: ({ afLabel, afChecked, onAfOnChange }) => (
     <label>
-      <input type="radio" aria-label={afLabel} onChange={onAfOnChange} />
+      <input
+        type="checkbox"
+        aria-label={afLabel}
+        checked={!!afChecked}
+        onChange={onAfOnChange}
+      />
       {afLabel}
     </label>
   ),
@@ -22,7 +26,7 @@ vi.mock('@designsystem-se/af-react', () => ({
 }))
 
 describe('DrivingLicenseFilter', () => {
-  it('notifies parent when a license option is selected', async () => {
+  it('notifies parent when a license option is checked', async () => {
     const user = userEvent.setup()
     const onChange = vi.fn()
 
@@ -32,6 +36,19 @@ describe('DrivingLicenseFilter', () => {
     await user.click(screen.getByLabelText('Körkort efterfrågas'))
 
     expect(onChange).toHaveBeenCalledWith('required')
+  })
+
+  it('emits no filter when both options are checked', async () => {
+    const user = userEvent.setup()
+    const onChange = vi.fn()
+
+    render(<DrivingLicenseFilter onChange={onChange} />)
+
+    await user.click(screen.getByRole('button', { name: /Körkort/ }))
+    await user.click(screen.getByLabelText('Körkort efterfrågas'))
+    await user.click(screen.getByLabelText('Körkort efterfrågas inte'))
+
+    expect(onChange).toHaveBeenLastCalledWith('')
   })
 
   it('clears selection via Rensa', async () => {
@@ -44,7 +61,7 @@ describe('DrivingLicenseFilter', () => {
     await user.click(screen.getByLabelText('Körkort efterfrågas'))
     onChange.mockClear()
 
-    await user.click(screen.getByRole('button', { name: 'Rensa' }))
+    await user.click(screen.getByRole('button', { name: 'Rensa alla' }))
 
     expect(onChange).toHaveBeenCalledWith('')
   })

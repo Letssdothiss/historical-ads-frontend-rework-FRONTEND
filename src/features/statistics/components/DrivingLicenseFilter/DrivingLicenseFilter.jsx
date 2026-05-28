@@ -3,31 +3,51 @@ import './DrivingLicenseFilter.css'
 
 import {
   DigiButton,
-  DigiFormRadiobutton,
-  DigiFormRadiogroup,
+  DigiFormCheckbox,
   DigiIconChevronDown,
   DigiIconLicenceCar,
-  DigiIconX,
 } from '@designsystem-se/af-react'
+
+const REQUIRED = 'required'
+const NOT_REQUIRED = 'not-required'
+
+function deriveChecks(value) {
+  return {
+    required: value === REQUIRED,
+    notRequired: value === NOT_REQUIRED || value === 'not_required',
+  }
+}
+
+// The backend filter is a single boolean (required / not required / unset),
+// so checking both boxes is equivalent to no filter.
+function toValue({ required, notRequired }) {
+  if (required && !notRequired) return REQUIRED
+  if (notRequired && !required) return NOT_REQUIRED
+  return ''
+}
 
 function DrivingLicenseFilter({ onChange, value = '' } = {}) {
   const [isOpen, setIsOpen] = useState(false)
-  const [licenseChoice, setLicenseChoice] = useState(value)
+  const [checks, setChecks] = useState(() => deriveChecks(value))
   const lastEmittedRef = useRef(value)
   const wrapperRef = useRef(null)
-  const hasSelection = licenseChoice !== ''
+  const hasSelection = checks.required || checks.notRequired
 
   useEffect(() => {
-    setLicenseChoice(value)
+    if (value === lastEmittedRef.current) return
     lastEmittedRef.current = value
+    setChecks(deriveChecks(value))
   }, [value])
 
   useEffect(() => {
-    if (!onChange || licenseChoice === lastEmittedRef.current) return
-    lastEmittedRef.current = licenseChoice
-    onChange(licenseChoice)
+    const next = toValue(checks)
+    if (!onChange || next === lastEmittedRef.current) return
+    lastEmittedRef.current = next
+    onChange(next)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [licenseChoice])
+  }, [checks])
+
+  const toggle = (key) => setChecks((prev) => ({ ...prev, [key]: !prev[key] }))
 
   useEffect(() => {
     if (!isOpen) return
@@ -80,48 +100,38 @@ function DrivingLicenseFilter({ onChange, value = '' } = {}) {
 
       {isOpen && (
         <div className="driving-license-dropdown">
-          <div className="dropdown-header">
-            <button
-              type="button"
-              className="dropdown-text-button"
-              onClick={() => setLicenseChoice('')}
-            >
-              Rensa
-            </button>
-
-            <button
-              type="button"
-              className="dropdown-close-button"
-              onClick={() => setIsOpen(false)}
-            >
-              <span>Stäng</span>
-
-              <DigiIconX />
-            </button>
-          </div>
-
           <div className="dropdown-content">
-            <h2 className="dropdown-title">Körkort</h2>
+            <div className="dropdown-title-row">
+              <h2 className="dropdown-title">Körkort</h2>
+
+              <button
+                type="button"
+                className="dropdown-text-button"
+                onClick={() =>
+                  setChecks({ required: false, notRequired: false })
+                }
+              >
+                Rensa alla
+              </button>
+            </div>
 
             <div className="dropdown-divider"></div>
 
-            <DigiFormRadiogroup afName="driving-license-group">
-              <DigiFormRadiobutton
+            <div className="driving-license-options">
+              <DigiFormCheckbox
                 afLabel="Körkort efterfrågas"
-                afName="driving-license-group"
-                afValue="required"
-                afChecked={licenseChoice === 'required'}
-                onAfOnChange={() => setLicenseChoice('required')}
+                afName="driving-license-required"
+                afChecked={checks.required}
+                onAfOnChange={() => toggle('required')}
               />
 
-              <DigiFormRadiobutton
+              <DigiFormCheckbox
                 afLabel="Körkort efterfrågas inte"
-                afName="driving-license-group"
-                afValue="not-required"
-                afChecked={licenseChoice === 'not-required'}
-                onAfOnChange={() => setLicenseChoice('not-required')}
+                afName="driving-license-not-required"
+                afChecked={checks.notRequired}
+                onAfOnChange={() => toggle('notRequired')}
               />
-            </DigiFormRadiogroup>
+            </div>
           </div>
 
           <div className="driving-license-footer">
