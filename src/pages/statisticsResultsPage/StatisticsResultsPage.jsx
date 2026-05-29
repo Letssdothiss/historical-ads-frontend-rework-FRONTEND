@@ -14,6 +14,7 @@ function readUiParamsFromUrl(searchParams) {
     q: searchParams.get('q') ?? '',
     kompetens: searchParams.get('q') ?? '',
     ar: searchParams.getAll('years'),
+    manader: searchParams.getAll('months'),
     lan: searchParams.getAll('lan'),
     municipality: searchParams.getAll('kommun'),
     occupation_field: searchParams.getAll('yrkesomrade'),
@@ -98,6 +99,7 @@ export default function StatisticsResultsPage() {
               kompetens: params.q,
               lan: params.lan,
               ar: params.ar,
+              manader: params.manader,
               trend: params.trend,
             }}
           />

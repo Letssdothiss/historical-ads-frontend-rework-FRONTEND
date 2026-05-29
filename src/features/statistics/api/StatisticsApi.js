@@ -44,6 +44,7 @@ function toBaseApiParams(params = {}) {
 
 export async function fetchStatistics(params) {
   const requestedYears = params?.ar?.length > 0 ? params.ar : null
+  const requestedMonths = params?.manader?.length > 0 ? params.manader : null
   const trend = params?.trend || null
   const baseParams = toBaseApiParams(params)
   if (trend) baseParams.trend = trend
@@ -52,9 +53,12 @@ export async function fetchStatistics(params) {
   // Trends always use the year-aggregated path so we get per-year columns;
   // the backend may widen the year span (growth/decline), so we read the
   // resulting years from the response rather than the requested ones.
-  if (requestedYears || trend) {
+  if (requestedYears || requestedMonths || trend) {
     const apiParams = { ...baseParams, aggregate: 'year_region' }
     if (requestedYears) apiParams.years = requestedYears.join(',')
+    // Year-qualified months ("2026-01") narrow each year's window to the
+    // selected month(s); the backend ignores them on the trend path.
+    if (requestedMonths) apiParams.months = requestedMonths
     const raw = await get('/stats', apiParams)
     const statsByYear = raw?.stats_by_year
     if (statsByYear && Object.keys(statsByYear).length > 0) {

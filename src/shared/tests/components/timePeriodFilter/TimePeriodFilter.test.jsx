@@ -81,7 +81,7 @@ describe('TimePeriodFilter', () => {
     await waitFor(() =>
       expect(onChange).toHaveBeenLastCalledWith({
         years: ['2026', '2025', '2024', '2023'],
-        months: expect.arrayContaining(['Januari', 'December']),
+        months: expect.arrayContaining(['2026-01', '2026-12', '2023-12']),
       }),
     )
 

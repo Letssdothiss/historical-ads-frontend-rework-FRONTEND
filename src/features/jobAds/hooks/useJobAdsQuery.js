@@ -3,7 +3,7 @@ import { jobAdsApi } from '../api/jobAdsApi'
 import { mapSearchResponse } from '../api/jobAdsMapper'
 import { PAGE_SIZE } from '../../../shared/constants/ui'
 import { resolveEmploymentTypeParams } from '../../../shared/utils/employmentParams'
-import { parseMonthNumbers } from '../../../shared/utils/monthLabels'
+import { buildPublishedDateRange } from '../../../shared/utils/monthLabels'
 
 // this hook is used for both the search page and the employer's job ads page, so it needs to be flexible in how it maps UI params to API params
 
@@ -30,16 +30,10 @@ function toApiParams(uiParams = {}, { offset = 0, limit = PAGE_SIZE } = {}) {
   if (uiParams.working_hours_type?.length)
     api.worktime_extent = uiParams.working_hours_type
   if (uiParams.years?.length || uiParams.months?.length) {
-    const years = (uiParams.years || []).map(Number).filter(Boolean).sort()
-    const months = parseMonthNumbers(uiParams.months)
-    if (years.length) {
-      const minYear = years[0]
-      const maxYear = years[years.length - 1]
-      const minMonth = months.length ? months[0] : 1
-      const maxMonth = months.length ? months[months.length - 1] : 12
-      api.published_after = `${minYear}-${String(minMonth).padStart(2, '0')}-01`
-      const endDate = new Date(Date.UTC(maxYear, maxMonth, 0))
-      api.published_before = endDate.toISOString().slice(0, 10)
+    const range = buildPublishedDateRange(uiParams.years, uiParams.months)
+    if (range) {
+      api.published_after = range.after
+      api.published_before = range.before
     }
   }
   if (uiParams.korkort === 'required') api.driving_license_required = true
