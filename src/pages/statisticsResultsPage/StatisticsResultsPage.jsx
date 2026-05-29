@@ -19,6 +19,9 @@ function readUiParamsFromUrl(searchParams) {
     occupation_field: searchParams.getAll('yrkesomrade'),
     occupation_group: searchParams.getAll('yrkesgrupp'),
     skills: searchParams.getAll('skills'),
+    employment_type: searchParams.getAll('employment_type'),
+    duration: searchParams.getAll('duration'),
+    working_hours_type: searchParams.getAll('working_hours_type'),
     driving_license_required: searchParams.get('korkort'),
     trend: searchParams.get('trend') ?? '',
   }

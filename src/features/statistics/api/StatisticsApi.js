@@ -1,4 +1,5 @@
 import { get, getFile } from '../../../shared/api/HttpClient'
+import { resolveEmploymentTypeParams } from '../../../shared/utils/employmentParams'
 
 // The upstream `driving-license-required` filter is a boolean. The UI carries
 // the selection as 'required' / 'not-required' strings, so map those (and any
@@ -24,8 +25,18 @@ function toBaseApiParams(params = {}) {
   } else if (params.yrkesgrupp?.length) {
     apiParams.occupation_group = params.yrkesgrupp
   }
-  if (params.employment_type?.length)
-    apiParams.employment_type = params.employment_type
+  if (params.employment_type?.length) {
+    const { conceptIds, abroad } = resolveEmploymentTypeParams(
+      params.employment_type,
+    )
+    if (conceptIds.length) apiParams.employment_type = conceptIds
+    if (abroad) apiParams.abroad = true
+  }
+  if (params.duration?.length) apiParams.duration = params.duration
+  // Upstream's worktime filter is `worktime-extent`, not `working-hours-type`
+  // (that name is ignored and returns unfiltered results).
+  if (params.working_hours_type?.length)
+    apiParams.worktime_extent = params.working_hours_type
   const drivingLicense = toDrivingLicenseRequired(params.driving_license_required)
   if (drivingLicense != null) apiParams.driving_license_required = drivingLicense
   return apiParams
