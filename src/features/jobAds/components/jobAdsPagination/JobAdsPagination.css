@@ -16,7 +16,9 @@
   font-size: 0;
 }
 
-.job-ads-pagination .ellipsis-last .digi-navigation-pagination__page-text::before {
+.job-ads-pagination
+  .ellipsis-last
+  .digi-navigation-pagination__page-text::before {
   font-size: 14px;
   vertical-align: middle;
 }

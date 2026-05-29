@@ -36,9 +36,9 @@ describe('buildPublishedDateRange', () => {
 
   it('collapses disjoint cross-year months to the tightest covering range', () => {
     // Dec 2025 + Jan 2026 — must not balloon to two full years.
-    expect(buildPublishedDateRange(['2025', '2026'], ['2025-12', '2026-01'])).toEqual(
-      { after: '2025-12-01', before: '2026-01-31' },
-    )
+    expect(
+      buildPublishedDateRange(['2025', '2026'], ['2025-12', '2026-01']),
+    ).toEqual({ after: '2025-12-01', before: '2026-01-31' })
   })
 
   it('still filters when months carry the year but years is empty', () => {

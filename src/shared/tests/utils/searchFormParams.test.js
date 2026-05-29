@@ -17,7 +17,10 @@ describe('parseJobAdsSearchFormState', () => {
     params.set('q', 'react')
     params.set('employer', 'Acme AB')
     params.append('kommun', 'k-stockholm')
-    params.set('kommun-labels', JSON.stringify({ 'Stockholms län': ['Stockholm'] }))
+    params.set(
+      'kommun-labels',
+      JSON.stringify({ 'Stockholms län': ['Stockholm'] }),
+    )
     params.append('yrkesgrupp', 'g-dev')
     params.set(
       'yrkesgrupp-labels',

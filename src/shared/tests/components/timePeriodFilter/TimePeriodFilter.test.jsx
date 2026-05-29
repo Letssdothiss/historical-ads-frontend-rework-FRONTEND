@@ -52,9 +52,7 @@ describe('TimePeriodFilter', () => {
     render(<TimePeriodFilter onChange={onChange} />)
 
     await user.click(screen.getByRole('button', { name: /Tidsperiod/ }))
-    await user.click(
-      screen.getByRole('button', { name: /Välj alla årtal/i }),
-    )
+    await user.click(screen.getByRole('button', { name: /Välj alla årtal/i }))
 
     await waitFor(() =>
       expect(onChange).toHaveBeenLastCalledWith({
@@ -71,12 +69,8 @@ describe('TimePeriodFilter', () => {
     render(<TimePeriodFilter onChange={onChange} />)
 
     await user.click(screen.getByRole('button', { name: /Tidsperiod/ }))
-    await user.click(
-      screen.getByRole('button', { name: /Välj alla årtal/i }),
-    )
-    await user.click(
-      screen.getByRole('button', { name: /Välj alla månader/i }),
-    )
+    await user.click(screen.getByRole('button', { name: /Välj alla årtal/i }))
+    await user.click(screen.getByRole('button', { name: /Välj alla månader/i }))
 
     await waitFor(() =>
       expect(onChange).toHaveBeenLastCalledWith({
