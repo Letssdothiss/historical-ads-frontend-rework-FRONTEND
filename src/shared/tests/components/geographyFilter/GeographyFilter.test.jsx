@@ -103,6 +103,25 @@ describe('GeographyFilter', () => {
     })
   })
 
+  it('expands a län to all its kommuner when none are individually picked', async () => {
+    const user = userEvent.setup()
+    const onApply = vi.fn()
+
+    render(<GeographyFilter onApply={onApply} />)
+
+    // Mark the län but pick no specific kommun, then apply.
+    await user.click(screen.getByRole('option', { name: /Stockholms län/ }))
+    await user.click(
+      screen.getByRole('button', { name: 'Lägg till och stäng' }),
+    )
+
+    expect(onApply).toHaveBeenCalledWith({
+      lan: [],
+      kommuner: ['k-stockholm', 'k-nacka'],
+      grouped: { 'Stockholms län': ['Stockholm', 'Nacka'] },
+    })
+  })
+
   it('selects all kommuner after "Välj alla län" without picking one county', async () => {
     const user = userEvent.setup()
 
