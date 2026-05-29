@@ -499,7 +499,11 @@ function StatisticsChartPanel({
                               (sum, y) => sum + (Number(row[y]) || 0),
                               0,
                             )
-                          : '100%'}
+                          : `${parseFloat(
+                              years
+                                .reduce((sum, y) => sum + (Number(row[y]) || 0), 0)
+                                .toFixed(1),
+                            )}%`}
                       </td>
                     )}
                   </tr>

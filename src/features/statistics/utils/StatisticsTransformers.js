@@ -78,16 +78,28 @@ export function toChartData(data, options = {}) {
   }
 }
 
-// Converts antal (count) to andel (share %) per row across all years
+// Converts antal (count) to andel (share %): each cell as its share of the
+// grand total across every region and year. This makes a single-year search
+// show each region's share of that year (summing to 100% across regions),
+// instead of the old per-row math where one year was always 100%. Using the
+// grand total keeps shares meaningful and additive regardless of pivot
+// orientation.
 export function toAndel(data) {
-  return data.map((row) => {
-    const years = Object.keys(row).filter((k) => k !== 'lan')
-    const total = years.reduce((sum, y) => sum + (row[y] ?? 0), 0)
+  if (!Array.isArray(data) || data.length === 0) return data
 
+  const years = Object.keys(data[0]).filter((k) => k !== 'lan')
+  const grandTotal = data.reduce(
+    (sum, row) => sum + years.reduce((s, y) => s + (Number(row[y]) || 0), 0),
+    0,
+  )
+
+  return data.map((row) => {
     const andelRow = { lan: row.lan }
     for (const y of years) {
       andelRow[y] =
-        total > 0 ? parseFloat(((row[y] / total) * 100).toFixed(1)) : 0
+        grandTotal > 0
+          ? parseFloat((((Number(row[y]) || 0) / grandTotal) * 100).toFixed(1))
+          : 0
     }
     return andelRow
   })
