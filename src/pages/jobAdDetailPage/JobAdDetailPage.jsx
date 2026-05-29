@@ -22,6 +22,37 @@ function readResultContext() {
   }
 }
 
+const QUALIFICATION_FIELDS = ['work_experience', 'education', 'skills', 'languages']
+
+// The enriched API splits qualifications into must_have and nice_to_have.
+// Merge both, plus competencies derived from the ad text by the backend
+// (source.enriched), deduplicating by label — otherwise a skill searched for
+// in nice_to_have or only present in the text never appears.
+function mergeQualifications(source = {}) {
+  const groups = [
+    source.must_have,
+    source.nice_to_have,
+    source.qualifications,
+    source.enriched,
+  ].filter(Boolean)
+  const merged = {}
+  for (const field of QUALIFICATION_FIELDS) {
+    const seen = new Set()
+    const entries = []
+    for (const group of groups) {
+      for (const entry of group?.[field] ?? []) {
+        const label = entry?.label ?? entry
+        const key = typeof label === 'string' ? label.toLowerCase() : label
+        if (seen.has(key)) continue
+        seen.add(key)
+        entries.push(entry)
+      }
+    }
+    merged[field] = entries
+  }
+  return merged
+}
+
 function adReducer(state, action) {
   switch (action.type) {
     case 'fetch': return { isLoading: true, error: null, ad: null, metadata: null }
@@ -71,7 +102,7 @@ export default function JobAdDetailPage() {
   }
 
   const source = ad?.raw ?? {}
-  const qualifications = source.must_have ?? source.qualifications ?? {}
+  const qualifications = mergeQualifications(source)
   const description = ad?.description || source.description?.text || ''
   const salaryType =
     source.salary_type?.label ?? source.salary_description ?? '–'
