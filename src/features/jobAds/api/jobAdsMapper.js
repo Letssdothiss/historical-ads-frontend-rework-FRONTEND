@@ -1,4 +1,4 @@
-import { formatShortDate } from '../../../shared/utils/date'
+import { formatShortDate } from '../../../shared/utils/Date'
 
 /**
  * Map a raw hit from the API to a UI-friendly job ad object.
