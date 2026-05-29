@@ -53,7 +53,8 @@ function getTimePeriodPayload(
   for (const [year, monthNames] of Object.entries(selectedMonthsByYear)) {
     for (const monthName of monthNames) {
       const index = MONTH_OPTIONS.indexOf(monthName)
-      if (index >= 0) months.push(`${year}-${String(index + 1).padStart(2, '0')}`)
+      if (index >= 0)
+        months.push(`${year}-${String(index + 1).padStart(2, '0')}`)
     }
   }
   return {
