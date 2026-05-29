@@ -22,6 +22,7 @@ import {
   mapStatisticsByMunicipality,
 } from '../../api/StatisticsMapper'
 import { toAndel } from '../../utils/StatisticsTransformers'
+import { formatPeriodLabel } from '../../../../shared/utils/monthLabels'
 import BarChart from '../charts/barChart/BarChart'
 import LineChart from '../charts/lineChart/LineChart'
 import './StatisticsChartPanel.css'
@@ -57,7 +58,8 @@ function buildSummary(params) {
   if (params.kompetens) parts.push(params.kompetens)
   if (params.yrkesgrupper?.length) parts.push(params.yrkesgrupper.join(', '))
   if (params.lan?.length) parts.push(params.lan.join(', '))
-  if (params.ar?.length) parts.push(params.ar.join(', '))
+  const period = formatPeriodLabel(params.ar, params.manader)
+  if (period) parts.push(period)
   return parts.length > 0 ? parts.join(' — ') : 'Sökresultat'
 }
 
