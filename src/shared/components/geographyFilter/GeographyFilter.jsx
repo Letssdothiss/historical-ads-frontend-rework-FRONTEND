@@ -126,7 +126,9 @@ export default function GeoFilter({
     if (!allLanSelected) {
       for (const lan of selectedLan) {
         const kommuner = lanData[lan]?.kommuner ?? []
-        const hasCheckedKommun = kommuner.some((k) => selectedKommuner.has(k.id))
+        const hasCheckedKommun = kommuner.some((k) =>
+          selectedKommuner.has(k.id),
+        )
         if (!hasCheckedKommun) {
           for (const k of kommuner) kommunIds.add(k.id)
         }
