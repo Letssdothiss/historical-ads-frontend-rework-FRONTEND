@@ -20,7 +20,7 @@
 - ~~Yrkesgrupper verkar inte fungera, får "Inga annonser hittades. Prova att ändra sökkriterier." på alla sökningar.~~
 
 #### Statistik
-- Alla olika sökningar returnerar 3,9 mil (om inte tidsperiod är med).
+- ~~Alla olika sökningar returnerar 3,9 mil (om inte tidsperiod är med).~~
 - ~~Efter gjord sökning och öppning av formulär igen så lägger sig rullgardinsmenyerna bakom "Välj presentationsform" & "Exportera sökresultat".~~
 - ~~Geografiskt område visar enbart Uppsala län.~~
 
@@ -66,7 +66,7 @@
 
 #### Statistik
 
-- Minska bredd på körkortsknapp, onödigt mycket whitespace.
+- ~~Minska bredd på körkortsknapp, onödigt mycket whitespace.~~
 - ~~Dropdown meny för trender, öka bredd så att vardera knapp blir bred nog att ha all text på en rad.~~
 - ~~Infoikonen (hover), visar info korrekt vid hover men kräver antingen klick utanför eller att muspekaren dras över själva textrutan för att försvinna.~~
 
