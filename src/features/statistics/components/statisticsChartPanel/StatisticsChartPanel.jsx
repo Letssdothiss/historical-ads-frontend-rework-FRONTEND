@@ -269,6 +269,7 @@ function StatisticsChartPanel({
           <DigiButton
             afVariation={ButtonVariation.SECONDARY}
             afType={ButtonType.BUTTON}
+            afFullWidth
             onAfOnClick={() => setPresentationOpen((prev) => !prev)}
           >
             <span className="statistics-chart-panel__btn-content">
@@ -368,6 +369,7 @@ function StatisticsChartPanel({
           <DigiButton
             afVariation={ButtonVariation.SECONDARY}
             afType={ButtonType.BUTTON}
+            afFullWidth
             onAfOnClick={() => setExportOpen((prev) => !prev)}
           >
             <span className="statistics-chart-panel__btn-content">
@@ -421,16 +423,19 @@ function StatisticsChartPanel({
           )}
         </div>
 
-        <DigiButton
-          afVariation={ButtonVariation.SECONDARY}
-          afType={ButtonType.BUTTON}
-          onAfOnClick={saveSearch}
-        >
-          <span className="statistics-chart-panel__btn-content">
-            <DigiIconBookmarkOutline />
-            <span>Spara sökning</span>
-          </span>
-        </DigiButton>
+        <div className="statistics-chart-panel__dropdown-wrapper">
+          <DigiButton
+            afVariation={ButtonVariation.SECONDARY}
+            afType={ButtonType.BUTTON}
+            afFullWidth
+            onAfOnClick={saveSearch}
+          >
+            <span className="statistics-chart-panel__btn-content">
+              <DigiIconBookmarkOutline />
+              <span>Spara sökning</span>
+            </span>
+          </DigiButton>
+        </div>
       </div>
 
       <div className="statistics-chart-panel__summary-row">

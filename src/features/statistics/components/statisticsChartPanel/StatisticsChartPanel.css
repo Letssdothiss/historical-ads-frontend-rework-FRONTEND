@@ -6,13 +6,20 @@
 
 .statistics-chart-panel__buttons {
   display: flex;
-  flex-wrap: wrap;
+  justify-content: center;
   gap: 0.75rem;
+}
+
+.statistics-chart-panel__buttons > *,
+.statistics-chart-panel__buttons digi-button {
+  flex: 1;
+  max-width: 270px;
 }
 
 .statistics-chart-panel__btn-content {
   display: inline-flex;
   align-items: center;
+  justify-content: space-between;
   gap: 8px;
 }
 
