@@ -168,7 +168,11 @@ export default function GeoFilter({
             <button
               type="button"
               className="geo-filter-text-button"
-              onClick={allLanSelected ? () => setSelectedKommuner(new Set()) : rensaKommuner}
+              onClick={
+                allLanSelected
+                  ? () => setSelectedKommuner(new Set())
+                  : rensaKommuner
+              }
             >
               {allLanSelected
                 ? 'Rensa alla kommuner'
@@ -276,7 +280,9 @@ export default function GeoFilter({
                     if (!search) return kommuner
                     const q = search.toLowerCase()
                     if (l.toLowerCase().includes(q)) return kommuner
-                    return kommuner.filter((k) => k.label.toLowerCase().includes(q))
+                    return kommuner.filter((k) =>
+                      k.label.toLowerCase().includes(q),
+                    )
                   })
                 : filteredKommuner
               ).map((k) => (
@@ -284,7 +290,9 @@ export default function GeoFilter({
                   <DigiFormCheckbox
                     id={`kommun-${k.id}`}
                     afChecked={selectedKommuner.has(k.id)}
-                    onAfOnChange={(e) => toggleKommun(k, e.detail.target.checked)}
+                    onAfOnChange={(e) =>
+                      toggleKommun(k, e.detail.target.checked)
+                    }
                   />
                   <label htmlFor={`kommun-${k.id}`}>{k.label}</label>
                 </li>

@@ -37,8 +37,11 @@ function toBaseApiParams(params = {}) {
   // (that name is ignored and returns unfiltered results).
   if (params.working_hours_type?.length)
     apiParams.worktime_extent = params.working_hours_type
-  const drivingLicense = toDrivingLicenseRequired(params.driving_license_required)
-  if (drivingLicense != null) apiParams.driving_license_required = drivingLicense
+  const drivingLicense = toDrivingLicenseRequired(
+    params.driving_license_required,
+  )
+  if (drivingLicense != null)
+    apiParams.driving_license_required = drivingLicense
   return apiParams
 }
 

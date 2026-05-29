@@ -284,7 +284,9 @@ export default function JobGroupFilter({
                     if (!search) return groups
                     const q = search.toLowerCase()
                     if (a.toLowerCase().includes(q)) return groups
-                    return groups.filter((g) => g.label.toLowerCase().includes(q))
+                    return groups.filter((g) =>
+                      g.label.toLowerCase().includes(q),
+                    )
                   })
                 : filteredGroups
               ).map((g) => (
@@ -292,7 +294,9 @@ export default function JobGroupFilter({
                   <DigiFormCheckbox
                     id={`group-${g.id}`}
                     afChecked={selectedGroups.has(g.id)}
-                    onAfOnChange={(e) => toggleGroup(g, e.detail.target.checked)}
+                    onAfOnChange={(e) =>
+                      toggleGroup(g, e.detail.target.checked)
+                    }
                   />
                   <label htmlFor={`group-${g.id}`}>{g.label}</label>
                 </li>

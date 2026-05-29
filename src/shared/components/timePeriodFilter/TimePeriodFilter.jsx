@@ -53,7 +53,8 @@ function getTimePeriodPayload(
   for (const [year, monthNames] of Object.entries(selectedMonthsByYear)) {
     for (const monthName of monthNames) {
       const index = MONTH_OPTIONS.indexOf(monthName)
-      if (index >= 0) months.push(`${year}-${String(index + 1).padStart(2, '0')}`)
+      if (index >= 0)
+        months.push(`${year}-${String(index + 1).padStart(2, '0')}`)
     }
   }
   return {
@@ -124,7 +125,9 @@ function TimePeriodFilter({ onChange, initialPeriod } = {}) {
   }, [isOpen])
 
   const [initial] = useState(() => getInitialTimePeriodState(initialPeriod))
-  const [allYearsSelected, setAllYearsSelected] = useState(initial.allYearsSelected)
+  const [allYearsSelected, setAllYearsSelected] = useState(
+    initial.allYearsSelected,
+  )
   const [selectedYears, setSelectedYears] = useState(initial.selectedYears)
   const [activeYear, setActiveYear] = useState(initial.activeYear)
   const [selectedMonthsByYear, setSelectedMonthsByYear] = useState(
