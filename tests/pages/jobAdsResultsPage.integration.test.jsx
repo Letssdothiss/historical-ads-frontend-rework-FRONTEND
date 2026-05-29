@@ -37,7 +37,7 @@ describe('JobAdsResultsPage (integration)', () => {
     expect(
       screen.getByRole('heading', { name: 'Integration testannons' }),
     ).toBeInTheDocument()
-    expect(screen.getByText(/Sökresultat:.*react/)).toBeInTheDocument()
+    expect(screen.getByText('"react"')).toBeInTheDocument()
     expect(
       screen.getByRole('button', { name: 'Justera sökning' }),
     ).toBeInTheDocument()
