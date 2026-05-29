@@ -116,7 +116,10 @@ describe('JobAdsSearchForm', () => {
         initialEntries={['/platsannonser/resultat?q=react&employer=Acme']}
       >
         <Routes>
-          <Route path="/platsannonser/resultat" element={<JobAdsSearchForm />} />
+          <Route
+            path="/platsannonser/resultat"
+            element={<JobAdsSearchForm />}
+          />
         </Routes>
       </MemoryRouter>,
     )

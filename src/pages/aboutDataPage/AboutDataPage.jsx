@@ -5,7 +5,10 @@ import './AboutDataPage.css'
 export default function AboutDataPage() {
   return (
     <MainLayout>
-      <ContentWrapper hideRensaLink contentClassName="shell-form-container--about">
+      <ContentWrapper
+        hideRensaLink
+        contentClassName="shell-form-container--about"
+      >
         <div className="about-data-page">
           <h2>Om datan i de Historiska platsannonserna</h2>
           <p>

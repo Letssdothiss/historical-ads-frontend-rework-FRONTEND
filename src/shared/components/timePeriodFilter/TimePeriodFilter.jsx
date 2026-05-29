@@ -106,7 +106,9 @@ function TimePeriodFilter({ onChange, initialPeriod } = {}) {
   }, [isOpen])
 
   const [initial] = useState(() => getInitialTimePeriodState(initialPeriod))
-  const [allYearsSelected, setAllYearsSelected] = useState(initial.allYearsSelected)
+  const [allYearsSelected, setAllYearsSelected] = useState(
+    initial.allYearsSelected,
+  )
   const [selectedYears, setSelectedYears] = useState(initial.selectedYears)
   const [activeYear, setActiveYear] = useState(initial.activeYear)
   const [selectedMonthsByYear, setSelectedMonthsByYear] = useState(

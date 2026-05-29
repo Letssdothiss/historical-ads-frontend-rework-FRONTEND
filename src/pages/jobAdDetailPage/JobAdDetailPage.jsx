@@ -22,7 +22,12 @@ function readResultContext() {
   }
 }
 
-const QUALIFICATION_FIELDS = ['work_experience', 'education', 'skills', 'languages']
+const QUALIFICATION_FIELDS = [
+  'work_experience',
+  'education',
+  'skills',
+  'languages',
+]
 
 // The enriched API splits qualifications into must_have and nice_to_have.
 // Merge both, plus competencies derived from the ad text by the backend
@@ -55,20 +60,31 @@ function mergeQualifications(source = {}) {
 
 function adReducer(state, action) {
   switch (action.type) {
-    case 'fetch': return { isLoading: true, error: null, ad: null, metadata: null }
-    case 'success': return { isLoading: false, error: null, ad: action.ad, metadata: action.metadata }
-    case 'error': return { ...state, isLoading: false, error: action.error }
-    default: return state
+    case 'fetch':
+      return { isLoading: true, error: null, ad: null, metadata: null }
+    case 'success':
+      return {
+        isLoading: false,
+        error: null,
+        ad: action.ad,
+        metadata: action.metadata,
+      }
+    case 'error':
+      return { ...state, isLoading: false, error: action.error }
+    default:
+      return state
   }
 }
 
 export default function JobAdDetailPage() {
   const { adId } = useParams()
   const navigate = useNavigate()
-  const [{ isLoading, error, ad, metadata }, dispatch] = useReducer(
-    adReducer,
-    { isLoading: true, error: null, ad: null, metadata: null },
-  )
+  const [{ isLoading, error, ad, metadata }, dispatch] = useReducer(adReducer, {
+    isLoading: true,
+    error: null,
+    ad: null,
+    metadata: null,
+  })
 
   useEffect(() => {
     let alive = true
@@ -78,10 +94,16 @@ export default function JobAdDetailPage() {
       .then((res) => {
         if (!alive) return
         const adData = res?.ad ?? res
-        dispatch({ type: 'success', ad: mapHitToAd(adData), metadata: res?.metadata ?? null })
+        dispatch({
+          type: 'success',
+          ad: mapHitToAd(adData),
+          metadata: res?.metadata ?? null,
+        })
       })
       .catch((err) => alive && dispatch({ type: 'error', error: err }))
-    return () => { alive = false }
+    return () => {
+      alive = false
+    }
   }, [adId])
 
   const resultContext = useMemo(() => readResultContext(), [])
