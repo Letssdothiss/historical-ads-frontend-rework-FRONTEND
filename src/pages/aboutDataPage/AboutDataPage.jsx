@@ -11,7 +11,7 @@ export default function AboutDataPage() {
           <p>
             Användarundersökningen visade att en av målgrupperna har ett starkt
             intresse av att få metadata kring databasen. Exempel på metadata
-            eller vad som ska skrivas under rubriken “Om databasen” är följande:
+            eller vad som ska skrivas under rubriken “Om datan” är följande:
           </p>
           <ul>
             <li>
