@@ -85,7 +85,7 @@
   flex-direction: column;
   align-items: stretch;
   width: fit-content;
-  margin-bottom: 25px;
+  margin-bottom: 12px;
 }
 
 .shell-reset-link {
@@ -135,6 +135,12 @@
   box-sizing: border-box;
 }
 
+/* Resultatsida: Justera sökning ihopfälld */
+.shell-form-container:has(.results-adjust--collapsed) {
+  padding-top: 0;
+  padding-bottom: 8px;
+}
+
 /* Narrow viewports — tabs + Rensa as one centered block */
 @media (max-width: 975px) {
   .shell-corner-actions .tabs-switch {
@@ -162,7 +168,7 @@
 
   .shell-top-row {
     display: block;
-    height: 196px;
+    height: 172px;
     padding: 0;
   }
 
@@ -173,7 +179,7 @@
 
   .shell-header-content-container {
     margin-left: 155px;
-    padding: 28px 28px 18px;
+    padding: 28px 28px 12px;
     text-align: left;
     margin-bottom: 0;
     max-width: none;
@@ -209,5 +215,9 @@
 
   .shell-form-container {
     padding: 4px 0 28px;
+  }
+
+  .shell-form-container:has(.results-adjust--collapsed) {
+    padding-bottom: 6px;
   }
 }

@@ -23,22 +23,24 @@
   align-items: center;
 }
 
-.statistics-search-form__top-row > *:last-child {
-  position: relative;
-  top: 25px;
-}
-
-.statistics-search-form__bottom-row > *:last-child {
-  position: relative;
-  top: -10px;
-}
-
 .statistics-search-form__top-row {
   grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr);
 }
 
+/* Trender — finjustering mot fritextkolumnen */
 .statistics-search-form__top-row > *:last-child {
+  position: relative;
+  top: 30px;
   margin-top: -26px;
+}
+
+.statistics-search-form__bottom-row {
+  align-items: start;
+}
+
+/* Körkort saknar labelrad — offset mot kompetens (44px label + 6px gap) */
+.statistics-search-form__bottom-row > *:first-child {
+  margin-top: 47px;
 }
 
 .statistics-search-form__free-text {
