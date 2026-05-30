@@ -43,6 +43,41 @@ export function toChartData(data, options = {}) {
   if (!data[0] || typeof data[0] !== 'object') return null
 
   const years = Object.keys(data[0]).filter((k) => k !== 'lan' && k !== 'title')
+
+  // Normally each column (year) is an x-value and each row (region/month) is a
+  // series. But when only a single period is selected while there are several
+  // rows — e.g. one year with all months — there's just one x-value, so a line
+  // can't be drawn. Transpose: put the row labels (months) on the x-axis and
+  // draw the single column as one series. This lets "one year + all months"
+  // render a month-over-month line instead of the "pick two periods" message.
+  if (years.length === 1) {
+    const rows = data.filter((row) => row && row.lan)
+    // digi-bar-chart accesses xScale.domain()[1] on resize, so we need at least
+    // 2 distinct x values; bail out otherwise to avoid a runtime crash.
+    if (rows.length < 2) return null
+    const col = years[0]
+    return {
+      title,
+      x: xLabel,
+      y: yLabel,
+      data: {
+        xValues: rows.map((_, i) => i),
+        xValueNames: rows.map((row) => row.lan),
+        series: [
+          {
+            title: col,
+            yValues: rows.map((row) => {
+              const val = row[col]
+              return val !== null && val !== undefined && !isNaN(val)
+                ? Number(val)
+                : 0
+            }),
+          },
+        ],
+      },
+    }
+  }
+
   // digi-bar-chart accesses xScale.domain()[1] on resize, so we need at least
   // 2 distinct x values; bail out otherwise to avoid a runtime crash.
   if (years.length < 2) return null
