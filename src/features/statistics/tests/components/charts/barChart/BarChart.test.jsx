@@ -1,8 +1,7 @@
 import { describe, expect, it, vi } from 'vitest'
 import { render, screen } from '@testing-library/react'
-import BarChart, {
-  chartMaxWidth,
-} from '../../../../components/charts/barChart/BarChart'
+import BarChart from '../../../../components/charts/barChart/BarChart'
+import { chartMaxWidth } from '../../../../utils/chartUtils'
 
 vi.mock('@designsystem-se/af-react', () => ({
   DigiBarChart: ({ afChartData }) => (
