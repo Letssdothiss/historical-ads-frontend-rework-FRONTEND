@@ -32,15 +32,15 @@
 
 #### Generellt
 
-- ~~Rullgardinsmenyer "Geografiskt område" & "Yrkesgrupper" går för långt åt höger när overlay är ute, bredd ska minskas så de är i linje med yttre högra kanten på knapparna.~~
 - All text för knappar, menyer, rubriker osv måste vara minst 16px.
-- Rensa-knappar är för stora eller skulle dom också vara 16px, tyckte Carolina sa att tillgängligheten vinner?
-- linjera överkant av tabsswitch med underkant av sträng "platsbanken" i headertexten.
 - Hover-info-knappar bör göras större, klickytan ska vara 44x44, ikon 34x34.
 - Linjera ikoner i rullgardinsmenyer när visningen är i sitt minsta responsiva format.
 - Rullgardinsmenyn för Tidsperiod blir blank vid mindre bredd än 800px.
 - Rullgardinsmenyn för Fakta Anställning hoppar runt i browsern vid bredder mindre än 800px.
 - olika rundning på ruta om sökruta är utfälld eller inte (Lite oklart vad som menas här?).
+- ~~linjera överkant av tabsswitch med underkant av sträng "platsbanken" i headertexten.~~
+- ~~Rensa-knappar är för stora, sätt 14px.~~
+- ~~Rullgardinsmenyer "Geografiskt område" & "Yrkesgrupper" går för långt åt höger när overlay är ute, bredd ska minskas så de är i linje med yttre högra kanten på knapparna.~~
 - ~~TabsSwitch-komponenten anpassar sig inte i bredder mindre än 975px.~~
 - ~~Rullgardingsmenyn för Geografiskt område "overflowar" utanför browser, synligt vid mindre bredd än 1520px.~~
 - ~~Rullgardingsmenyn för Yrkesgrupper "overflowar" utanför browser, synligt vid mindre bredd än 1520px.~~
