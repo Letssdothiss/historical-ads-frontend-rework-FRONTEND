@@ -2,7 +2,7 @@ import './BarChart.css'
 import { DigiBarChart } from '@designsystem-se/af-react'
 import { BarChartVariation } from '@designsystem-se/af'
 import { toBarChartData } from '../../../utils/StatisticsTransformers'
-import { chartMaxWidth } from '../../../utils/chartUtils' // ← add this
+import { chartMaxWidth } from '../../../utils/chartUtils'
 
 function BarChart({ data, stacked = false }) {
   const chartData = toBarChartData(data)
