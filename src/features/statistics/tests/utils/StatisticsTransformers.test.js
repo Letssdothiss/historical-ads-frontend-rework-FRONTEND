@@ -73,6 +73,20 @@ describe('toChartData', () => {
     expect(toChartData([{ lan: 'Skåne län', 2024: 100 }])).toBeNull()
   })
 
+  it('transposes a single year with several rows onto the x-axis', () => {
+    const result = toChartData([
+      { lan: 'Januari', 2024: 100 },
+      { lan: 'Februari', 2024: 150 },
+      { lan: 'Mars', 2024: 120 },
+    ])
+
+    expect(result.data.xValueNames).toEqual(['Januari', 'Februari', 'Mars'])
+    expect(result.data.xValues).toEqual([0, 1, 2])
+    expect(result.data.series).toEqual([
+      { title: '2024', yValues: [100, 150, 120] },
+    ])
+  })
+
   it('builds line chart series with years on the x-axis', () => {
     const result = toChartData(tableData)
 
