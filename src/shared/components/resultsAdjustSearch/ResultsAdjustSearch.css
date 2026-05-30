@@ -54,3 +54,9 @@
 .results-adjust__toggle:hover .results-adjust__chevron digi-icon-chevron-down {
   --digi--icon--color: #b9eb55;
 }
+
+/* Ihopfälld på resultatsidor — minimera blå yta ovanför resultatlistan */
+.results-adjust--collapsed .results-adjust__toggle {
+  margin: 2px auto 6px;
+  padding: 4px 14px;
+}

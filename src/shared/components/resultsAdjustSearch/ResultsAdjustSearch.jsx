@@ -6,7 +6,9 @@ import './ResultsAdjustSearch.css'
  */
 export default function ResultsAdjustSearch({ open, onToggle, children }) {
   return (
-    <div className="results-adjust">
+    <div
+      className={`results-adjust${open ? '' : ' results-adjust--collapsed'}`}
+    >
       {open && <div className="results-adjust__panel">{children}</div>}
       <button
         type="button"

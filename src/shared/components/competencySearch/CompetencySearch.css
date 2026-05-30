@@ -16,7 +16,7 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-
+  min-height: 44px;
   margin: 0;
 }
 
@@ -28,14 +28,6 @@
   font-size: 16px;
   font-weight: 600;
   line-height: 1.4;
-}
-
-.competency-search-label-row .info-tooltip digi-icon-notification-info {
-  --digi--icon--width: 18px;
-  --digi--icon--height: 18px;
-  --digi--icon--color: #ffffff;
-
-  flex-shrink: 0;
 }
 
 .competency-search-input-wrapper {

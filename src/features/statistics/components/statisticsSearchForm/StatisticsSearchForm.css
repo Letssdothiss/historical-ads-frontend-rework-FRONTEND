@@ -28,9 +28,13 @@
   top: 25px;
 }
 
-.statistics-search-form__bottom-row > *:last-child {
-  position: relative;
-  top: -10px;
+.statistics-search-form__bottom-row {
+  align-items: start;
+}
+
+/* Körkort saknar labelrad — samma offset som kompetens (44px label + 6px gap) */
+.statistics-search-form__bottom-row > *:first-child {
+  margin-top: 50px;
 }
 
 .statistics-search-form__top-row {

@@ -2,16 +2,31 @@
   position: relative;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  /* Flytta klick-/hoveryta bort från label och input */
+  margin: -8px 0 0 6px;
+  vertical-align: middle;
 }
 
 .info-tooltip__trigger {
-  --digi--icon--width: 20px;
-  --digi--icon--height: 20px;
+  --digi--icon--width: 34px;
+  --digi--icon--height: 34px;
   --digi--icon--color: #ffffff;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0;
+  border: none;
+  background: transparent;
   cursor: pointer;
+  box-sizing: border-box;
 }
 
 .info-tooltip__trigger:focus-visible {
@@ -23,17 +38,17 @@
 /* Invisible strip between icon and bubble so hover is not lost in the gap */
 .info-tooltip__bridge {
   position: absolute;
-  left: 16px;
+  left: 38px;
   top: -10px;
   z-index: 49;
-  width: 16px;
+  width: 14px;
   height: calc(100% + 20px);
-  min-height: 36px;
+  min-height: 44px;
 }
 
 .info-tooltip__bubble {
   position: absolute;
-  left: 28px;
+  left: 50px;
   top: -8px;
   z-index: 50;
   width: 240px;

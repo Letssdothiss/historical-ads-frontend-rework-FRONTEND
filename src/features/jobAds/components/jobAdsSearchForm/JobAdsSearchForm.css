@@ -166,9 +166,11 @@ span {
   gap: 6px;
 }
 
-.job-ads-search-form__inputs > *:last-child {
-  position: relative;
-  top: 3.5px;
+/* Samma labelhöjd som kompetensraden (InfoTooltip 44px) så inputfälten linjerar */
+.job-ads-search-form__inputs
+  > .job-ads-search-form__input-block:first-child
+  > .job-ads-search-form__field-label {
+  min-height: 44px;
 }
 
 .job-ads-search-form__radio-group {
