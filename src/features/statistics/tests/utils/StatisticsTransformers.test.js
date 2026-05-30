@@ -73,6 +73,20 @@ describe('toChartData', () => {
     expect(toChartData([{ lan: 'Skåne län', 2024: 100 }])).toBeNull()
   })
 
+  it('transposes a single year with several rows onto the x-axis', () => {
+    const result = toChartData([
+      { lan: 'Januari', 2024: 100 },
+      { lan: 'Februari', 2024: 150 },
+      { lan: 'Mars', 2024: 120 },
+    ])
+
+    expect(result.data.xValueNames).toEqual(['Januari', 'Februari', 'Mars'])
+    expect(result.data.xValues).toEqual([0, 1, 2])
+    expect(result.data.series).toEqual([
+      { title: '2024', yValues: [100, 150, 120] },
+    ])
+  })
+
   it('builds line chart series with years on the x-axis', () => {
     const result = toChartData(tableData)
 
@@ -109,13 +123,34 @@ describe('toChartData', () => {
 })
 
 describe('toAndel', () => {
-  it('converts counts to row percentages that sum to 100', () => {
-    const result = toAndel([{ lan: 'Stockholms län', 2024: 75, 2025: 25 }])
+  it('gives each region its share of the grand total for a single year', () => {
+    // The single-year regression: shares must be relative to the total across
+    // regions, not 100% per row.
+    const result = toAndel([
+      { lan: 'Stockholms län', 2025: 300 },
+      { lan: 'Skåne län', 2025: 100 },
+    ])
 
-    expect(result).toEqual([{ lan: 'Stockholms län', 2024: 75, 2025: 25 }])
+    expect(result).toEqual([
+      { lan: 'Stockholms län', 2025: 75 },
+      { lan: 'Skåne län', 2025: 25 },
+    ])
   })
 
-  it('returns zero shares when a row total is zero', () => {
+  it('computes shares relative to the grand total across regions and years', () => {
+    const result = toAndel([
+      { lan: 'A', 2024: 100, 2025: 100 },
+      { lan: 'B', 2024: 100, 2025: 100 },
+    ])
+
+    // Grand total 400 -> every cell is 25%.
+    expect(result).toEqual([
+      { lan: 'A', 2024: 25, 2025: 25 },
+      { lan: 'B', 2024: 25, 2025: 25 },
+    ])
+  })
+
+  it('returns zero shares when every count is zero', () => {
     const result = toAndel([{ lan: 'Tom rad', 2024: 0, 2025: 0 }])
 
     expect(result).toEqual([{ lan: 'Tom rad', 2024: 0, 2025: 0 }])

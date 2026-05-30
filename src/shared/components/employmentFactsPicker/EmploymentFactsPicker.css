@@ -211,8 +211,15 @@
 
 .employment-facts-picker__checkbox-row input,
 .employment-facts-picker__option-row input {
+  width: 20px;
+  height: 20px;
+  opacity: 1;
+  border-radius: var(--checkbox-marker-border-radius, 4px);
+  border-width: var(--checkbox-primary-border-width, 2px);
+  border-top: 1px solid var(--Checkbox-default-border, #333333);
   accent-color: #0f9d2a;
   flex-shrink: 0;
+  cursor: pointer;
 }
 
 .employment-facts-picker__section-list,

@@ -9,7 +9,7 @@
 }
 
 .tabs-switch--flat-bottom {
-  border-radius: 6px 6px 0 0;
+  border-radius: 6px 6px 6px 6px;
 }
 
 .tabs-switch__link {

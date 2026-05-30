@@ -1,6 +1,7 @@
 import { describe, expect, it, vi } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import BarChart from '../../../../components/charts/barChart/BarChart'
+import { chartMaxWidth } from '../../../../utils/chartUtils'
 
 vi.mock('@designsystem-se/af-react', () => ({
   DigiBarChart: ({ afChartData }) => (
@@ -34,5 +35,27 @@ describe('BarChart', () => {
     render(<BarChart data={chartData} stacked />)
 
     expect(screen.getByTestId('digi-bar-chart')).toBeInTheDocument()
+  })
+
+  it('caps the width for few regions so x-axis labels stay visible', () => {
+    const { container } = render(<BarChart data={chartData} />)
+
+    // Two regions -> narrow enough that the chart lib keeps every label.
+    expect(container.querySelector('.bar-chart')).toHaveStyle({
+      maxWidth: '400px',
+    })
+  })
+})
+
+describe('chartMaxWidth', () => {
+  it('returns undefined for no categories', () => {
+    expect(chartMaxWidth(0)).toBeUndefined()
+    expect(chartMaxWidth(undefined)).toBeUndefined()
+  })
+
+  it('grows the cap with the category count', () => {
+    expect(chartMaxWidth(2)).toBe('400px')
+    expect(chartMaxWidth(3)).toBe('520px')
+    expect(chartMaxWidth(10)).toBe('1360px')
   })
 })

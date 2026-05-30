@@ -34,7 +34,10 @@ import './JobAdsSearchForm.css'
 export default function JobAdsSearchForm() {
   const [searchParams] = useSearchParams()
   return (
-    <JobAdsSearchFormFields key={searchParams.toString()} searchParams={searchParams} />
+    <JobAdsSearchFormFields
+      key={searchParams.toString()}
+      searchParams={searchParams}
+    />
   )
 }
 

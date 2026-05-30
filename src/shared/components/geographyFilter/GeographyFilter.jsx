@@ -117,16 +117,32 @@ export default function GeoFilter({
   }
 
   function handleApply() {
-    const kommunIds = [...selectedKommuner]
+    const kommunIds = new Set(selectedKommuner)
+
+    // A län marked without any individual kommun checked means "the whole län".
+    // Expand it to all its kommuner so the search is actually scoped — an empty
+    // municipality filter would otherwise return the entire corpus. Skip this
+    // when every län is selected, since "no filter" already means "everywhere".
+    if (!allLanSelected) {
+      for (const lan of selectedLan) {
+        const kommuner = lanData[lan]?.kommuner ?? []
+        const hasCheckedKommun = kommuner.some((k) =>
+          selectedKommuner.has(k.id),
+        )
+        if (!hasCheckedKommun) {
+          for (const k of kommuner) kommunIds.add(k.id)
+        }
+      }
+    }
 
     const grouped = {}
     for (const lan of allLanNames) {
       const kommuner =
-        lanData[lan]?.kommuner.filter((k) => selectedKommuner.has(k.id)) ?? []
+        lanData[lan]?.kommuner.filter((k) => kommunIds.has(k.id)) ?? []
       if (kommuner.length > 0) grouped[lan] = kommuner.map((k) => k.label)
     }
 
-    onApply?.({ lan: [], kommuner: kommunIds, grouped })
+    onApply?.({ lan: [], kommuner: [...kommunIds], grouped })
   }
 
   if (loading) {
@@ -168,7 +184,11 @@ export default function GeoFilter({
             <button
               type="button"
               className="geo-filter-text-button"
-              onClick={allLanSelected ? () => setSelectedKommuner(new Set()) : rensaKommuner}
+              onClick={
+                allLanSelected
+                  ? () => setSelectedKommuner(new Set())
+                  : rensaKommuner
+              }
             >
               {allLanSelected
                 ? 'Rensa alla kommuner'
@@ -276,7 +296,9 @@ export default function GeoFilter({
                     if (!search) return kommuner
                     const q = search.toLowerCase()
                     if (l.toLowerCase().includes(q)) return kommuner
-                    return kommuner.filter((k) => k.label.toLowerCase().includes(q))
+                    return kommuner.filter((k) =>
+                      k.label.toLowerCase().includes(q),
+                    )
                   })
                 : filteredKommuner
               ).map((k) => (
@@ -284,7 +306,9 @@ export default function GeoFilter({
                   <DigiFormCheckbox
                     id={`kommun-${k.id}`}
                     afChecked={selectedKommuner.has(k.id)}
-                    onAfOnChange={(e) => toggleKommun(k, e.detail.target.checked)}
+                    onAfOnChange={(e) =>
+                      toggleKommun(k, e.detail.target.checked)
+                    }
                   />
                   <label htmlFor={`kommun-${k.id}`}>{k.label}</label>
                 </li>

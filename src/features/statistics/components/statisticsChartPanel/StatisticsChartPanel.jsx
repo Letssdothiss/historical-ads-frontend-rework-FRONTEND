@@ -22,6 +22,7 @@ import {
   mapStatisticsByMunicipality,
 } from '../../api/StatisticsMapper'
 import { toAndel } from '../../utils/StatisticsTransformers'
+import { formatPeriodLabel } from '../../../../shared/utils/monthLabels'
 import BarChart from '../charts/barChart/BarChart'
 import LineChart from '../charts/lineChart/LineChart'
 import './StatisticsChartPanel.css'
@@ -57,7 +58,8 @@ function buildSummary(params) {
   if (params.kompetens) parts.push(params.kompetens)
   if (params.yrkesgrupper?.length) parts.push(params.yrkesgrupper.join(', '))
   if (params.lan?.length) parts.push(params.lan.join(', '))
-  if (params.ar?.length) parts.push(params.ar.join(', '))
+  const period = formatPeriodLabel(params.ar, params.manader)
+  if (period) parts.push(period)
   return parts.length > 0 ? parts.join(' — ') : 'Sökresultat'
 }
 
@@ -175,6 +177,21 @@ function StatisticsChartPanel({
           : 'Län'))
   const searchSummary = buildSummary(searchParams)
   const displayData = enhet === 'andel' ? toAndel(pivotedData) : pivotedData
+
+  // A line chart over a single year is only meaningful as a month-over-month
+  // trend — charting one aggregated year point just draws a flat/straight line.
+  // When the search resolves to exactly one year and month data is available,
+  // feed the line chart the per-month breakdown so the line moves across the
+  // months (toChartData transposes a single-column dataset onto the x-axis).
+  const singleYear = useMemo(
+    () => yearResults.filter(({ raw }) => !raw?.error).length === 1,
+    [yearResults],
+  )
+  const lineChartData = useMemo(() => {
+    if (!singleYear || !monthDataAvailable) return displayData
+    const monthData = mapStatisticsByMonth(yearResults)
+    return enhet === 'andel' ? toAndel(monthData) : monthData
+  }, [singleYear, monthDataAvailable, yearResults, enhet, displayData])
   const totalAnnonser = useMemo(
     () =>
       pivotedData.reduce(
@@ -497,7 +514,14 @@ function StatisticsChartPanel({
                               (sum, y) => sum + (Number(row[y]) || 0),
                               0,
                             )
-                          : '100%'}
+                          : `${parseFloat(
+                              years
+                                .reduce(
+                                  (sum, y) => sum + (Number(row[y]) || 0),
+                                  0,
+                                )
+                                .toFixed(1),
+                            )}%`}
                       </td>
                     )}
                   </tr>
@@ -513,7 +537,7 @@ function StatisticsChartPanel({
           )}
 
         {activeData.length > 0 && visning === 'linje' && (
-          <LineChart data={displayData} />
+          <LineChart data={lineChartData} />
         )}
       </div>
 

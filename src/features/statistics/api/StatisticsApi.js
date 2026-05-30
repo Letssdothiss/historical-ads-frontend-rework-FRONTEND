@@ -1,4 +1,5 @@
 import { get, getFile } from '../../../shared/api/HttpClient'
+import { resolveEmploymentTypeParams } from '../../../shared/utils/employmentParams'
 
 // The upstream `driving-license-required` filter is a boolean. The UI carries
 // the selection as 'required' / 'not-required' strings, so map those (and any
@@ -24,15 +25,29 @@ function toBaseApiParams(params = {}) {
   } else if (params.yrkesgrupp?.length) {
     apiParams.occupation_group = params.yrkesgrupp
   }
-  if (params.employment_type?.length)
-    apiParams.employment_type = params.employment_type
-  const drivingLicense = toDrivingLicenseRequired(params.driving_license_required)
-  if (drivingLicense != null) apiParams.driving_license_required = drivingLicense
+  if (params.employment_type?.length) {
+    const { conceptIds, abroad } = resolveEmploymentTypeParams(
+      params.employment_type,
+    )
+    if (conceptIds.length) apiParams.employment_type = conceptIds
+    if (abroad) apiParams.abroad = true
+  }
+  if (params.duration?.length) apiParams.duration = params.duration
+  // Upstream's worktime filter is `worktime-extent`, not `working-hours-type`
+  // (that name is ignored and returns unfiltered results).
+  if (params.working_hours_type?.length)
+    apiParams.worktime_extent = params.working_hours_type
+  const drivingLicense = toDrivingLicenseRequired(
+    params.driving_license_required,
+  )
+  if (drivingLicense != null)
+    apiParams.driving_license_required = drivingLicense
   return apiParams
 }
 
 export async function fetchStatistics(params) {
   const requestedYears = params?.ar?.length > 0 ? params.ar : null
+  const requestedMonths = params?.manader?.length > 0 ? params.manader : null
   const trend = params?.trend || null
   const baseParams = toBaseApiParams(params)
   if (trend) baseParams.trend = trend
@@ -41,9 +56,12 @@ export async function fetchStatistics(params) {
   // Trends always use the year-aggregated path so we get per-year columns;
   // the backend may widen the year span (growth/decline), so we read the
   // resulting years from the response rather than the requested ones.
-  if (requestedYears || trend) {
+  if (requestedYears || requestedMonths || trend) {
     const apiParams = { ...baseParams, aggregate: 'year_region' }
     if (requestedYears) apiParams.years = requestedYears.join(',')
+    // Year-qualified months ("2026-01") narrow each year's window to the
+    // selected month(s); the backend ignores them on the trend path.
+    if (requestedMonths) apiParams.months = requestedMonths
     const raw = await get('/stats', apiParams)
     const statsByYear = raw?.stats_by_year
     if (statsByYear && Object.keys(statsByYear).length > 0) {

@@ -52,9 +52,7 @@ describe('TimePeriodFilter', () => {
     render(<TimePeriodFilter onChange={onChange} />)
 
     await user.click(screen.getByRole('button', { name: /Tidsperiod/ }))
-    await user.click(
-      screen.getByRole('button', { name: /Välj alla årtal/i }),
-    )
+    await user.click(screen.getByRole('button', { name: /Välj alla årtal/i }))
 
     await waitFor(() =>
       expect(onChange).toHaveBeenLastCalledWith({
@@ -71,17 +69,13 @@ describe('TimePeriodFilter', () => {
     render(<TimePeriodFilter onChange={onChange} />)
 
     await user.click(screen.getByRole('button', { name: /Tidsperiod/ }))
-    await user.click(
-      screen.getByRole('button', { name: /Välj alla årtal/i }),
-    )
-    await user.click(
-      screen.getByRole('button', { name: /Välj alla månader/i }),
-    )
+    await user.click(screen.getByRole('button', { name: /Välj alla årtal/i }))
+    await user.click(screen.getByRole('button', { name: /Välj alla månader/i }))
 
     await waitFor(() =>
       expect(onChange).toHaveBeenLastCalledWith({
         years: ['2026', '2025', '2024', '2023'],
-        months: expect.arrayContaining(['Januari', 'December']),
+        months: expect.arrayContaining(['2026-01', '2026-12', '2023-12']),
       }),
     )
 

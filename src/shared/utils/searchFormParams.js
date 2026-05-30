@@ -16,7 +16,10 @@ const EMPTY_EMPLOYMENT = { type: [], duration: [], scope: [] }
 /** Form state for JobAdsSearchForm / results URL on /platsannonser/resultat */
 export function parseJobAdsSearchFormState(searchParams) {
   const kommunGrouped = parseJsonLabelsParam(searchParams, 'kommun-labels')
-  const yrkesgruppGrouped = parseJsonLabelsParam(searchParams, 'yrkesgrupp-labels')
+  const yrkesgruppGrouped = parseJsonLabelsParam(
+    searchParams,
+    'yrkesgrupp-labels',
+  )
   const lanFromUrl = searchParams.getAll('lan')
   const organizationNumber = searchParams.get('organization_number') ?? ''
 
@@ -51,7 +54,10 @@ export function parseJobAdsSearchFormState(searchParams) {
 /** Form state for StatisticsSearchForm / results URL on /statistik/resultat */
 export function parseStatisticsSearchFormState(searchParams) {
   const kommunGrouped = parseJsonLabelsParam(searchParams, 'kommun-labels')
-  const yrkesgruppGrouped = parseJsonLabelsParam(searchParams, 'yrkesgrupp-labels')
+  const yrkesgruppGrouped = parseJsonLabelsParam(
+    searchParams,
+    'yrkesgrupp-labels',
+  )
   const lanFromUrl = searchParams.getAll('lan')
 
   return {

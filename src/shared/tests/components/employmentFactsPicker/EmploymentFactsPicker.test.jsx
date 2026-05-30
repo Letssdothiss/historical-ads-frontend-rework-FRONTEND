@@ -25,7 +25,7 @@ describe('EmploymentFactsPicker', () => {
     await user.click(screen.getByLabelText('Tillsvidare eller visstid'))
 
     expect(onChange).toHaveBeenCalledWith({
-      type: ['tillsvidare_eller_visstid'],
+      type: ['kpPX_CNN_gDU,sTu5_NBQ_udq'],
       duration: [],
       scope: [],
     })
@@ -37,7 +37,7 @@ describe('EmploymentFactsPicker', () => {
 
     render(
       <EmploymentFactsPicker
-        value={{ type: ['tillsvidare_eller_visstid'], duration: [], scope: [] }}
+        value={{ type: ['kpPX_CNN_gDU,sTu5_NBQ_udq'], duration: [], scope: [] }}
         onChange={onChange}
       />,
     )

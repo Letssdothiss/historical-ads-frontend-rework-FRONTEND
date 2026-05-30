@@ -56,6 +56,23 @@ describe('fetchStatistics', () => {
     })
   })
 
+  it('forwards employment facts: expands type tokens, sets abroad, renames scope', async () => {
+    getMock.mockResolvedValue({})
+
+    await fetchStatistics({
+      employment_type: ['kpPX_CNN_gDU,sTu5_NBQ_udq', 'abroad'],
+      duration: ['a7uU_j21_mkL'],
+      working_hours_type: ['6YE1_gAC_R2G'],
+    })
+
+    expect(getMock).toHaveBeenCalledWith('/stats', {
+      employment_type: ['kpPX_CNN_gDU', 'sTu5_NBQ_udq'],
+      abroad: true,
+      duration: ['a7uU_j21_mkL'],
+      worktime_extent: ['6YE1_gAC_R2G'],
+    })
+  })
+
   it('fetches year_region aggregate when years are selected', async () => {
     const raw = {
       stats_by_year: {

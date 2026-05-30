@@ -5,13 +5,16 @@ import './AboutDataPage.css'
 export default function AboutDataPage() {
   return (
     <MainLayout>
-      <ContentWrapper hideRensaLink contentClassName="shell-form-container--about">
+      <ContentWrapper
+        hideRensaLink
+        contentClassName="shell-form-container--about"
+      >
         <div className="about-data-page">
           <h2>Om datan i de Historiska platsannonserna</h2>
           <p>
             Användarundersökningen visade att en av målgrupperna har ett starkt
             intresse av att få metadata kring databasen. Exempel på metadata
-            eller vad som ska skrivas under rubriken “Om databasen” är följande:
+            eller vad som ska skrivas under rubriken “Om datan” är följande:
           </p>
           <ul>
             <li>

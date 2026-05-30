@@ -41,14 +41,25 @@ const MONTH_OPTIONS = [
   'December',
 ]
 
+// Months are emitted year-qualified (`"2026-01"`) so each month stays tied to
+// the year it was picked under — that keeps "Januari 2026" distinct from a
+// whole-year or cross-year selection once it round-trips through the URL.
 function getTimePeriodPayload(
   allYearsSelected,
   selectedYears,
   selectedMonthsByYear,
 ) {
+  const months = []
+  for (const [year, monthNames] of Object.entries(selectedMonthsByYear)) {
+    for (const monthName of monthNames) {
+      const index = MONTH_OPTIONS.indexOf(monthName)
+      if (index >= 0)
+        months.push(`${year}-${String(index + 1).padStart(2, '0')}`)
+    }
+  }
   return {
     years: allYearsSelected ? YEAR_OPTIONS : selectedYears,
-    months: Object.values(selectedMonthsByYear).flat(),
+    months,
   }
 }
 
@@ -60,14 +71,22 @@ function applyTimePeriodValue(value) {
     selectedYearList.length > 0 &&
     YEAR_OPTIONS.every((year) => selectedYearList.includes(year))
   const activeYears = allYearsSelected ? YEAR_OPTIONS : selectedYearList
-  const selectedMonthsByYear = YEAR_OPTIONS.reduce(
-    (acc, year) => ({ ...acc, [year]: [] }),
-    {},
-  )
+  const selectedMonthsByYear = createEmptyMonthsByYear()
+  // Legacy bare month names (older URLs) apply to every active year.
+  const bareMonths = monthList.filter((month) => MONTH_OPTIONS.includes(month))
   for (const year of activeYears) {
-    selectedMonthsByYear[year] = monthList.filter((month) =>
-      MONTH_OPTIONS.includes(month),
-    )
+    selectedMonthsByYear[year] = [...bareMonths]
+  }
+  for (const entry of monthList) {
+    const qualified = /^(\d{4})-(\d{1,2})$/.exec(String(entry))
+    if (!qualified) continue
+    const year = qualified[1]
+    const monthName = MONTH_OPTIONS[Number(qualified[2]) - 1]
+    if (monthName && selectedMonthsByYear[year]) {
+      selectedMonthsByYear[year] = [
+        ...new Set([...selectedMonthsByYear[year], monthName]),
+      ]
+    }
   }
   return {
     allYearsSelected,
@@ -106,7 +125,9 @@ function TimePeriodFilter({ onChange, initialPeriod } = {}) {
   }, [isOpen])
 
   const [initial] = useState(() => getInitialTimePeriodState(initialPeriod))
-  const [allYearsSelected, setAllYearsSelected] = useState(initial.allYearsSelected)
+  const [allYearsSelected, setAllYearsSelected] = useState(
+    initial.allYearsSelected,
+  )
   const [selectedYears, setSelectedYears] = useState(initial.selectedYears)
   const [activeYear, setActiveYear] = useState(initial.activeYear)
   const [selectedMonthsByYear, setSelectedMonthsByYear] = useState(

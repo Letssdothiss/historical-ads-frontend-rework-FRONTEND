@@ -14,11 +14,15 @@ function readUiParamsFromUrl(searchParams) {
     q: searchParams.get('q') ?? '',
     kompetens: searchParams.get('q') ?? '',
     ar: searchParams.getAll('years'),
+    manader: searchParams.getAll('months'),
     lan: searchParams.getAll('lan'),
     municipality: searchParams.getAll('kommun'),
     occupation_field: searchParams.getAll('yrkesomrade'),
     occupation_group: searchParams.getAll('yrkesgrupp'),
     skills: searchParams.getAll('skills'),
+    employment_type: searchParams.getAll('employment_type'),
+    duration: searchParams.getAll('duration'),
+    working_hours_type: searchParams.getAll('working_hours_type'),
     driving_license_required: searchParams.get('korkort'),
     trend: searchParams.get('trend') ?? '',
   }
@@ -95,6 +99,7 @@ export default function StatisticsResultsPage() {
               kompetens: params.q,
               lan: params.lan,
               ar: params.ar,
+              manader: params.manader,
               trend: params.trend,
             }}
           />
