@@ -20,11 +20,25 @@
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 16px 24px;
-  align-items: end;
+  align-items: center;
+}
+
+.statistics-search-form__top-row > *:last-child {
+  position: relative;
+  top: 25px;
+}
+
+.statistics-search-form__bottom-row > *:last-child {
+  position: relative;
+  top: -10px;
 }
 
 .statistics-search-form__top-row {
   grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr);
+}
+
+.statistics-search-form__top-row > *:last-child {
+  margin-top: -26px;
 }
 
 .statistics-search-form__free-text {

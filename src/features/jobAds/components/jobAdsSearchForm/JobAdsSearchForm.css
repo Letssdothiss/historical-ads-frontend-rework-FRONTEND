@@ -45,6 +45,7 @@ span {
 
 .job-ads-search-form__field-label label {
   color: #ffffff;
+  height: 22.4px;
 }
 
 .job-ads-search-form__field-label digi-icon-info-circle-solid {
@@ -163,6 +164,11 @@ span {
   display: flex;
   flex-direction: column;
   gap: 6px;
+}
+
+.job-ads-search-form__inputs > *:last-child {
+  position: relative;
+  top: 3.5px;
 }
 
 .job-ads-search-form__radio-group {
