@@ -8,9 +8,18 @@ Omarbetad webbklient för att utforska **historiska platsannonser** som tidigare
 
 ## Exempel från applikationen
 
-![Platsannonser med sökning](./docs/img/PlatsannonserSokning.png) ![Statistik trendsökning](./docs/img/StatistikTrender.png)
+### Platsannonssökning med fritextsök och filter
 
-![Statistik Fritextsök](./docs/img/StatistikFritext.png) ![Statistik Stapeldiagram](./docs/img/StatistikStapeldiagram.png)
+![Platsannonser med sökning](./docs/img/PlatsannonserSokning.png)
+
+### Statistiksökning med trendfilter
+
+![Statistik trendsökning](./docs/img/StatistikTrender.png)
+
+### Statistiksökning med fritextsök och filter samt tillhörande stapeldiagram
+
+![Statistik Fritextsök](./docs/img/StatistikFritext.png)
+![Statistik Stapeldiagram](./docs/img/StatistikStapeldiagram.png)
 
 ## Funktioner (översikt)
 
