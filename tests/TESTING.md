@@ -106,3 +106,10 @@ npm run test:coverage        # run all tests once + terminal + HTML report
 Terminal shows a summary table; the HTML report gives file-by-file line highlighting (green/red) similar to other coverage tools.
 
 API base URL in tests defaults to `http://localhost:5000/api/v1` (same as `HttpClient`).
+
+## Test results
+### Tests Performed June 1st - 2026
+![Automated Testing](./img/AutomatedTesting.png)
+---
+![Test Coverage](./img/CoverageSummary.png)
+---
