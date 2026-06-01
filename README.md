@@ -6,6 +6,12 @@ Omarbetad webbklient för att utforska **historiska platsannonser** som tidigare
 
 - [Historical Ads Rework Backend](https://github.com/Letssdothiss/historical-ads-frontend-rework-BACKEND)
 
+## Exempel från applikationen
+
+![Platsannonser med sökning](./docs/img/PlatsannonserSokning.png) ![Statistik trendsökning](./docs/img/StatistikTrender.png)
+
+![Statistik Fritextsök](./docs/img/StatistikFritext.png) ![Statistik Stapeldiagram](./docs/img/StatistikStapeldiagram.png)
+
 ## Funktioner (översikt)
 
 - **Platsannonser** — sökformulär med filter (fritext, geografi, yrkesområden m.m.), resultatlista och relaterad logik under `src/features/jobAds/`.
@@ -14,15 +20,15 @@ Omarbetad webbklient för att utforska **historiska platsannonser** som tidigare
 
 ## Teknikstack
 
-| Område       | Val                                                                                                                           |
-| ------------ | ----------------------------------------------------------------------------------------------------------------------------- |
-| UI           | React 19, Vite 8                                                                                                              |
-| Routing      | React Router 7                                                                                                                |
-| Design       | [Digi — Arbetsförmedlingen](https://designsystem.arbetsformedlingen.se/) (`@designsystem-se/af`, `@designsystem-se/af-react`) |
-| HTTP         | Axios (`src/shared/api/HttpClient.js`)                                                                                        |
-| Tester       | Vitest, Testing Library, [MSW](https://mswjs.io/)                                                                             |
-| Kodkvalitet  | ESLint, Prettier, GitHub Actions                                                                                              |
-| Övrigt       | `@taxonomy/yrkesvaljaren` (Ej implementerad i nuvarande iteration.)                                                           |
+| Område      | Val                                                                                                                           |
+| ----------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| UI          | React 19, Vite 8                                                                                                              |
+| Routing     | React Router 7                                                                                                                |
+| Design      | [Digi — Arbetsförmedlingen](https://designsystem.arbetsformedlingen.se/) (`@designsystem-se/af`, `@designsystem-se/af-react`) |
+| HTTP        | Axios (`src/shared/api/HttpClient.js`)                                                                                        |
+| Tester      | Vitest, Testing Library, [MSW](https://mswjs.io/)                                                                             |
+| Kodkvalitet | ESLint, Prettier, GitHub Actions                                                                                              |
+| Övrigt      | `@taxonomy/yrkesvaljaren` (Ej implementerad i nuvarande iteration.)                                                           |
 
 ## Kom igång
 
@@ -41,19 +47,19 @@ Kopiera `.env.example` till `.env.local` och justera vid behov.
 
 ## NPM-skript
 
-| Kommando                  | Beskrivning                         |
-| ------------------------- | ----------------------------------- |
-| `npm run dev`             | Utvecklingsserver med HMR           |
-| `npm run build`           | Produktionsbygge                    |
-| `npm run preview`         | Förhandsvisning av bygge            |
-| `npm run lint`            | ESLint                              |
-| `npm run format`          | Prettier (skriv över)               |
-| `npm run format:check`    | Prettier (endast kontroll)          |
-| `npm run test`            | Vitest (watch)                      |
-| `npm run test:run`        | Vitest en gång                      |
-| `npm run test:ui`         | Vitest med webb-UI                  |
-| `npm run test:coverage`   | Tester + coverage-rapport           |
-| `npm run test:coverage:ui`| Coverage i Vitest UI                |
+| Kommando                   | Beskrivning                |
+| -------------------------- | -------------------------- |
+| `npm run dev`              | Utvecklingsserver med HMR  |
+| `npm run build`            | Produktionsbygge           |
+| `npm run preview`          | Förhandsvisning av bygge   |
+| `npm run lint`             | ESLint                     |
+| `npm run format`           | Prettier (skriv över)      |
+| `npm run format:check`     | Prettier (endast kontroll) |
+| `npm run test`             | Vitest (watch)             |
+| `npm run test:run`         | Vitest en gång             |
+| `npm run test:ui`          | Vitest med webb-UI         |
+| `npm run test:coverage`    | Tester + coverage-rapport  |
+| `npm run test:coverage:ui` | Coverage i Vitest UI       |
 
 ## Tester
 
@@ -114,9 +120,10 @@ Exakta paths beror på hur backend är monterad; justera `VITE_API_BASE_URL` om 
 ## Användning av Generativ AI
 
 I detta projekt har generativ AI såsom cursor och co-pilot använts som stöd för:
+
 - Dokumentation.
 - Problemlösning i skrift.
-- Problemlösning i kod. 
+- Problemlösning i kod.
 - Implementation bitvis.
 - Viss automatiserad testning.
 
