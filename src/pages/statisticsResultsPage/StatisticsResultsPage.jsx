@@ -64,7 +64,7 @@ export default function StatisticsResultsPage() {
 
   return (
     <MainLayout>
-      <ContentWrapper>
+      <ContentWrapper isResultsView={!adjustOpen}>
         <ResultsAdjustSearch
           open={adjustOpen}
           onToggle={() => setAdjustOpen((open) => !open)}

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useReducer } from 'react'
+import { useEffect, useMemo, useReducer, useState } from 'react'
 import { ButtonVariation } from '@designsystem-se/af'
 import { DigiButton } from '@designsystem-se/af-react'
 import { useNavigate, useParams } from 'react-router-dom'
@@ -6,6 +6,8 @@ import MainLayout from '../../app/layout/MainLayout'
 import { jobAdsApi } from '../../features/jobAds/api/jobAdsApi'
 import { mapHitToAd } from '../../features/jobAds/api/jobAdsMapper'
 import ContentWrapper from '../../shared/components/contentWrapper/ContentWrapper'
+import ResultsAdjustSearch from '../../shared/components/resultsAdjustSearch/ResultsAdjustSearch'
+import JobAdsSearchForm from '../../features/jobAds/components/jobAdsSearchForm/JobAdsSearchForm'
 import { buildAdDetailPath, ROUTES } from '../../shared/constants/routes'
 import ErrorState from '../../shared/components/errorState/ErrorState'
 import './JobAdDetailPage.css'
@@ -79,6 +81,7 @@ function adReducer(state, action) {
 export default function JobAdDetailPage() {
   const { adId } = useParams()
   const navigate = useNavigate()
+  const [adjustOpen, setAdjustOpen] = useState(false)
   const [{ isLoading, error, ad, metadata }, dispatch] = useReducer(adReducer, {
     isLoading: true,
     error: null,
@@ -134,14 +137,13 @@ export default function JobAdDetailPage() {
 
   return (
     <MainLayout>
-      <ContentWrapper hideRensaLink>
-        <button
-          type="button"
-          className="job-ad-detail__nav-toggle"
-          onClick={() => navigate(-1)}
+      <ContentWrapper isResultsView>
+        <ResultsAdjustSearch
+          open={adjustOpen}
+          onToggle={() => setAdjustOpen((open) => !open)}
         >
-          Justera sökning
-        </button>
+          <JobAdsSearchForm />
+        </ResultsAdjustSearch>
       </ContentWrapper>
 
       <div className="job-ad-detail">
