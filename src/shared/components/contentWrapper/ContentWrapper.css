@@ -220,4 +220,53 @@
   .shell-form-container:has(.results-adjust--collapsed) {
     padding-bottom: 6px;
   }
+
+  /* ── Results view: title left, tabs right, single compact row ── */
+  .shell-top-row--results {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    height: auto;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    padding-left: max(28px, calc((100% - var(--shell-form-width)) / 2 + var(--shell-form-inline-padding)));
+    padding-right: max(28px, calc((100% - var(--shell-form-width)) / 2 + var(--shell-form-inline-padding)));
+  }
+
+  .shell-top-row--results .shell-header-container {
+    display: flex;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .shell-top-row--results .shell-header-content-container {
+    margin-left: 0;
+    padding: 0;
+    text-align: left;
+    max-width: none;
+    width: auto;
+    min-width: 0;
+  }
+
+  .shell-top-row--results .shell-header-content-container h2 {
+    font-size: 1.8rem;
+    width: auto;
+    margin-bottom: 0;
+    padding-left: 0;
+    white-space: nowrap;
+  }
+
+  .shell-top-row--results .shell-corner-actions {
+    position: static;
+    align-items: flex-end;
+    padding-top: 0;
+    max-width: none;
+    flex-shrink: 0;
+    margin-left: 16px;
+  }
+
+  .shell-top-row--results .tabsswitch-component-container {
+    margin-bottom: 0;
+  }
 }

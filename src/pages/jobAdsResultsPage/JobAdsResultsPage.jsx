@@ -43,10 +43,7 @@ function buildSummary(params) {
   } else if (params.kommuner.length) {
     parts.push(params.kommuner.join(', '))
   }
-  if (
-    params.yrkesgruppGrouped &&
-    Object.keys(params.yrkesgruppGrouped).length
-  ) {
+  if (params.yrkesgruppGrouped && Object.keys(params.yrkesgruppGrouped).length) {
     const labels = Object.values(params.yrkesgruppGrouped).flat()
     parts.push(labels.join(', '))
   } else if (params.yrkesgrupper.length) {
@@ -54,18 +51,14 @@ function buildSummary(params) {
   }
   if (params.years.length) parts.push(params.years.sort().join(', '))
   if (params.employer) parts.push(`Arbetsgivare: ${params.employer}`)
-  if (params.skills.length)
-    parts.push(`Kompetenser: ${params.skills.join(', ')}`)
+  if (params.skills.length) parts.push(`Kompetenser: ${params.skills.join(', ')}`)
   return parts.length ? parts.join(' — ') : 'Alla annonser'
 }
 
 export default function JobAdsResultsPage() {
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
-  const uiParams = useMemo(
-    () => readUiParamsFromUrl(searchParams),
-    [searchParams],
-  )
+  const uiParams = useMemo(() => readUiParamsFromUrl(searchParams), [searchParams])
 
   const [page, setPage] = useState(1)
   const [adjustOpen, setAdjustOpen] = useState(false)
@@ -94,7 +87,7 @@ export default function JobAdsResultsPage() {
 
   return (
     <MainLayout>
-      <ContentWrapper>
+      <ContentWrapper isResultsView={!adjustOpen}>
         <ResultsAdjustSearch
           open={adjustOpen}
           onToggle={() => setAdjustOpen((open) => !open)}

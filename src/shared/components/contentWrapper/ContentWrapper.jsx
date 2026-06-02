@@ -6,6 +6,7 @@ import './ContentWrapper.css'
 export default function ContentWrapper({
   children,
   onReset,
+  isResultsView = false,
   hideRensaLink = false,
   contentClassName = '',
 }) {
@@ -25,31 +26,33 @@ export default function ContentWrapper({
 
   return (
     <section className="shell-section">
-      <div className="shell-top-row">
+      <div className={`shell-top-row${isResultsView ? ' shell-top-row--results' : ''}`}>
         <div className="shell-header-container">
           <div className="shell-header-content-container">
             <h2>Historiska platsannonser</h2>
-            <p>Platsannonser tidigare publicerade på</p>
-            <p>Platsbanken</p>
+            {!isResultsView && (
+              <>
+                <p>Platsannonser tidigare publicerade på</p>
+                <p>Platsbanken</p>
+              </>
+            )}
           </div>
         </div>
-
         <div className="shell-corner-actions">
-          <button
-            type="button"
-            className={`shell-reset-link${hideRensaLink ? ' shell-reset-link--hidden' : ''}`}
-            onClick={handleClear}
-            aria-hidden={hideRensaLink}
-            tabIndex={hideRensaLink ? -1 : 0}
-          >
-            Rensa
-          </button>
+          {!isResultsView && !hideRensaLink && (
+            <button
+              type="button"
+              className="shell-reset-link"
+              onClick={handleClear}
+            >
+              Rensa
+            </button>
+          )}
           <div className="tabsswitch-component-container">
             <TabsSwitch />
           </div>
         </div>
       </div>
-
       <div
         className={`shell-form-container${contentClassName ? ` ${contentClassName}` : ''}`}
       >
