@@ -26,7 +26,9 @@ export default function ContentWrapper({
 
   return (
     <section className="shell-section">
-      <div className={`shell-top-row${isResultsView ? ' shell-top-row--results' : ''}`}>
+      <div
+        className={`shell-top-row${isResultsView ? ' shell-top-row--results' : ''}`}
+      >
         <div className="shell-header-container">
           <div className="shell-header-content-container">
             <h2>Historiska platsannonser</h2>

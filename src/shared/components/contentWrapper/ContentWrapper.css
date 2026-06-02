@@ -230,8 +230,18 @@
     height: auto;
     padding-top: 16px;
     padding-bottom: 16px;
-    padding-left: max(28px, calc((100% - var(--shell-form-width)) / 2 + var(--shell-form-inline-padding)));
-    padding-right: max(28px, calc((100% - var(--shell-form-width)) / 2 + var(--shell-form-inline-padding)));
+    padding-left: max(
+      28px,
+      calc(
+        (100% - var(--shell-form-width)) / 2 + var(--shell-form-inline-padding)
+      )
+    );
+    padding-right: max(
+      28px,
+      calc(
+        (100% - var(--shell-form-width)) / 2 + var(--shell-form-inline-padding)
+      )
+    );
   }
 
   .shell-top-row--results .shell-header-container {
