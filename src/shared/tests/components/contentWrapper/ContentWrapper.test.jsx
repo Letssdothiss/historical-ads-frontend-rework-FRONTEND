@@ -65,14 +65,8 @@ describe('ContentWrapper', () => {
     expect(navigate).toHaveBeenCalledWith('/statistik', { replace: true })
   })
 
-  it('keeps Rensa in DOM but hidden when hideRensaLink is true', () => {
-    const { container } = renderWrapper('/platsannonser/resultat', {
-      hideRensaLink: true,
-    })
-
-    const resetButton = container.querySelector('.shell-reset-link')
-    expect(resetButton).toHaveClass('shell-reset-link--hidden')
-    expect(resetButton).toHaveAttribute('aria-hidden', 'true')
-    expect(resetButton).toHaveAttribute('tabindex', '-1')
+  it('hides Rensa button when hideRensaLink is true', () => {
+    renderWrapper('/platsannonser', { hideRensaLink: true })
+    expect(screen.queryByRole('button', { name: 'Rensa' })).not.toBeInTheDocument()
   })
 })
