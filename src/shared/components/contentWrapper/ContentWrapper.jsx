@@ -44,8 +44,10 @@ export default function ContentWrapper({
           {!isResultsView && !hideRensaLink && (
             <button
               type="button"
-              className="shell-reset-link"
+              className={`shell-reset-link${hideRensaLink ? ' shell-reset-link--hidden' : ''}`}
               onClick={handleClear}
+              aria-hidden={hideRensaLink}
+              tabIndex={hideRensaLink ? -1 : 0}
             >
               Rensa
             </button>
