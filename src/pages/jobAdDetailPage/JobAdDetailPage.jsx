@@ -137,7 +137,7 @@ export default function JobAdDetailPage() {
 
   return (
     <MainLayout>
-      <ContentWrapper isResultsView>
+      <ContentWrapper isResultsView={!adjustOpen}>
         <ResultsAdjustSearch
           open={adjustOpen}
           onToggle={() => setAdjustOpen((open) => !open)}
