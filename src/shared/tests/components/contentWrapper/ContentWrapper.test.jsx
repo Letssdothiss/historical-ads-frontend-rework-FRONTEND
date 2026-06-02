@@ -67,6 +67,8 @@ describe('ContentWrapper', () => {
 
   it('hides Rensa button when hideRensaLink is true', () => {
     renderWrapper('/platsannonser', { hideRensaLink: true })
-    expect(screen.queryByRole('button', { name: 'Rensa' })).not.toBeInTheDocument()
+    expect(
+      screen.queryByRole('button', { name: 'Rensa' }),
+    ).not.toBeInTheDocument()
   })
 })
